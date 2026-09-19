@@ -8,17 +8,29 @@ const ROLE_KEY = 'smritisetu_device_role'
 
 function App() {
   const [role, setRole] = useState(() => {
-    const savedRole = localStorage.getItem(ROLE_KEY)
-    return savedRole === 'patient' || savedRole === 'caregiver' ? savedRole : null
+    try {
+      const savedRole = localStorage.getItem(ROLE_KEY)
+      return savedRole === 'patient' || savedRole === 'caregiver' ? savedRole : null
+    } catch {
+      return null
+    }
   })
 
   const handleSelectRole = (selectedRole) => {
-    localStorage.setItem(ROLE_KEY, selectedRole)
+    try {
+      localStorage.setItem(ROLE_KEY, selectedRole)
+    } catch (e) {
+      console.warn('LocalStorage error:', e)
+    }
     setRole(selectedRole)
   }
 
   const handleChangeRole = () => {
-    localStorage.removeItem(ROLE_KEY)
+    try {
+      localStorage.removeItem(ROLE_KEY)
+    } catch (e) {
+      console.warn('LocalStorage error:', e)
+    }
     setRole(null)
   }
 
