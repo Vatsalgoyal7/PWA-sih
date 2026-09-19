@@ -5,9 +5,12 @@ import headerImg from '../assets/role-select-header.png'
 import patientBtn from '../assets/role-patient-btn.png'
 import caregiverBtn from '../assets/role-caregiver-btn.png'
 import sceneryImg from '../assets/role-scenery-full.png'
+import { useLanguage } from '../context/LanguageContext'
 import './RoleSelect.css'
 
 function RoleSelect({ onSelect }) {
+  const { lang, t } = useLanguage()
+
   return (
     <div className="role-select-viewport">
       <div className="role-select-card">
@@ -39,36 +42,51 @@ function RoleSelect({ onSelect }) {
           <header className="role-avatar-section">
             <img
               src={headerImg}
-              alt="আপুনি কোন হিচাপে ব্যৱহাৰ কৰিব? (Which role will you use as?)"
+              alt={t('roleSelectTitle')}
               className="role-avatar-img"
             />
+            {lang === 'en' && (
+              <div className="role-bubble-en-overlay">
+                Which role will you use as?
+              </div>
+            )}
           </header>
 
-          <main className="role-cards-grid" role="group" aria-label="Role selection options">
+          <main className="role-cards-grid" role="group" aria-label={t('roleSelectTitle')}>
             <button
               type="button"
               className="role-card-btn"
               onClick={() => onSelect('patient')}
-              aria-label="পেচেণ্ট হিচাপে প্ৰৱেশ কৰক (Continue as Patient)"
+              aria-label={t('patient')}
             >
               <img
                 src={patientBtn}
-                alt="পেচেণ্ট (Patient)"
+                alt={t('patient')}
                 className="role-card-img"
               />
+              {lang === 'en' && (
+                <div className="role-card-en-pill role-card-en-pill--patient">
+                  <span>👤 Patient</span>
+                </div>
+              )}
             </button>
 
             <button
               type="button"
               className="role-card-btn"
               onClick={() => onSelect('caregiver')}
-              aria-label="কেয়াৰগিভাৰ হিচাপে প্ৰৱেশ কৰক (Continue as Caregiver)"
+              aria-label={t('caregiver')}
             >
               <img
                 src={caregiverBtn}
-                alt="কেয়াৰগিভাৰ (Caregiver)"
+                alt={t('caregiver')}
                 className="role-card-img"
               />
+              {lang === 'en' && (
+                <div className="role-card-en-pill role-card-en-pill--caregiver">
+                  <span>👥 Caregiver</span>
+                </div>
+              )}
             </button>
           </main>
         </div>

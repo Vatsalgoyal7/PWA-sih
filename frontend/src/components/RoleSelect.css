@@ -135,6 +135,7 @@
   border-radius: 18px;
   overflow: hidden;
   display: flex;
+  position: relative;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   transition:
     transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -142,6 +143,67 @@
     filter 0.2s ease;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* English speech bubble overlay */
+.role-bubble-en-overlay {
+  position: absolute;
+  top: 48%;
+  right: 18px;
+  background: #fffdfa;
+  border: 2px solid #b83a24;
+  border-radius: 16px;
+  padding: 6px 12px;
+  color: #8c2513;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(184, 58, 36, 0.2);
+  z-index: 5;
+  animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* English pill label across bottom of card */
+.role-card-en-pill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  z-index: 3;
+  border-radius: 0 0 16px 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+.role-card-en-pill--patient {
+  background: #c34b35;
+}
+
+.role-card-en-pill--caregiver {
+  background: #366d4c;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .role-card-img {

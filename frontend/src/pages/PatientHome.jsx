@@ -8,10 +8,12 @@ import gamesPanelImg from '../assets/games-panel.png'
 import sceneryImg from '../assets/role-scenery-full.png'
 import ReminderPage from './ReminderPage'
 import GamesPage from './GamesPage'
+import { useLanguage } from '../context/LanguageContext'
 import './PatientHome.css'
 
 function PatientHome({ onChangeRole }) {
   const [page, setPage] = useState('home') // 'home' | 'reminders' | 'games'
+  const { lang, t } = useLanguage()
 
   if (page === 'reminders') {
     return <ReminderPage onBack={() => setPage('home')} />
@@ -34,7 +36,7 @@ function PatientHome({ onChangeRole }) {
           type="button"
           className="patient-back-btn"
           onClick={onChangeRole}
-          aria-label="Back to role selection"
+          aria-label={t('back')}
         >
           &#8592;
         </button>
@@ -64,31 +66,41 @@ function PatientHome({ onChangeRole }) {
             />
           </header>
 
-          <main className="patient-panels-grid" role="group" aria-label="Patient options">
+          <main className="patient-panels-grid" role="group" aria-label={t('home')}>
             <button
               type="button"
               className="patient-panel-btn"
               onClick={() => setPage('reminders')}
-              aria-label="Open Reminders"
+              aria-label={t('reminders')}
             >
               <img
                 src={reminderPanelImg}
-                alt="Reminder Panel"
+                alt={t('reminders')}
                 className="patient-panel-img"
               />
+              {lang === 'en' && (
+                <div className="patient-panel-en-pill">
+                  <span>⏰ Reminders</span>
+                </div>
+              )}
             </button>
 
             <button
               type="button"
               className="patient-panel-btn"
               onClick={() => setPage('games')}
-              aria-label="Open Games"
+              aria-label={t('games')}
             >
               <img
                 src={gamesPanelImg}
-                alt="Games Panel"
+                alt={t('games')}
                 className="patient-panel-img"
               />
+              {lang === 'en' && (
+                <div className="patient-panel-en-pill">
+                  <span>🎮 My Games</span>
+                </div>
+              )}
             </button>
           </main>
         </div>
