@@ -1,0 +1,313 @@
+﻿/* =========================================================
+   GamesPage — patient-facing game tile grid
+   Mirrors ReminderPage chrome (viewport → card → strip →
+   brooches → home-btn → center → scenery).
+   ========================================================= */
+
+/* ---- Viewport & card shell ---- */
+.gp-viewport {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.gp-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  height: min(calc(100dvh - 16px), 820px);
+  min-height: 600px;
+  background-color: #fdf8ee;
+  border: 2.5px solid #b83a24;
+  border-radius: 22px;
+  box-shadow:
+    0 20px 48px -12px rgba(184, 58, 36, .14),
+    0 8px 24px -6px rgba(0, 0, 0, .08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ---- Top gamusa strip ---- */
+.gp-top-border {
+  width: 100%;
+  flex-shrink: 0;
+  line-height: 0;
+  pointer-events: none;
+  position: relative;
+  z-index: 2;
+}
+.gp-top-strip {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---- Corner brooches ---- */
+.gp-brooch {
+  position: absolute;
+  top: 0;
+  width: 26%;
+  max-width: 115px;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.gp-brooch--left  { left: 0;  z-index: 4; }
+.gp-brooch--right { right: 0; z-index: 1; }   /* behind avatar */
+
+/* ---- Home / back button ---- */
+.gp-home-btn {
+  position: absolute;
+  top: 50px;
+  left: 14px;
+  z-index: 5;
+  background: #b83a24;
+  border: none;
+  border-radius: 14px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(184, 58, 36, .4);
+  transition: transform .18s ease, background .18s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.gp-home-btn:hover  { background: #9e2e18; transform: scale(1.08); }
+.gp-home-btn:active { transform: scale(0.92); }
+
+/* ---- Scrollable centre ---- */
+.gp-center {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 14px 8px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  -webkit-overflow-scrolling: touch;
+}
+.gp-center::-webkit-scrollbar { width: 0; }
+
+/* ---- Page title ---- */
+.gp-title {
+  font-size: clamp(20px, 5.2vw, 25px);
+  font-weight: 800;
+  color: #7a1c0a;
+  text-align: center;
+  margin: 0 0 4px;
+  letter-spacing: .01em;
+  line-height: 1.25;
+}
+
+/* ---- Avatar + dialogue ---- */
+.gp-avatar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 2;
+}
+.gp-avatar {
+  width: 52%;
+  max-width: 200px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.06));
+}
+.gp-dialogue {
+  background: #fff8e8;
+  border: 2px solid #d4a017;
+  border-radius: 16px;
+  padding: 7px 14px;
+  font-size: clamp(13px, 3.6vw, 15px);
+  font-weight: 700;
+  color: #5a3800;
+  text-align: center;
+  max-width: 88%;
+  margin-top: -4px;
+  box-shadow: 0 2px 8px rgba(212, 160, 23, .15);
+  position: relative;
+}
+/* small upward pointer on dialogue bubble */
+.gp-dialogue::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-bottom-color: #d4a017;
+}
+.gp-dialogue::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-bottom-color: #fff8e8;
+}
+
+/* ---- Status messages ---- */
+.gp-loading, .gp-error {
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+  margin: 8px 0;
+}
+.gp-error { color: #b83a24; }
+
+/* ---- Tile grid — reflowing, no fixed slots ---- */
+.gp-grid {
+  list-style: none;
+  margin: 0 0 6px;
+  padding: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.gp-grid-item { width: 100%; }
+
+/* ---- Individual tile ---- */
+.gp-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+  border: 2.5px solid var(--tile-bc);
+  background: var(--tile-bg);
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    transform .20s cubic-bezier(.34, 1.56, .64, 1),
+    box-shadow .20s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 3px 10px rgba(0,0,0,.07);
+}
+.gp-tile:hover  { transform: translateY(-3px) scale(1.015); box-shadow: 0 8px 20px rgba(0,0,0,.11); }
+.gp-tile:active { transform: scale(0.95); }
+.gp-tile:focus-visible { outline: 3px solid #b83a24; outline-offset: 3px; }
+
+/* ---- Color variants (8-color cycle) ---- */
+.gp-tile--pink   { --tile-bc: #c94b8b; --tile-bg: rgba(201,75,139,.08);  --tile-accent: #c94b8b; }
+.gp-tile--yellow { --tile-bc: #c9a51a; --tile-bg: rgba(201,165,26,.08);  --tile-accent: #c9a51a; }
+.gp-tile--green  { --tile-bc: #3a7d44; --tile-bg: rgba(58,125,68,.08);   --tile-accent: #3a7d44; }
+.gp-tile--blue   { --tile-bc: #2a6fa8; --tile-bg: rgba(42,111,168,.08);  --tile-accent: #2a6fa8; }
+.gp-tile--orange { --tile-bc: #c96a1a; --tile-bg: rgba(201,106,26,.08);  --tile-accent: #c96a1a; }
+.gp-tile--purple { --tile-bc: #7a3d9e; --tile-bg: rgba(122,61,158,.08);  --tile-accent: #7a3d9e; }
+.gp-tile--red    { --tile-bc: #b83a24; --tile-bg: rgba(184,58,36,.08);   --tile-accent: #b83a24; }
+.gp-tile--teal   { --tile-bc: #1a8c7a; --tile-bg: rgba(26,140,122,.08);  --tile-accent: #1a8c7a; }
+
+/* ---- Game image — fills upper 75% of tile ---- */
+.gp-tile-img {
+  position: absolute;
+  inset: 0 0 28% 0;
+  width: 100%;
+  height: 72%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+  display: block;
+}
+
+/* ---- Label strip at bottom of tile ---- */
+.gp-tile-label {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: var(--tile-bc);
+  color: #fff;
+  font-size: clamp(11px, 3vw, 13px);
+  font-weight: 800;
+  text-align: center;
+  padding: 4px 4px 5px;
+  letter-spacing: .01em;
+  line-height: 1.2;
+}
+
+/* ---- Speaker button — top-right corner ---- */
+.gp-speak-btn {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  z-index: 4;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  background: var(--tile-accent);
+  box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  transition: transform .16s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.gp-speak-btn svg { width: 18px; height: 18px; }
+.gp-speak-btn:active { transform: scale(0.86); }
+
+/* ---- Bottom scenery ---- */
+.gp-scenery {
+  width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  line-height: 0;
+  pointer-events: none;
+}
+.gp-scenery-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 380px) {
+  .gp-card { border-radius: 18px; }
+  .gp-center { padding: 4px 10px 6px; }
+  .gp-avatar { width: 58%; }
+  .gp-speak-btn { width: 28px; height: 28px; top: 5px; right: 5px; }
+  .gp-speak-btn svg { width: 14px; height: 14px; }
+  .gp-grid { gap: 8px; }
+  .gp-tile { border-radius: 14px; }
+}
+@media (max-height: 640px) {
+  .gp-viewport { align-items: flex-start; padding: 4px; }
+  .gp-card { height: auto; min-height: auto; max-height: none; overflow-y: auto; }
+}

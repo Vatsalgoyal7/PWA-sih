@@ -1,0 +1,293 @@
+/* ReminderPage */
+
+.rem-viewport {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.rem-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  height: min(calc(100dvh - 16px), 820px);
+  min-height: 600px;
+  background-color: #fdf8ee;
+  border: 2.5px solid #b83a24;
+  border-radius: 22px;
+  box-shadow: 0 20px 48px -12px rgba(184,58,36,.14), 0 8px 24px -6px rgba(0,0,0,.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.rem-top-border {
+  width: 100%;
+  flex-shrink: 0;
+  line-height: 0;
+  pointer-events: none;
+  position: relative;
+  z-index: 2;
+}
+.rem-top-strip {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.rem-right-brooch {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 32%;
+  max-width: 130px;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.rem-home-btn {
+  position: absolute;
+  top: 50px;
+  left: 14px;
+  z-index: 5;
+  background: #b83a24;
+  border: none;
+  border-radius: 14px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(184,58,36,.4);
+  transition: transform .18s ease, background .18s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.rem-home-btn:hover  { background: #9e2e18; transform: scale(1.08); }
+.rem-home-btn:active { transform: scale(0.92); }
+
+.rem-center {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 14px 8px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  -webkit-overflow-scrolling: touch;
+}
+.rem-center::-webkit-scrollbar { width: 0; }
+
+.rem-title {
+  font-size: clamp(20px, 5.2vw, 25px);
+  font-weight: 800;
+  color: #7a1c0a;
+  text-align: center;
+  margin: 0 0 4px;
+  letter-spacing: .01em;
+  line-height: 1.25;
+}
+
+/* Enlarged Avatar Container */
+.rem-avatar-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.rem-avatar {
+  width: 76%;
+  max-width: 290px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.06));
+}
+
+/* Reminder grid — square cards, 2 per row */
+.rem-list {
+  list-style: none;
+  margin: 0 0 6px 0;
+  padding: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.rem-list-item { width: 100%; }
+
+.rem-card-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 6px 4px;
+  gap: 8px;
+  border-radius: 20px;
+  border: 2.5px solid var(--bc);
+  background: var(--bgc);
+  cursor: pointer;
+  text-align: center;
+  transition: transform .20s cubic-bezier(.34,1.56,.64,1), box-shadow .20s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 3px 10px rgba(0,0,0,.06);
+}
+.rem-card-btn:hover  { transform: translateY(-3px) scale(1.015); box-shadow: 0 8px 20px rgba(0,0,0,.10); }
+.rem-card-btn:active { transform: scale(0.96); }
+.rem-card-btn:focus-visible { outline: 3px solid #b83a24; outline-offset: 3px; }
+.rem-card-btn--green  { --bc: #3a7d44; --bgc: rgba(58,125,68,.09);  }
+.rem-card-btn--red    { --bc: #b83a24; --bgc: rgba(184,58,36,.09);  }
+.rem-card-btn--orange { --bc: #c96a1a; --bgc: rgba(201,106,26,.09); }
+
+/* Speaker button, top-right corner of each card */
+.rem-speak-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(0,0,0,.18);
+  transition: transform .16s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.rem-speak-btn svg { width: 22px; height: 22px; }
+.rem-speak-btn:active { transform: scale(0.88); }
+.rem-speak-btn--green  { background: #3a7d44; }
+.rem-speak-btn--red    { background: #b83a24; }
+.rem-speak-btn--orange { background: #c96a1a; }
+
+.rem-icon-wrap {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.rem-icon-wrap--green  { background: rgba(58,125,68,.16);  }
+.rem-icon-wrap--red    { background: rgba(184,58,36,.16);  }
+.rem-icon-wrap--orange { background: rgba(201,106,26,.16); }
+.rem-icon-img { width: 88%; height: 88%; object-fit: contain; display: block; user-select: none; -webkit-user-drag: none; }
+
+.rem-card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.rem-card-label {
+  font-size: clamp(19px, 5.4vw, 26px);
+  font-weight: 800;
+  color: #2d1a00;
+  line-height: 1.15;
+}
+
+.rem-card-time {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: clamp(14px, 4vw, 17px);
+  font-weight: 700;
+  padding: 3px 10px; border-radius: 20px; width: fit-content;
+}
+.rem-card-time--green  { color: #2a6033; background: rgba(58,125,68,.18);  }
+.rem-card-time--red    { color: #8c2515; background: rgba(184,58,36,.18);  }
+.rem-card-time--orange { color: #7a3d0a; background: rgba(201,106,26,.18); }
+.rem-clock-svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* Bottom scenery — sits in normal flow, below the reminder cards */
+.rem-scenery {
+  width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.rem-scenery-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.rem-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.48);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; padding: 16px; box-sizing: border-box;
+}
+.rem-modal {
+  background: #fdf8ee; border: 2.5px solid #b83a24; border-radius: 22px;
+  padding: 28px 24px 22px; width: 100%; max-width: 320px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.24);
+}
+.rem-modal-name { font-size: 28px; font-weight: 800; color: #2d1a00; margin: 0; }
+.rem-modal-sub  { font-size: 13px; color: #999; margin: -4px 0 4px; }
+.rem-time-input {
+  width: 100%; font-size: 36px; font-weight: 700; color: #2d1a00;
+  text-align: center; border: 2px solid #d4a017; border-radius: 14px;
+  padding: 10px 14px; background: #fef9ed; outline: none; box-sizing: border-box; cursor: pointer;
+}
+.rem-time-input:focus { border-color: #b83a24; }
+.rem-modal-actions { display: flex; gap: 12px; width: 100%; margin-top: 6px; }
+.rem-modal-cancel, .rem-modal-save {
+  flex: 1; padding: 12px 0; font-size: 17px; font-weight: 700;
+  border-radius: 14px; border: none; cursor: pointer;
+  transition: opacity .18s, transform .18s; touch-action: manipulation;
+}
+.rem-modal-cancel { background: #ede8dc; color: #5a4030; }
+.rem-modal-save   { background: #b83a24; color: #fff; box-shadow: 0 4px 12px rgba(184,58,36,.35); }
+.rem-modal-cancel:active, .rem-modal-save:active { transform: scale(.95); opacity: .85; }
+
+@media (max-width: 380px) {
+  .rem-card { border-radius: 18px; }
+  .rem-center { padding: 4px 10px 6px; }
+  .rem-avatar { width: 82%; }
+  .rem-icon-wrap { width: 78px; height: 78px; }
+  .rem-speak-btn { width: 34px; height: 34px; top: 6px; right: 6px; }
+  .rem-speak-btn svg { width: 18px; height: 18px; }
+  .rem-card-btn { border-radius: 16px; gap: 6px; padding: 4px 2px; }
+}
+@media (max-height: 640px) {
+  .rem-viewport { align-items: flex-start; padding: 4px; }
+  .rem-card { height: auto; min-height: auto; max-height: none; overflow-y: auto; }
+}

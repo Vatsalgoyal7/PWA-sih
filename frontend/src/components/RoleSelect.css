@@ -1,0 +1,256 @@
+/* Full viewport container that centers the mobile card on desktop/tablets */
+.role-select-viewport {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* Framed app card with Assamese traditional red rounded border */
+.role-select-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  /* Maintain comfortable height on desktop; fill screen on mobile */
+  height: min(calc(100dvh - 16px), 820px);
+  min-height: 600px;
+  background-color: #fdf8ee;
+  border: 2.5px solid #b83a24;
+  border-radius: 22px;
+  box-shadow:
+    0 20px 48px -12px rgba(184, 58, 36, 0.12),
+    0 8px 24px -6px rgba(0, 0, 0, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 1. Top Section: Upper Gamusa Border Strip (matches bottom strip) */
+.role-top-border-wrapper {
+  width: 100%;
+  flex-shrink: 0;
+  line-height: 0;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.role-top-strip-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Extreme Top Corner Brooches covering corner white spaces */
+.role-corner-brooch {
+  position: absolute;
+  top: 0;
+  width: 26%;
+  max-width: 115px;
+  height: auto;
+  display: block;
+  z-index: 4;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.role-corner-left {
+  left: 0;
+}
+
+.role-corner-right {
+  right: 0;
+}
+
+/* 2. Center Section: Avatar + Selection Cards balanced with even whitespace */
+.role-center-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* margin: auto 0 creates perfectly balanced, even whitespace between top border and bottom scenery */
+  margin: auto 0;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+/* AI Avatar & Speech bubble */
+.role-avatar-section {
+  width: 100%;
+  padding: 0 14px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.role-avatar-img {
+  width: 100%;
+  max-width: 410px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  /* Negative margin pulls the cards flush up against her saree drape */
+  margin-bottom: -16px;
+  position: relative;
+  z-index: 2;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Side-by-side selection cards */
+.role-cards-grid {
+  width: 100%;
+  padding: 0 14px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Individual card button */
+.role-card-btn {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.22s ease,
+    filter 0.2s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.role-card-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 18px;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Hover, active, and focus micro-interactions */
+.role-card-btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 10px 24px -4px rgba(184, 58, 36, 0.22);
+  filter: brightness(1.02);
+}
+
+.role-card-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  filter: brightness(0.95);
+}
+
+.role-card-btn:focus-visible {
+  outline: 3px solid #b83a24;
+  outline-offset: 3px;
+}
+
+/* 3. Bottom Section: Assam Scenery with bottom Gamusa embroidery */
+.role-scenery-section {
+  width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.role-scenery-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Responsive tweaks for narrow mobile screens */
+@media (max-width: 380px) {
+  .role-select-viewport {
+    padding: 4px;
+  }
+
+  .role-select-card {
+    border-radius: 18px;
+  }
+
+  .role-corner-brooch {
+    width: 28%;
+    max-width: 95px;
+  }
+
+  .role-avatar-section {
+    padding: 0 10px;
+  }
+
+  .role-avatar-img {
+    margin-bottom: -12px;
+  }
+
+  .role-cards-grid {
+    padding: 0 10px;
+    gap: 8px;
+  }
+
+  .role-card-btn {
+    border-radius: 14px;
+  }
+
+  .role-card-img {
+    border-radius: 14px;
+  }
+}
+
+/* Responsive tweaks for tall phone viewports */
+@media (min-height: 780px) and (max-width: 500px) {
+  .role-select-card {
+    height: calc(100dvh - 12px);
+    max-height: none;
+  }
+}
+
+/* Safeguard for very short screens (landscape or compact devices) */
+@media (max-height: 640px) {
+  .role-select-viewport {
+    padding: 4px;
+    align-items: flex-start;
+  }
+
+  .role-select-card {
+    height: auto;
+    min-height: auto;
+    max-height: none;
+    overflow-y: auto;
+  }
+
+  .role-avatar-img {
+    margin-bottom: -8px;
+  }
+}
