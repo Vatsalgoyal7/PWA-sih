@@ -1,0 +1,319 @@
+/* CSS specifically matching the provided UI/UX reference image */
+
+:root {
+    --text-dark: #4A3525;      
+    --text-muted: #6D5C50;     
+    --primary-action: #C75C41; 
+    --primary-action-active: #A84830;
+    --card-bg: #ffffff;
+    --border-color: #e0d8c3;
+    
+    --font-base: 28px;
+    --font-heading: 42px;
+    --font-subheading: 26px;
+    --font-weight: 700;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+body {
+    /* Using 100% 100% with fixed attachment ensures the frame baked into bg_main.png 
+       is always visible at the edges of the screen without cropping */
+    background-image: url('../images/bg_main.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-dark);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight);
+    line-height: 1.4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px; /* Padding to keep content inside the drawn frame */
+}
+
+/* Screens */
+.screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    height: 100%;
+    justify-content: center; /* Center content vertically */
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Header for Game & Difficulty screens */
+.game-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    padding: 0 40px;
+    z-index: 10;
+}
+
+/* Language Button (Top Right) */
+.btn-lang-top {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    background-color: var(--primary-action);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 24px;
+    font-size: 24px;
+    font-weight: var(--font-weight);
+    cursor: pointer;
+    transition: transform 0.2s;
+    z-index: 10;
+}
+
+.game-header .btn-lang-top {
+    position: static; /* Let it sit in the flex header naturally */
+}
+
+.btn-lang-top:active {
+    transform: scale(0.95);
+}
+
+/* Home Button */
+.btn-home {
+    background-color: var(--primary-action);
+    border: 3px solid #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #fff; /* White icon */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transition: transform 0.2s;
+}
+
+.btn-home:active {
+    transform: scale(0.95);
+}
+
+.btn-home svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* Avatars */
+#avatar-welcome, #avatar-celebration {
+    width: 200px; /* Slightly smaller to fit nicely in the frame */
+    height: auto;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+}
+
+.avatar-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 16px;
+    margin-bottom: 32px;
+    width: 100%;
+}
+
+.avatar-small {
+    width: 90px;
+    height: auto;
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+}
+
+#avatar-message {
+    font-size: 32px;
+    color: var(--text-dark);
+}
+
+/* Typography */
+h1 {
+    font-size: var(--font-heading);
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+h2 {
+    font-size: var(--font-subheading);
+    color: var(--text-muted);
+    margin-bottom: 32px;
+}
+
+/* Buttons */
+.play-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.btn-primary {
+    background-color: var(--primary-action);
+    color: #fff;
+    border: none;
+    border-radius: 40px; 
+    padding: 16px 48px;
+    font-size: 32px;
+    font-weight: var(--font-weight);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-primary:active {
+    transform: scale(0.95);
+}
+
+.btn-round {
+    background-color: var(--primary-action);
+    border: 4px solid #fff;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-round-small {
+    background-color: var(--primary-action);
+    border: 3px solid #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.btn-round:active, .btn-round-small:active {
+    transform: scale(0.95);
+}
+
+/* Difficulty Buttons */
+.difficulty-buttons {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Grid layout */
+.game-grid {
+    display: grid;
+    gap: 16px;
+    justify-content: center;
+    width: 100%;
+}
+
+.game-grid[data-pairs="4"], .game-grid[data-pairs="6"] {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 800px;
+}
+
+@media (max-width: 768px) {
+    .game-grid[data-pairs="4"], .game-grid[data-pairs="6"] {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width: 480px) {
+    .game-grid[data-pairs="4"], .game-grid[data-pairs="6"] {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Cards */
+.card {
+    background-color: transparent;
+    width: 120px; /* Slightly smaller to ensure fit on single screen */
+    height: 155px;
+    perspective: 1000px;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 12px;
+}
+
+.card.flipped .card-inner,
+.card.matched .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid #fff;
+}
+
+.card-front {
+    background-color: var(--card-bg);
+    background-image: url('../images/card_back.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.card-back {
+    background-color: #fff;
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.card.matched .card-inner {
+    border: 5px solid var(--primary-action);
+    box-shadow: 0 0 16px rgba(199, 92, 65, 0.5);
+}

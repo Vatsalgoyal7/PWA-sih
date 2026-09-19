@@ -111,6 +111,13 @@
   transform: scale(0.93);
 }
 
+.patient-lang-toggle {
+  position: absolute;
+  top: 52px;
+  right: 14px;
+  z-index: 5;
+}
+
 /* 2. Center Section: Avatar + Panel Cards */
 .patient-center-content {
   width: 100%;

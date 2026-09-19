@@ -1,4 +1,4 @@
-﻿/* =========================================================
+/* =========================================================
    CaregiverHome — plain professional dashboard
    No gamusa motifs, no Assamese decorations.
    ========================================================= */
@@ -27,6 +27,9 @@
   top: 0;
   z-index: 10;
 }
+.cg-header-lang {
+  margin-left: auto;
+}
 .cg-back-btn {
   background: none;
   border: 1.5px solid #b83a24;
@@ -51,6 +54,15 @@
   background: #b83a24;
   padding: 32px 24px 24px;
   color: #fff;
+}
+.cg-home-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.cg-home-lang {
+  flex-shrink: 0;
 }
 .cg-home-title {
   font-size: 28px;

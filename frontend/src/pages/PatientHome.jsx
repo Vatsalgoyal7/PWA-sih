@@ -1,17 +1,19 @@
 import { useState } from 'react'
+import { useLanguage } from '../context/LanguageContext'
+import LanguageToggle from '../components/LanguageToggle'
 import topStripImg from '../assets/role-gamusa-strip.png'
 import topLeftBrooch from '../assets/upper-left-gamosa.png'
 import topRightBrooch from '../assets/upper-right-gamosa.png'
 import grandmaImg from '../assets/namaskar-grandma.png'
 import reminderPanelImg from '../assets/reminder-panel.png'
 import gamesPanelImg from '../assets/games-panel.png'
-import sceneryImg from '../assets/role-scenery-full.png'
 import ReminderPage from './ReminderPage'
 import GamesPage from './GamesPage'
 import './PatientHome.css'
 
 function PatientHome({ onChangeRole }) {
   const [page, setPage] = useState('home') // 'home' | 'reminders' | 'games'
+  const { t } = useLanguage()
 
   if (page === 'reminders') {
     return <ReminderPage onBack={() => setPage('home')} />
@@ -34,10 +36,13 @@ function PatientHome({ onChangeRole }) {
           type="button"
           className="patient-back-btn"
           onClick={onChangeRole}
-          aria-label="Back to role selection"
+          aria-label={t('patientBackAria')}
         >
           &#8592;
         </button>
+
+        {/* Language Toggle — top-right */}
+        <LanguageToggle className="patient-lang-toggle" />
 
         {/* Left brooch — above strip */}
         <img
@@ -59,7 +64,7 @@ function PatientHome({ onChangeRole }) {
           <header className="patient-avatar-section">
             <img
               src={grandmaImg}
-              alt="Namaskar Grandma welcoming the patient"
+              alt={t('patientGrandmaAlt')}
               className="patient-avatar-img"
             />
           </header>
@@ -69,11 +74,11 @@ function PatientHome({ onChangeRole }) {
               type="button"
               className="patient-panel-btn"
               onClick={() => setPage('reminders')}
-              aria-label="Open Reminders"
+              aria-label={t('patientReminders')}
             >
               <img
                 src={reminderPanelImg}
-                alt="Reminder Panel"
+                alt={t('patientReminders')}
                 className="patient-panel-img"
               />
             </button>
@@ -82,26 +87,21 @@ function PatientHome({ onChangeRole }) {
               type="button"
               className="patient-panel-btn"
               onClick={() => setPage('games')}
-              aria-label="Open Games"
+              aria-label={t('patientGames')}
             >
               <img
                 src={gamesPanelImg}
-                alt="Games Panel"
+                alt={t('patientGames')}
                 className="patient-panel-img"
               />
             </button>
           </main>
         </div>
 
-        {/* Bottom: River Scenery */}
-        <footer className="patient-scenery-section">
-          <img
-            src={sceneryImg}
-            alt="Assam scenery with river, boat, and Gamusa border"
-            aria-hidden="true"
-            className="patient-scenery-img"
-          />
-        </footer>
+        {/* Lower Gamusa Border Strip */}
+        <div className="patient-top-border-wrapper" aria-hidden="true" style={{ marginTop: 'auto' }}>
+          <img src={topStripImg} alt="" className="patient-top-strip-img" />
+        </div>
       </div>
     </div>
   )

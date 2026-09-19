@@ -1,9 +1,8 @@
-﻿import { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import topStripImg  from "../assets/role-gamusa-strip.png"
 import leftBrooch   from "../assets/upper-left-gamosa.png"
 import rightBrooch  from "../assets/upper-right-gamosa.png"
 import grannyImg    from "../assets/granny_gamer.png"
-import sceneryImg   from "../assets/role-scenery-full.png"
 import game1  from "../assets/game1-ki-utsav.png"
 import game2  from "../assets/game2-ki-ki-silo.png"
 import game3  from "../assets/game3-kot-gol.png"
@@ -20,20 +19,20 @@ import "./GamesPage.css"
 const API_BASE = import.meta.env.VITE_API_URL ?? "https://smritisetu-backend.onrender.com"
 
 // ---------------------------------------------------------------------------
-// Master game catalog — order here defines grid position when all are active
+// Master game catalog � order here defines grid position when all are active
 // ---------------------------------------------------------------------------
 const ALL_GAMES = [
-  { id: "game1",  labelAs: "কি উৎসৱ?",          labelEn: "Which festival?",          img: game1,  color: "pink"   },
-  { id: "game2",  labelAs: "কি কি আছিল?",        labelEn: "What were they?",          img: game2,  color: "yellow" },
-  { id: "game3",  labelAs: "ক'ত গ'ল?",            labelEn: "Where did it go?",         img: game3,  color: "green"  },
-  { id: "game4",  labelAs: "এইটো চাওঁ",           labelEn: "Look at this",             img: game4,  color: "blue"   },
-  { id: "game5",  labelAs: "ভিন্ন কোন?",          labelEn: "Which is different?",      img: game5,  color: "orange" },
-  { id: "game6",  labelAs: "লগা লৈ যাও",          labelEn: "Take along / Match",       img: game6,  color: "purple" },
-  { id: "game7",  labelAs: "বসাৰত কি লাগে?",      labelEn: "What's needed here?",      img: game7,  color: "red"    },
-  { id: "game8",  labelAs: "মিলাই দিয়া",          labelEn: "Match them",               img: game8,  color: "teal"   },
-  { id: "game9",  labelAs: "বাকি ক'তটা?",         labelEn: "How many are left?",       img: game9,  color: "pink"   },
-  { id: "game10", labelAs: "কি কৰিব?",            labelEn: "What should be done?",     img: game10, color: "yellow" },
-  { id: "game11", labelAs: "বিশেষ খেলা",           labelEn: "Describe Your Day",        img: game11, color: "blue"   },
+  { id: "game1",  labelAs: "?? ?????",          labelEn: "Which festival?",          img: game1,  color: "pink"   },
+  { id: "game2",  labelAs: "?? ?? ?????",        labelEn: "What were they?",          img: game2,  color: "yellow" },
+  { id: "game3",  labelAs: "?'? ?'??",            labelEn: "Where did it go?",         img: game3,  color: "green"  },
+  { id: "game4",  labelAs: "???? ????",           labelEn: "Look at this",             img: game4,  color: "blue"   },
+  { id: "game5",  labelAs: "????? ????",          labelEn: "Which is different?",      img: game5,  color: "orange" },
+  { id: "game6",  labelAs: "??? ?? ???",          labelEn: "Take along / Match",       img: game6,  color: "purple" },
+  { id: "game7",  labelAs: "????? ?? ?????",      labelEn: "What's needed here?",      img: game7,  color: "red"    },
+  { id: "game8",  labelAs: "????? ?????",          labelEn: "Match them",               img: game8,  color: "teal"   },
+  { id: "game9",  labelAs: "???? ?'????",         labelEn: "How many are left?",       img: game9,  color: "pink"   },
+  { id: "game10", labelAs: "?? ?????",            labelEn: "What should be done?",     img: game10, color: "yellow" },
+  { id: "game11", labelAs: "????? ????",           labelEn: "Describe Your Day",        img: game11, color: "blue"   },
 ]
 
 const GAME_MAP = Object.fromEntries(ALL_GAMES.map(g => [g.id, g]))
@@ -64,7 +63,7 @@ function GamesPage({ onBack }) {
         console.error("GamesPage fetch failed:", err)
         setGames(ALL_GAMES)   // offline fallback: show all games
         setLoading(false)
-        setError("config unavailable — showing all games")
+        setError("config unavailable � showing all games")
       })
     return () => { cancelled = true }
   }, [])
@@ -79,9 +78,9 @@ function GamesPage({ onBack }) {
   }
 
   const launch = (game) => {
-    // Placeholder — route into the actual game when game components exist
+    // Placeholder � route into the actual game when game components exist
     console.log("Launching game:", game.id)
-    alert(`খেলা মাতি আনি আছে: ${game.labelAs}`)
+    alert(`???? ???? ??? ???: ${game.labelAs}`)
   }
 
   return (
@@ -95,30 +94,30 @@ function GamesPage({ onBack }) {
 
         {/* Left brooch */}
         <img src={leftBrooch}  alt="" aria-hidden="true" className="gp-brooch gp-brooch--left"  />
-        {/* Right brooch — behind avatar (z-index 1) */}
+        {/* Right brooch � behind avatar (z-index 1) */}
         <img src={rightBrooch} alt="" aria-hidden="true" className="gp-brooch gp-brooch--right" />
 
         {/* Home / back button */}
         <button className="gp-home-btn" onClick={onBack} aria-label="Back to home">
-          <span aria-hidden="true">⌂</span>
+          <span aria-hidden="true">�</span>
         </button>
 
         {/* Scrollable centre */}
         <div className="gp-center">
-          <h1 className="gp-title">মোৰ খেলা</h1>
+          <h1 className="gp-title">??? ????</h1>
 
           {/* Avatar + dialogue */}
           <div className="gp-avatar-wrap">
             <img src={grannyImg} alt="Granny gamer" className="gp-avatar" />
             <div className="gp-dialogue" aria-live="polite">
-              মনে ৰাখোঁ, আনন্দৰে খেলোঁ!
+              ??? ?????, ??????? ?????!
             </div>
           </div>
 
           {error && <p className="gp-error">{error}</p>}
 
           {loading ? (
-            <p className="gp-loading">Loading…</p>
+            <p className="gp-loading">Loading�</p>
           ) : (
             <ul className="gp-grid" role="list">
               {games.map(game => (
@@ -129,7 +128,7 @@ function GamesPage({ onBack }) {
                     tabIndex={0}
                     onClick={() => launch(game)}
                     onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); launch(game) } }}
-                    aria-label={`${game.labelEn} — tap to play`}
+                    aria-label={`${game.labelEn} � tap to play`}
                   >
                     {/* Speaker button */}
                     <button
@@ -155,14 +154,14 @@ function GamesPage({ onBack }) {
             </ul>
           )}
         </div>
-
-        {/* Bottom scenery */}
-        <footer className="gp-scenery" aria-hidden="true">
-          <img src={sceneryImg} alt="" className="gp-scenery-img" />
-        </footer>
+        {/* Lower Gamusa Border Strip */}
+        <div className="gp-top-border" aria-hidden="true" style={{ marginTop: 'auto' }}>
+          <img src={topStripImg} alt="" className="gp-top-strip" />
+        </div>
       </div>
     </div>
   )
 }
 
 export default GamesPage
+

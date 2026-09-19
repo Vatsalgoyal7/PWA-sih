@@ -1,30 +1,37 @@
 import { useState, useEffect } from "react"
+import { useLanguage } from "../context/LanguageContext"
+import LanguageToggle from "../components/LanguageToggle"
 import "./CaregiverHome.css"
 
-const API_BASE = import.meta.env.VITE_API_URL ?? "https://smritisetu-backend.onrender.com"
+const API_BASE =
+  import.meta.env.VITE_API_URL ||
+  (typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1")
+    ? "http://localhost:8000"
+    : "https://smritisetu-backend.onrender.com")
 
 // ---------------------------------------------------------------------------
 // Game catalog (English labels + IDs for the caregiver checklist)
 // ---------------------------------------------------------------------------
 const ALL_GAMES = [
-  { id: "game1",  label: "কি উৎসৱ? — Which festival?"         },
-  { id: "game2",  label: "কি কি আছিল? — What were they?"      },
-  { id: "game3",  label: "ক'ত গ'ল? — Where did it go?"        },
-  { id: "game4",  label: "এইটো চাওঁ — Look at this"           },
-  { id: "game5",  label: "ভিন্ন কোন? — Which is different?"   },
-  { id: "game6",  label: "লগা লৈ যাও — Take along / Match"    },
-  { id: "game7",  label: "বসাৰত কি লাগে? — What's needed here?"},
-  { id: "game8",  label: "মিলাই দিয়া — Match them"            },
-  { id: "game9",  label: "বাকি ক'তটা? — How many are left?"   },
-  { id: "game10", label: "কি কৰিব? — What should be done?"    },
-  { id: "game11", label: "বিশেষ খেলা — Describe Your Day (online)" },
+  { id: "game1",  labelAs: "কি উৎসৱ?",          labelEn: "Which festival?"          },
+  { id: "game2",  labelAs: "কি কি আছিল?",        labelEn: "What were they?"          },
+  { id: "game3",  labelAs: "ক'ত গ'ল?",            labelEn: "Where did it go?"         },
+  { id: "game4",  labelAs: "এইটো চাওঁ",           labelEn: "Look at this"             },
+  { id: "game5",  labelAs: "ভিন্ন কোন?",          labelEn: "Which is different?"      },
+  { id: "game6",  labelAs: "লগা লৈ যাও",          labelEn: "Take along / Match"       },
+  { id: "game7",  labelAs: "বসাৰত কি লাগে?",      labelEn: "What's needed here?"      },
+  { id: "game8",  labelAs: "মিলাই দিয়া",          labelEn: "Match them"               },
+  { id: "game9",  labelAs: "বাকি ক'তটা?",         labelEn: "How many are left?"       },
+  { id: "game10", labelAs: "কি কৰিব?",            labelEn: "What should be done?"     },
 ]
 
 const REMINDER_FIELDS = [
-  { key: "reminder_medicine", label: "💊 Medicine",  labelAs: "ঔষধ"  },
-  { key: "reminder_food",     label: "🍽️ Food",      labelAs: "খাদ্য" },
-  { key: "reminder_doctor",   label: "🩺 Doctor",    labelAs: "ডাক্তৰ" },
-  { key: "reminder_walk",     label: "🚶 Walk",      labelAs: "হাঁটিব" },
+  { key: "reminder_medicine", labelEn: "💊 Medicine", labelAs: "💊 ঔষধ"  },
+  { key: "reminder_food",     labelEn: "🍽️ Food",     labelAs: "🍽️ খাদ্য" },
+  { key: "reminder_doctor",   labelEn: "🩺 Doctor",   labelAs: "🩺 ডাক্তৰ" },
+  { key: "reminder_walk",     labelEn: "🚶 Walk",     labelAs: "🚶টিব" },
 ]
 
 // ---------------------------------------------------------------------------
@@ -49,6 +56,7 @@ function usePatientConfig() {
 // Sub-page: Game Selection
 // ===========================================================================
 function GameSelectionPage({ config, setConfig, onBack }) {
+  const { lang, t } = useLanguage()
   const existing = config?.game_selection ?? []
   const [selected, setSelected] = useState(new Set(existing))
   const [saving,   setSaving]   = useState(false)
@@ -59,7 +67,7 @@ function GameSelectionPage({ config, setConfig, onBack }) {
       const next = new Set(prev)
       if (next.has(id)) {
         next.delete(id)
-      } else if (next.size < 11) {
+      } else if (next.size < 10) {
         next.add(id)
       }
       return next
@@ -69,7 +77,7 @@ function GameSelectionPage({ config, setConfig, onBack }) {
 
   const handleSave = async () => {
     if (selected.size < 3) {
-      setSaveMsg({ type: "error", text: "Select at least 3 games before saving." })
+      setSaveMsg({ type: "error", text: lang === 'as' ? "সংৰক্ষণৰ আগতে নিম্নতম ৩ টা খেল বাছক।" : "Select at least 3 games before saving." })
       return
     }
     setSaving(true)
@@ -84,9 +92,9 @@ function GameSelectionPage({ config, setConfig, onBack }) {
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       setConfig(prev => ({ ...prev, game_selection: ordered }))
-      setSaveMsg({ type: "ok", text: "Saved successfully." })
+      setSaveMsg({ type: "ok", text: t("cgSavedOk") })
     } catch (err) {
-      setSaveMsg({ type: "error", text: `Save failed: ${err.message}` })
+      setSaveMsg({ type: "error", text: `${t("cgSaveFailed")}${err.message}` })
     } finally {
       setSaving(false)
     }
@@ -95,20 +103,22 @@ function GameSelectionPage({ config, setConfig, onBack }) {
   return (
     <div className="cg-page">
       <div className="cg-header">
-        <button className="cg-back-btn" onClick={onBack}>← Back</button>
-        <h2 className="cg-page-title">Game Selection</h2>
+        <button className="cg-back-btn" onClick={onBack}>{t("cgBack")}</button>
+        <h2 className="cg-page-title">{t("cgGamesTitle")}</h2>
+        <LanguageToggle className="cg-header-lang" />
       </div>
 
       <p className="cg-counter">
-        <strong>{selected.size}</strong> of 11 selected
-        {selected.size < 3  && <span className="cg-warn"> — minimum 3 required</span>}
-        {selected.size === 11 && <span className="cg-info"> — maximum reached</span>}
+        <strong>{selected.size}</strong> {t("cgSelectedOf")} 10
+        {selected.size < 3  && <span className="cg-warn"> {t("cgMinRequired")}</span>}
+        {selected.size === 10 && <span className="cg-info"> {t("cgMaxReached")}</span>}
       </p>
 
       <ul className="cg-checklist">
         {ALL_GAMES.map((game, idx) => {
           const checked    = selected.has(game.id)
-          const maxReached = selected.size >= 11 && !checked
+          const maxReached = selected.size >= 10 && !checked
+          const label = `${game.labelAs} — ${game.labelEn}`
           return (
             <li key={game.id} className={`cg-check-item ${checked ? "cg-check-item--on" : ""}`}>
               <label className={`cg-check-label ${maxReached ? "cg-check-label--disabled" : ""}`}>
@@ -120,7 +130,7 @@ function GameSelectionPage({ config, setConfig, onBack }) {
                   onChange={() => toggle(game.id)}
                 />
                 <span className="cg-game-num">{idx + 1}</span>
-                <span className="cg-game-label">{game.label}</span>
+                <span className="cg-game-label">{label}</span>
               </label>
             </li>
           )
@@ -136,7 +146,7 @@ function GameSelectionPage({ config, setConfig, onBack }) {
         onClick={handleSave}
         disabled={saving || selected.size < 3}
       >
-        {saving ? "Saving…" : "Save Game Selection"}
+        {saving ? t("cgSaving") : t("cgSaveGames")}
       </button>
     </div>
   )
@@ -146,6 +156,7 @@ function GameSelectionPage({ config, setConfig, onBack }) {
 // Sub-page: Reminder Times
 // ===========================================================================
 function ReminderSettingsPage({ config, setConfig, onBack }) {
+  const { lang, t } = useLanguage()
   const [times, setTimes] = useState({
     reminder_medicine: config?.reminder_medicine ?? "",
     reminder_food:     config?.reminder_food     ?? "",
@@ -177,9 +188,9 @@ function ReminderSettingsPage({ config, setConfig, onBack }) {
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       setConfig(prev => ({ ...prev, ...payload }))
-      setSaveMsg({ type: "ok", text: "Reminder times saved." })
+      setSaveMsg({ type: "ok", text: t("cgSavedOk") })
     } catch (err) {
-      setSaveMsg({ type: "error", text: `Save failed: ${err.message}` })
+      setSaveMsg({ type: "error", text: `${t("cgSaveFailed")}${err.message}` })
     } finally {
       setSaving(false)
     }
@@ -188,18 +199,18 @@ function ReminderSettingsPage({ config, setConfig, onBack }) {
   return (
     <div className="cg-page">
       <div className="cg-header">
-        <button className="cg-back-btn" onClick={onBack}>← Back</button>
-        <h2 className="cg-page-title">Reminder Times</h2>
+        <button className="cg-back-btn" onClick={onBack}>{t("cgBack")}</button>
+        <h2 className="cg-page-title">{t("cgRemTitle")}</h2>
+        <LanguageToggle className="cg-header-lang" />
       </div>
 
-      <p className="cg-subtitle">Set the daily time for each reminder type.</p>
+      <p className="cg-subtitle">{t("cgDailyTimePrompt")}</p>
 
       <ul className="cg-reminder-list">
         {REMINDER_FIELDS.map(field => (
           <li key={field.key} className="cg-reminder-item">
             <label className="cg-reminder-label" htmlFor={field.key}>
-              <span className="cg-rem-label-text">{field.label}</span>
-              <span className="cg-rem-label-as">{field.labelAs}</span>
+              <span className="cg-rem-label-text">{lang === 'as' ? field.labelAs : field.labelEn}</span>
             </label>
             <input
               id={field.key}
@@ -217,7 +228,7 @@ function ReminderSettingsPage({ config, setConfig, onBack }) {
       )}
 
       <button className="cg-save-btn" onClick={handleSave} disabled={saving}>
-        {saving ? "Saving…" : "Save Reminder Times"}
+        {saving ? t("cgSaving") : t("cgSaveReminders")}
       </button>
     </div>
   )
@@ -227,6 +238,7 @@ function ReminderSettingsPage({ config, setConfig, onBack }) {
 // Root: CaregiverHome — home | games | reminders
 // ===========================================================================
 function CaregiverHome({ onChangeRole }) {
+  const { t } = useLanguage()
   const [page, setPage] = useState("home")   // "home" | "games" | "reminders"
   const { config, setConfig, loading, error } = usePatientConfig()
 
@@ -254,8 +266,13 @@ function CaregiverHome({ onChangeRole }) {
   return (
     <div className="cg-page cg-home">
       <div className="cg-home-header">
-        <h1 className="cg-home-title">SmritiSetu</h1>
-        <p className="cg-home-sub">Caregiver Dashboard</p>
+        <div className="cg-home-header-top">
+          <div>
+            <h1 className="cg-home-title">{t("cgTitle")}</h1>
+            <p className="cg-home-sub">{t("cgSubtitle")}</p>
+          </div>
+          <LanguageToggle className="cg-home-lang" />
+        </div>
       </div>
 
       {loading && <p className="cg-loading">Loading patient config…</p>}
@@ -265,9 +282,9 @@ function CaregiverHome({ onChangeRole }) {
         <div className="cg-home-grid">
           <button className="cg-nav-card" onClick={() => setPage("games")}>
             <span className="cg-nav-icon">🎮</span>
-            <span className="cg-nav-title">Game Selection</span>
+            <span className="cg-nav-title">{t("cgGamesTitle")}</span>
             <span className="cg-nav-desc">
-              Choose which games the patient sees
+              {t("cgGamesDesc")}
               {config && (
                 <em> ({config.game_selection?.length ?? 0} active)</em>
               )}
@@ -276,14 +293,14 @@ function CaregiverHome({ onChangeRole }) {
 
           <button className="cg-nav-card" onClick={() => setPage("reminders")}>
             <span className="cg-nav-icon">⏰</span>
-            <span className="cg-nav-title">Reminder Times</span>
-            <span className="cg-nav-desc">Set daily times for medicine, food, doctor & walk</span>
+            <span className="cg-nav-title">{t("cgRemTitle")}</span>
+            <span className="cg-nav-desc">{t("cgRemDesc")}</span>
           </button>
         </div>
       )}
 
       <button className="cg-role-btn" onClick={onChangeRole}>
-        ← Switch role
+        {t("cgSwitchRole")}
       </button>
     </div>
   )

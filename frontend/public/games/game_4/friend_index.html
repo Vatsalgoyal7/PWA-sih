@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+<meta charset="UTF-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=ai-legible&utm_source=comment&utm_medium=referral&utm_id=b8df7f15-c7c8-4507-8d75-3269d7bac8fa
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta name="hosting-provider" content="Netlify">
+<meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=b8df7f15-c7c8-4507-8d75-3269d7bac8fa">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>কি কি আছিল? — Ki Ki Silo?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- persistent top bar: translate+home (left), help+listen (right) -->
+  <header class="topbar">
+    <div class="topbar-group">
+      <button id="btnTranslate" class="icon-btn-round" aria-label="Toggle English translation">EN</button>
+      <button id="btnHome" class="icon-btn-round icon-btn-white" aria-label="Home / ঘৰলৈ যাওক">
+        <img src="Assets/icon_home.png" alt="Home">
+      </button>
+    </div>
+    <div class="topbar-title translatable" data-as="কি কি আছিল?" data-en="Ki Ki Silo?">কি কি আছিল?</div>
+    <div class="topbar-group">
+      <button id="btnHelp" class="icon-btn-round icon-btn-white" aria-label="Help / সহায়">
+        <img src="Assets/icon_help.png" alt="Help">
+      </button>
+      <button id="btnRepeat" class="icon-btn-round icon-btn-white" aria-label="Repeat / Listen">
+        <img src="Assets/icon_speaker.png" alt="Listen">
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ SCREEN A: AVATAR GREETING (HOME) ============
+       Doc §3 Screen A: "Full-bleed warm illustration, avatar centered,
+       one large Play tap target, spoken greeting auto-plays on load" -->
+  <section id="screen-home" class="screen active">
+    <div class="avatar-banner" id="heroImage" aria-hidden="true"></div>
+    <p class="lead translatable" data-as="কেইটামান বস্তু চাওক, তাৰ পিছত মনত ৰাখি বাছি লওক।" data-en="Look at a few items, then remember and pick them out.">কেইটামান বস্তু চাওক, তাৰ পিছত মনত ৰাখি বাছি লওক।</p>
+    <button id="btnPlay" class="btn btn-primary btn-huge translatable" data-as="খেলক" data-en="Play">খেলক</button>
+  </section>
+
+  <!-- ============ SCREEN B: PRESENTATION ============ -->
+  <section id="screen-present" class="screen">
+    <p class="prompt-as translatable" data-as="ভালদৰে চাওক আৰু মনত ৰাখক!" data-en="Look carefully and remember these!">ভালদৰে চাওক আৰু মনত ৰাখক!</p>
+    <div id="presentGrid" class="item-grid"></div>
+    <button id="btnReady" class="btn btn-primary btn-huge translatable" data-as="মই সাজু আছোঁ" data-en="I'm ready">মই সাজু আছোঁ</button>
+  </section>
+
+  <!-- ============ SCREEN C: RECALL (VOICE + TAP ANSWER PATH) ============ -->
+  <section id="screen-recall" class="screen">
+    <p class="prompt-as translatable" data-as="চাওকচোন, ইয়াত আপুনি কি কি বস্তু দেখিছিল?" data-en="Let's see, which of these items did you see just now?">চাওকচোন, ইয়াত আপুনি কি কি বস্তু দেখিছিল?</p>
+    <div id="recallGrid" class="item-grid recall-grid"></div>
+    <button id="btnSubmit" class="btn btn-primary btn-huge translatable" data-as="হৈছে" data-en="Done">হৈছে</button>
+  </section>
+
+  <!-- ============ SCREEN D: FEEDBACK (ALWAYS GENTLE) ============ -->
+  <section id="screen-feedback" class="screen">
+    <div class="feedback-card">
+      <p class="prompt-as translatable" id="feedbackAs" data-as="বৰ ধুনীয়া হৈছে!" data-en="Well done!">বৰ ধুনীয়া হৈছে!</p>
+      <div id="revealGrid" class="item-grid reveal-grid"></div>
+    </div>
+    <button id="btnNext" class="btn btn-primary btn-huge translatable" data-as="আগবাঢ়ক" data-en="Continue">আগবাঢ়ক</button>
+  </section>
+
+  <!-- ============ SCREEN: LEVEL COMPLETE ============ -->
+  <section id="screen-complete" class="screen">
+    <div class="avatar-banner" id="heroImageComplete" aria-hidden="true"></div>
+    <p class="prompt-as translatable" data-as="বৰ ধুনীয়া হৈছে! আপুনি সকলোবোৰ মনত ৰাখিলে।" data-en="Very well done! You remembered all of them.">বৰ ধুনীয়া হৈছে! আপুনি সকলোবোৰ মনত ৰাখিলে।</p>
+    <button id="btnPlayAgain" class="btn btn-primary btn-huge translatable" data-as="আকৌ খেলক" data-en="Play again">আকৌ খেলক</button>
+    <button id="btnGoHome" class="btn btn-secondary btn-huge" aria-label="Home / ঘৰলৈ যাওক">
+      <img src="Assets/icon_home.png" alt="Home" class="btn-icon">
+    </button>
+  </section>
+
+  <!-- help modal -->
+  <div id="helpModal" class="modal-backdrop">
+    <div class="modal">
+      <p class="prompt-as translatable" data-as="একো চিন্তা নকৰিব, ছবিবোৰলৈ চাওক আৰু আপুনি মনত থকা বস্তুটো বাছি লওক।" data-en="Don't worry at all — look at the pictures and pick the items you remember.">একো চিন্তা নকৰিব, ছবিবোৰলৈ চাওক আৰু আপুনি মনত থকা বস্তুটো বাছি লওক।</p>
+      <button id="btnSpeakHelp" class="icon-btn-round modal-speak" aria-label="Listen">
+        <img src="Assets/icon_speaker.png" alt="Listen">
+      </button>
+      <button id="btnCloseHelp" class="btn btn-primary btn-huge translatable" data-as="বুজিলোঁ" data-en="Got it">বুজিলোঁ</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- hidden audio player, source swapped per cue -->
+<audio id="player" preload="none"></audio>
+
+<script src="script.js"></script>
+</body>
+</html>
+<script async src="/.netlify/scripts/hud?variant=public" data-nf-variant="public" data-netlify-site-id="b8df7f15-c7c8-4507-8d75-3269d7bac8fa" data-app-host="app.netlify.com"></script>

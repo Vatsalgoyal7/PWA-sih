@@ -1,0 +1,34 @@
+.lang-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2.5px solid #C41E3A;
+  color: #C41E3A;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(196, 30, 58, 0.25);
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.lang-toggle-btn:hover {
+  background: #C41E3A;
+  color: #FFFFFF;
+  transform: scale(1.06);
+}
+
+.lang-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.lang-toggle-text {
+  line-height: 1;
+  pointer-events: none;
+}

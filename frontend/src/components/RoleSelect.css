@@ -73,6 +73,15 @@
   right: 0;
 }
 
+.role-lang-toggle {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 100;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
 /* 2. Center Section: Avatar + Selection Cards balanced with even whitespace */
 .role-center-content {
   width: 100%;
@@ -135,6 +144,7 @@
   border-radius: 18px;
   overflow: hidden;
   display: flex;
+  position: relative; /* Ensure overlays are scoped to this card */
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   transition:
     transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -252,5 +262,49 @@
 
   .role-avatar-img {
     margin-bottom: -8px;
+  }
+}
+/* Language Overlays for English Mode */
+.role-speech-bubble-overlay {
+  position: absolute;
+  top: 15%; /* Adjust to vertically align with the original speech bubble */
+  left: 20%;
+  right: 20%;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #b83a24;
+  pointer-events: none;
+  background-color: #fff; /* Cover the original Assamese text if possible */
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.role-card-bar-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 25%; /* Covers the bottom band containing Assamese text */
+  background-color: #b83a24; /* Red color of the button bar */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  pointer-events: none;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+
+@media (max-width: 380px) {
+  .role-speech-bubble-overlay {
+    font-size: 1rem;
+  }
+  .role-card-bar-overlay {
+    font-size: 1rem;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
   }
 }

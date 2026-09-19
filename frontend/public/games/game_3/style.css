@@ -1,0 +1,497 @@
+/* ==========================================================================
+   SmritiSetu — Game 3 "কʼত গʼল?"
+   Design tokens below apply ui-style-instructions-for-llm.md exactly.
+   Layout/structure is unchanged — only tokens, sizing, and typography scale
+   were replaced. No pure blue anywhere. Terracotta = action, never failure.
+   ========================================================================== */
+
+:root {
+  /* Color palette — exact values from the style spec */
+  --paper:            #F7F0DE;
+  --paper-deep:       #EFE4C6;
+  --ink:              #3A2A1D;
+  --ink-soft:         #6B5A46;   /* muted secondary text — not in spec, derived to pair with --ink */
+  --terracotta:       #C1522F;
+  --terracotta-deep:  #9F3F22;
+  --soft-green:       #7C9473;
+  --soft-green-deep:  #5E7A57;
+  --mustard:          #D9A441;
+  --card:             #FFFBF2;
+  --card-border:      #D8C79E;
+
+  /* Font */
+  --font-face: 'Baloo Da 2', 'Noto Sans Bengali', sans-serif;
+
+  /* Typography scale (px / weight, per spec table) */
+  --fs-header-title: 19px;  /* page/header title, 700 */
+  --fs-body:         21px;  /* body/lead paragraph, 700 */
+  --fs-heading:      26px;  /* large prompt/heading text, 800 */
+  --fs-btn:          21px;  /* primary button label, 700 */
+  --fs-label:        18px;  /* card/item label, 700 */
+  --fs-small-btn:    17px;  /* small text-button label, 700 */
+  --fs-caption:      12px;  /* caption/sub-label, 500 */
+
+  /* Radius, shadow, tap targets */
+  --radius-lg: 22px;   /* cards, modals, item tiles */
+  --radius-md: 16px;   /* buttons, thumbnails */
+  --tap-min: 56px;     /* minimum tap target size */
+  --tap-gap: 20px;
+  --shadow-btn:  0 6px 0 rgba(58, 42, 29, 0.14);
+  --shadow-card: 0 6px 0 rgba(58, 42, 29, 0.10);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--paper);
+  background-image: url('Assets/bg_main.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* extends the backdrop to the full viewport, not just the 720px app column */
+  color: var(--ink);
+  font-family: var(--font-face);
+  font-weight: 700; /* 700 is the floor for readable text — never lighter */
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Frame strips are defined below, directly on #app::before / #app::after. */
+
+button {
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+img { max-width: 100%; display: block; }
+
+/* Visible keyboard focus everywhere — never rely on color alone */
+:focus-visible {
+  outline: 4px solid var(--terracotta);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* ==========================================================================
+   App frame — capped container per the layout spec
+   ========================================================================== */
+
+#app {
+  position: relative;
+  max-width: 720px;
+  margin: 10px auto;
+  min-height: calc(100vh - 20px);
+  overflow: hidden;
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+}
+
+@media (max-width: 480px) {
+  #app { margin: 6px; min-height: calc(100vh - 12px); }
+}
+
+#screens {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Only one screen visible at a time. One orchestrated fade, nothing scattered. */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 116px 20px 120px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.screen.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Cards/buttons cap their own width inside the 720px shell, per spec */
+.content-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 480px;
+  padding: 40px 36px;
+  background: var(--card);
+  border: 3px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+.title {
+  font-size: var(--fs-heading);
+  font-weight: 800;
+  margin: 0;
+  color: var(--ink);
+}
+
+.subtitle {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  margin: 0;
+  max-width: 420px;
+  color: var(--ink);
+}
+
+.question-text {
+  font-size: var(--fs-heading);
+  font-weight: 800;
+  margin: 0;
+  max-width: 480px;
+  color: var(--ink);
+}
+
+.feedback-text {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  margin: 0;
+  max-width: 480px;
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   Avatar — exact hero/avatar spec
+   ========================================================================== */
+
+.avatar {
+  object-fit: contain; /* never crop */
+  object-position: bottom center;
+}
+.avatar-lg {
+  width: min(320px, 78%);
+  height: 380px;
+}
+.avatar-md  { width: min(320px, 78%); height: 380px; }
+.avatar-corner {
+  position: absolute;
+  z-index: 3;
+  bottom: 4%;
+  left: 4%;
+  width: 11%;
+  height: 34%;
+}
+
+/* ==========================================================================
+   Primary button — "pressed" shadow interaction per spec
+   ========================================================================== */
+
+.btn-primary {
+  min-height: var(--tap-min);
+  min-width: 220px;
+  padding: 14px 32px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--terracotta);
+  color: var(--card);
+  font-size: var(--fs-btn);
+  font-weight: 700;
+  box-shadow: var(--shadow-btn);
+  transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.btn-block { width: 100%; }
+
+.btn-primary:hover  { background: var(--terracotta-deep); }
+.btn-primary:active {
+  box-shadow: 0 3px 0 rgba(58, 42, 29, 0.14);
+  transform: translateY(3px);
+}
+
+/* ==========================================================================
+   Persistent controls — [Home] [language toggle] — Title — [Listen] [Help]
+   On the home screen, Home/Help are hidden via JS so only the toggle and
+   Listen show. All round icon buttons: 56×56 container, 22×22 icon inside.
+   ========================================================================== */
+
+.app-header {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: min(92%, 680px);
+}
+
+.header-cluster {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-header-title {
+  margin: 0;
+  font-size: var(--fs-header-title);
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+  flex: 1;
+}
+
+.icon-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: var(--fs-small-btn);
+  line-height: 1;
+  box-shadow: var(--shadow-btn);
+  width: var(--tap-min);
+  height: var(--tap-min);
+  min-width: var(--tap-min);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.icon-circle img { width: 22px; height: 22px; object-fit: contain; }
+
+.icon-circle[hidden] { display: none; }
+
+.icon-circle--primary {
+  border: none;
+  background: var(--terracotta);
+  color: var(--card);
+}
+
+.icon-circle--primary.icon-circle--light {
+  background: var(--card);
+  color: var(--ink);
+  border: 3px solid var(--card-border);
+}
+
+.icon-circle--secondary {
+  border: 3px solid var(--card-border);
+  background: var(--card);
+  color: var(--ink);
+}
+
+.icon-circle:active {
+  box-shadow: 0 3px 0 rgba(58, 42, 29, 0.14);
+  transform: translateY(3px);
+}
+
+/* Help modal — an overlay, never a second navigation level */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(58, 42, 29, 0.55);
+}
+.modal-overlay[hidden] { display: none; }
+
+.modal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 480px;
+  padding: 36px;
+  background: var(--card);
+  border: 3px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+.modal-card h2 {
+  margin: 0;
+  font-size: var(--fs-heading);
+  font-weight: 800;
+  color: var(--ink);
+}
+.modal-card p {
+  margin: 0;
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   Scene (observation phase)
+   ========================================================================== */
+
+.scene {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  background: var(--paper-deep);
+  border: 3px solid var(--card-border);
+}
+
+.bg-full {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.marker {
+  position: absolute;
+  z-index: 1;
+  width: 18%;   /* was 14% — a little bigger per feedback */
+  top: 43%;     /* was 38% — lowered so its base meets the ground/water line instead of floating */
+}
+.marker-tree  { left: 46%; }
+.marker-chang { left: 58%; }
+
+.focal-obj {
+  position: absolute;
+  z-index: 2;
+  width: 20%;   /* was 12% — a little bigger per feedback */
+  top: 61%;     /* was 55% — moved down onto the water/road instead of the grass bank */
+  left: 14%;    /* was 6% — moved right, off the bank edge */
+  transition: left 2.6s ease-in-out, transform 2.2s ease-in-out, top 2.6s ease-in-out;
+}
+
+/* River: boat drifts to the marker, then turns left (up + left) */
+#boat.at-marker { left: 50%; top: 56%; }
+#boat.turned    { left: 28%; top: 36%; transform: rotate(-35deg); }
+
+/* Village: walker proceeds to the marker, then turns right (down + right) */
+#walker.at-marker { left: 60%; top: 50%; }
+#walker.turned    { left: 82%; top: 74%; transform: scaleX(-1); }
+
+/* ==========================================================================
+   Choice cards — distinguished by icon + label, not color alone
+   ========================================================================== */
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--tap-gap);
+}
+
+.choice-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 200px;
+  min-height: 220px;
+  padding: 0 0 16px;
+  overflow: hidden;
+  background: var(--card);
+  border: 3px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.15s ease, transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.choice-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  /* fills the top of the card edge-to-edge, matching the card's own radius */
+  border-radius: calc(var(--radius-lg) - 3px) calc(var(--radius-lg) - 3px) 0 0;
+}
+
+.choice-card span {
+  margin-top: 12px;
+  padding: 0 16px;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.choice-card:hover  { border-color: var(--terracotta); }
+.choice-card:active {
+  box-shadow: 0 3px 0 rgba(58, 42, 29, 0.10);
+  transform: translateY(3px);
+}
+
+.choice-card.chosen-correct {
+  border-color: var(--terracotta);
+  background: var(--mustard);
+}
+
+.choice-card.chosen-incorrect {
+  border-color: var(--ink-soft);
+  background: var(--paper);
+}
+
+.choice-card[disabled] { pointer-events: none; opacity: 0.85; }
+
+/* ==========================================================================
+   Feedback — gentle only; never a red X, never a buzzer
+   ========================================================================== */
+
+.feedback-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 480px;
+  padding: 36px;
+  background: var(--card);
+  border: 3px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.feedback-panel.is-correct {
+  border-color: var(--terracotta);
+  background: linear-gradient(180deg, var(--mustard) 0%, var(--card) 70%);
+}
+
+.feedback-panel.is-incorrect {
+  border-color: var(--soft-green);
+}
+
+/* ==========================================================================
+   Responsive — per spec's ≤360px rule (and generally down to small phones)
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  .choice-card { width: 44%; min-width: 150px; min-height: 190px; }
+  .choice-card img { height: 120px; }
+  .content-card { padding: 32px 24px; }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --fs-heading: 23px;
+    --fs-btn: 19px;
+  }
+  .avatar-lg { height: 190px; }
+}

@@ -1,37 +1,96 @@
-﻿import os
+import os
 import json
-import asyncpg
+import logging
 from contextlib import asynccontextmanager
+from typing import Optional
+
+try:
+    import asyncpg
+except ImportError:
+    asyncpg = None
+
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, field_validator
-from typing import Optional
-from dotenv import load_dotenv
+
+# ---------------------------------------------------------------------------
+# Logging & Environment
+# ---------------------------------------------------------------------------
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("smritisetu-backend")
 
 load_dotenv()
 
 # ---------------------------------------------------------------------------
-# Connection pool
+# Connection pool & Fallback State
 # ---------------------------------------------------------------------------
-pool: asyncpg.Pool | None = None
+pool: Optional[object] = None
+
+# Default in-memory state used if database is unconfigured or unreachable
+_fallback_config = {
+    "patient_id": "default",
+    "game_selection": ["game1", "game2", "game3"],
+    "reminder_medicine": "08:00",
+    "reminder_food": "10:00",
+    "reminder_doctor": "12:00",
+    "reminder_walk": "18:00",
+}
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global pool
-    database_url = os.environ["DATABASE_URL"]
-    pool = await asyncpg.create_pool(database_url, min_size=1, max_size=5)
+    database_url = os.environ.get("DATABASE_URL")
+    if database_url and asyncpg is not None:
+        try:
+            logger.info("Connecting to PostgreSQL database...")
+            pool = await asyncpg.create_pool(database_url, min_size=1, max_size=5)
+            logger.info("Connected to PostgreSQL successfully.")
+        except Exception as e:
+            logger.warning(
+                f"Failed to connect to DATABASE_URL: {e}. "
+                "Running in local memory fallback mode."
+            )
+            pool = None
+    else:
+        if not database_url:
+            logger.warning(
+                "DATABASE_URL environment variable is not set. "
+                "Running in local memory fallback mode for development."
+            )
+        else:
+            logger.warning(
+                "asyncpg library is not installed. "
+                "Running in local memory fallback mode."
+            )
+        pool = None
+
     yield
-    await pool.close()
 
-app = FastAPI(lifespan=lifespan)
+    if pool is not None:
+        await pool.close()
+        logger.info("PostgreSQL connection pool closed.")
+
+app = FastAPI(
+    title="SmritiSetu API",
+    description="Cognitive care & memory stimulation platform backend API",
+    version="1.0.0",
+    lifespan=lifespan,
+)
 
 # ---------------------------------------------------------------------------
-# CORS
+# CORS Configuration
 # ---------------------------------------------------------------------------
-origins = [
-    "http://localhost:5173",
-    "https://peppy-puppy-9df68c.netlify.app",
-]
+cors_env = os.environ.get("CORS_ORIGINS", "")
+if cors_env:
+    origins = [o.strip() for o in cors_env.split(",") if o.strip()]
+else:
+    origins = [
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://peppy-puppy-9df68c.netlify.app",
+    ]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -45,7 +104,7 @@ app.add_middleware(
 # ---------------------------------------------------------------------------
 VALID_GAME_IDS = {
     "game1", "game2", "game3", "game4", "game5",
-    "game6", "game7", "game8", "game9", "game10", "game11",
+    "game6", "game7", "game8", "game9", "game10",
 }
 
 class GamesPayload(BaseModel):
@@ -56,8 +115,8 @@ class GamesPayload(BaseModel):
     def validate_games(cls, v: list[str]) -> list[str]:
         if len(v) < 3:
             raise ValueError("At least 3 games must be selected")
-        if len(v) > 11:
-            raise ValueError("At most 11 games can be selected")
+        if len(v) > 10:
+            raise ValueError("At most 10 games can be selected")
         invalid = set(v) - VALID_GAME_IDS
         if invalid:
             raise ValueError(f"Unknown game ids: {invalid}")
@@ -76,11 +135,26 @@ class RemindersPayload(BaseModel):
 # ---------------------------------------------------------------------------
 @app.get("/")
 def read_root():
-    return {"message": "SmritiSetu backend running"}
+    return {
+        "service": "SmritiSetu backend",
+        "version": "1.0.0",
+        "database_connected": pool is not None,
+    }
+
+
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "database": "connected" if pool is not None else "in_memory_fallback",
+    }
 
 
 @app.get("/patient-config")
 async def get_patient_config():
+    if pool is None:
+        return dict(_fallback_config)
+
     async with pool.acquire() as conn:
         row = await conn.fetchrow(
             "SELECT * FROM patient_config WHERE patient_id = $1", "default"
@@ -92,7 +166,10 @@ async def get_patient_config():
     # game_selection is stored as jsonb/text — normalise to list
     gs = raw.get("game_selection")
     if isinstance(gs, str):
-        gs = json.loads(gs)
+        try:
+            gs = json.loads(gs)
+        except json.JSONDecodeError:
+            gs = []
     elif gs is None:
         gs = []
     raw["game_selection"] = gs
@@ -101,6 +178,10 @@ async def get_patient_config():
 
 @app.patch("/patient-config/games")
 async def update_games(payload: GamesPayload):
+    if pool is None:
+        _fallback_config["game_selection"] = payload.game_selection
+        return {"ok": True, "game_selection": payload.game_selection, "storage": "in_memory"}
+
     async with pool.acquire() as conn:
         result = await conn.execute(
             "UPDATE patient_config SET game_selection = $1 WHERE patient_id = $2",
@@ -114,6 +195,17 @@ async def update_games(payload: GamesPayload):
 
 @app.patch("/patient-config/reminders")
 async def update_reminders(payload: RemindersPayload):
+    if pool is None:
+        if payload.reminder_medicine is not None:
+            _fallback_config["reminder_medicine"] = payload.reminder_medicine
+        if payload.reminder_food is not None:
+            _fallback_config["reminder_food"] = payload.reminder_food
+        if payload.reminder_doctor is not None:
+            _fallback_config["reminder_doctor"] = payload.reminder_doctor
+        if payload.reminder_walk is not None:
+            _fallback_config["reminder_walk"] = payload.reminder_walk
+        return {"ok": True, "storage": "in_memory"}
+
     async with pool.acquire() as conn:
         result = await conn.execute(
             """
@@ -133,3 +225,10 @@ async def update_reminders(payload: RemindersPayload):
     if result == "UPDATE 0":
         raise HTTPException(status_code=404, detail="patient_config row not found")
     return {"ok": True}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    logger.info(f"Starting server on port {port}...")
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)

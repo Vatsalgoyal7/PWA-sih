@@ -7,13 +7,13 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico'],
+      includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'My PWA App',
-        short_name: 'MyPWA',
-        description: 'My auto-updating Progressive Web App',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
+        name: 'SmritiSetu — স্মৃতিসেতু',
+        short_name: 'SmritiSetu',
+        description: 'Cognitive care & memory stimulation platform in Assamese and English',
+        theme_color: '#B83A24',
+        background_color: '#FDF8EE',
         display: 'standalone',
         start_url: '/',
         icons: [
@@ -30,7 +30,8 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,mp3,wav}'],
+        maximumFileSizeToCacheInBytes: 6 * 1024 * 1024
       }
     })
   ]

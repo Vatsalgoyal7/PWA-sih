@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milai Diya - Match Them</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <!-- Screen 1: Front Page (Welcome) -->
+    <div id="screen-welcome" class="screen active">
+        <button id="btn-lang-welcome" class="btn-lang-top">EN</button>
+        
+        <img id="avatar-welcome" src="images/avatar_idle.png" alt="Avatar Character">
+        
+        <h1 id="game-title">Milai Diya</h1>
+        <h2 id="game-subtitle">Match Them</h2>
+        
+        <div class="play-row">
+            <button id="btn-repeat-welcome" class="btn-round" aria-label="Repeat Audio">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+            </button>
+            <button id="btn-play" class="btn-primary">Let's Play</button>
+        </div>
+    </div>
+
+    <!-- Screen 2: Difficulty Selection -->
+    <div id="screen-difficulty" class="screen hidden">
+        <header class="game-header">
+            <button class="btn-home" aria-label="Home">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+            </button>
+            <button class="btn-lang-top">EN</button>
+        </header>
+        <div class="avatar-row">
+            <img id="avatar-difficulty" src="images/avatar_idle.png" alt="Avatar Character" class="avatar-small">
+            <h1 id="instruction-setup">Select Difficulty</h1>
+            <button id="btn-repeat-difficulty" class="btn-round-small" aria-label="Repeat Audio">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="difficulty-buttons">
+            <button class="btn-primary difficulty-btn" data-pairs="4" id="btn-easy">4 Pairs</button>
+            <button class="btn-primary difficulty-btn" data-pairs="6" id="btn-hard">6 Pairs</button>
+        </div>
+    </div>
+
+    <!-- Screen 3: Game Grid -->
+    <div id="screen-game" class="screen hidden">
+        <header class="game-header">
+            <button class="btn-home" aria-label="Home">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+            </button>
+            <button class="btn-lang-top">EN</button>
+        </header>
+        
+        <div class="avatar-row">
+            <img id="avatar-game" src="images/avatar_idle.png" alt="Avatar Character" class="avatar-small">
+            <p id="avatar-message">Match the same pictures.</p>
+            <button id="btn-repeat-game" class="btn-round-small" aria-label="Repeat Audio">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+            </button>
+        </div>
+
+        <div id="game-grid" class="game-grid">
+            <!-- Cards injected via JS -->
+        </div>
+    </div>
+
+    <!-- Screen 4: Celebration -->
+    <div id="screen-celebration" class="screen hidden">
+        <img id="avatar-celebration" src="images/avatar_idle.png" alt="Avatar Character">
+        <h1 id="celebration-title">Wonderful!</h1>
+        <div class="play-row">
+            <button id="btn-repeat-celebration" class="btn-round" aria-label="Repeat Audio">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+            </button>
+            <button id="btn-play-again" class="btn-primary">Play Again</button>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+/* ============================================================
+   Ki Ki Silo? — design tokens, strictly per SmritiSetu UI/UX doc:
+   cream/terracotta/soft-green/mustard palette (no blue), 20pt+/700
+   type floor, 48px+ tap targets, no timers, no color-only meaning,
+   gentle feedback only, avatar full-bleed per doc §3 Screen A.
+   ============================================================ */
+
+:root{
+  --paper:        #F7F0DE;
+  --paper-deep:   #EFE4C6;
+  --ink:          #3A2A1D;
+  --terracotta:   #C1522F;   /* doc §1.8/§2: primary action + correct-answer color */
+  --terracotta-deep: #9F3F22;
+  --soft-green:   #7C9473;
+  --soft-green-deep: #5E7A57;
+  --mustard:      #D9A441;
+  --card:         #FFFBF2;
+  --card-border:  #D8C79E;
+
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --tap-min: 56px;          /* doc §1.4: 48x48px min, generous spacing */
+
+  --shadow: 0 6px 0 rgba(58,42,29,0.14);
+}
+
+*{ box-sizing: border-box; }
+
+html,body{
+  margin:0; padding:0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Baloo Da 2', 'Noto Sans Bengali', sans-serif; /* doc §2: rounded, high-legibility, native Assamese script */
+  min-height: 100vh;
+}
+
+body{
+  background-image: url('Assets/bg_main.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-color: var(--paper);
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* ---------- layout shell ---------- */
+
+#app{
+  max-width: 720px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 0 20px 20px;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px 0;
+  position: sticky; top:0;
+  background: linear-gradient(var(--paper) 80%, transparent);
+  z-index: 20;
+  gap: 10px;
+}
+
+.topbar-group{
+  display:flex; align-items:center; gap: 10px;
+}
+
+.topbar-title{
+  font-weight: 700;
+  font-size: 19px;
+  text-align:center;
+  line-height:1.15;
+  flex: 1;
+}
+
+.text-btn{
+  min-width: 64px; min-height: var(--tap-min);
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--card-border);
+  background: var(--card);
+  color: var(--ink);
+  font-family: inherit;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  line-height:1.1;
+  font-size: 17px; font-weight: 700;
+  cursor:pointer;
+}
+.text-btn span{ font-size: 12px; font-weight: 500; opacity:.7; }
+.text-btn:active{ background: var(--paper-deep); }
+.text-btn:focus-visible{ outline: 3px solid var(--terracotta); outline-offset: 2px; }
+
+/* compact circular controls: translation toggle (EN/AS) + speaker —
+   same red-circle pattern as the reference Game 1 UI, sitting in the
+   top bar next to Home/Help instead of floating at the bottom */
+.icon-btn-round{
+  width: var(--tap-min); height: var(--tap-min);
+  min-width: 48px; min-height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--terracotta);
+  color: #FFF8EE;
+  font-family: inherit; font-weight: 800; font-size: 15px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  box-shadow: 0 4px 0 rgba(58,42,29,0.16);
+  padding: 0;
+}
+.icon-btn-round img{ width: 22px; height: 22px; object-fit: contain; opacity: 1; }
+.icon-btn-round:active{ background: var(--terracotta-deep); transform: translateY(2px); box-shadow: 0 2px 0 rgba(58,42,29,0.16); }
+.icon-btn-round:focus-visible{ outline: 3px solid var(--ink); outline-offset: 2px; }
+.icon-btn-round.translation-on{ background: var(--mustard); color: var(--ink); }
+
+/* white variant — top-bar speaker button only */
+.icon-btn-round.icon-btn-white{
+  background: #FFFFFF;
+  border: 2px solid var(--card-border);
+  box-shadow: 0 4px 0 rgba(58,42,29,0.10);
+}
+.icon-btn-round.icon-btn-white:active{ background: var(--paper-deep); }
+
+/* ---------- screens ---------- */
+/* every screen now sits inside the same bounded card frame — border,
+   cream background, rounded corners — matching the reference UI,
+   instead of floating directly on the textured page background */
+.screen{
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  animation: fade-in .35s ease;
+  background: var(--card);
+  border: 3px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 28px 20px 32px;
+  margin: 10px 0 28px;
+  box-shadow: 0 6px 0 rgba(58,42,29,0.10);
+}
+.screen.active{ display:flex; flex: 1; }
+
+@keyframes fade-in{
+  from{ opacity:0; transform: translateY(6px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+
+/* ---------- avatar: no frame, image floats directly on the page ---------- */
+.avatar-banner{
+  width: min(320px, 78%);
+  height: 380px;
+  margin: 0 auto 16px;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 18px; font-weight: 700; color: var(--ink);
+  text-align:center;
+}
+/* dimming now applies ONLY to the fallback text (image failed to
+   load) via this class, added/removed in JS — it no longer sits on
+   the container, so it never touches the real avatar image */
+.avatar-banner.avatar-fallback{ opacity:.6; }
+.avatar-banner .avatar-img{
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 1;
+}
+
+.lead{ font-size: 21px; font-weight: 700; margin: 0 0 18px; max-width: 480px; }
+
+.prompt-as{
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0 0 20px;
+  max-width: 560px;
+}
+
+/* ---------- buttons ---------- */
+
+.btn{
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 21px;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 16px 30px;
+  min-height: var(--tap-min);
+  cursor: pointer;
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  box-shadow: var(--shadow);
+}
+.btn:active{ transform: translateY(3px); box-shadow: 0 3px 0 rgba(58,42,29,0.14); }
+.btn:focus-visible{ outline: 3px solid var(--ink); outline-offset: 3px; }
+
+.btn-huge{ width: 100%; max-width: 420px; margin-top: 14px; }
+
+.btn-primary{ background: var(--terracotta); color: #FFF8EE; }
+.btn-primary:active{ background: var(--terracotta-deep); }
+
+.btn-secondary{ background: var(--card); color: var(--ink); border: 2px solid var(--card-border); }
+.btn-icon{ width: 26px; height: 26px; object-fit: contain; }
+.btn-secondary:active{ background: var(--paper-deep); }
+
+.modal-speak{ margin: 4px auto 14px; }
+
+/* ---------- item grid (presentation / recall / reveal) ---------- */
+
+.item-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 480px;
+  margin: 4px 0 10px;
+}
+@media (min-width: 460px){
+  .item-grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+
+.item-card{
+  background: var(--card);
+  border: 3px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 10px 8px 12px;
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  min-height: var(--tap-min);
+}
+
+.item-card.tappable{
+  cursor:pointer;
+  transition: transform .12s ease, border-color .12s ease, background .12s ease;
+}
+.item-card.tappable:active{ transform: scale(.97); }
+.item-card.tappable:focus-visible{ outline: 3px solid var(--ink); outline-offset: 2px; }
+
+.item-card .thumb{
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  background: var(--paper-deep);
+  display:flex; align-items:center; justify-content:center;
+  font-size: 18px; font-weight:700;
+  overflow:hidden;
+  padding: 6px;
+  text-align:center;
+  position: relative;
+}
+.item-card .thumb img{ width:100%; height:100%; object-fit: cover; }
+
+/* speaker badge sits in the bottom-right corner of each item's own
+   image, not as a separate row below it */
+.item-speaker-btn{
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 30px; height: 30px;
+  min-width: 30px; min-height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--card-border);
+  background: #FFFFFF;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(58,42,29,0.25);
+}
+.item-speaker-btn img{ width: 16px; height: 16px; object-fit: contain; opacity: 1; }
+.item-speaker-btn:active{ background: var(--paper-deep); transform: translateY(1px); }
+
+.item-card .label{ font-size: 18px; font-weight: 700; line-height:1.1; }
+
+/* selection state — doc §2 "Adjacent-element distinction": never
+   color alone, border + a text badge reinforce the difference */
+.item-card.selected{
+  border-color: var(--terracotta);
+  background: #FBEAE0;
+}
+.item-card .check-badge{
+  display:none;
+  align-self:flex-end;
+  margin-top:-38px;
+  margin-right:-2px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--terracotta);
+  color:#fff;
+  font-size: 12px; font-weight:800;
+}
+.item-card.selected .check-badge{ display:inline-block; }
+
+/* reveal grid: shown-correctly = soft green ring + text tag;
+   never a red X for anything (doc §6 anti-pattern) */
+.reveal-grid .item-card.was-shown{
+  border-color: var(--soft-green);
+  background: #EEF3EA;
+}
+.reveal-grid .item-card .tag{
+  font-size: 12px; font-weight: 700;
+  padding: 3px 8px; border-radius: 999px;
+  background: var(--soft-green); color:#fff;
+  display:none;
+}
+.reveal-grid .item-card.was-shown .tag{ display:inline-block; }
+
+/* ---------- feedback screen ---------- */
+
+.feedback-card{
+  width:100%; max-width: 500px;
+  display:flex; flex-direction:column; align-items:center;
+}
+
+/* ---------- help modal ---------- */
+
+.modal-backdrop{
+  position: fixed; inset:0;
+  background: rgba(58,42,29,0.45);
+  display:none;
+  align-items:center; justify-content:center;
+  padding: 20px;
+  z-index: 50;
+}
+.modal-backdrop.open{ display:flex; }
+.modal{
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  padding: 26px 22px;
+  max-width: 440px;
+  width:100%;
+  text-align:center;
+  box-shadow: 0 10px 0 rgba(58,42,29,0.18);
+}
+
+/* small screens: keep everything comfortably tappable */
+@media (max-width: 360px){
+  .prompt-as{ font-size: 23px; }
+  .btn{ font-size: 19px; }
+  .avatar-banner{ height: 190px; }
+}

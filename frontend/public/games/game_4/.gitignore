@@ -1,0 +1,17 @@
+﻿# Extra reference & temporary files
+*.pdf
+*.txt
+smritisetu-uiux-doc*.md
+friend_*
+MEMORY.md
+
+# Root duplicate assets (clean assets are inside Assets/)
+/avatar_*.png
+/bg_main.png
+/icon_*.png
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

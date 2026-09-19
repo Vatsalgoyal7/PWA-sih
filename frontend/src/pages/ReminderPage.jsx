@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLanguage } from '../context/LanguageContext'
+import LanguageToggle from '../components/LanguageToggle'
 import topStripImg  from '../assets/role-gamusa-strip.png'
 import rightBrooch  from '../assets/upper-right-gamosa.png'
 import grandmaImg   from '../assets/namaskar-grandma.png'
@@ -6,17 +8,25 @@ import remMedImg    from '../assets/rem-med.png'
 import remFoodImg   from '../assets/rem-food.png'
 import remDocImg    from '../assets/rem-doc.png'
 import remWalkImg   from '../assets/rem-walk.png'
-import sceneryImg   from '../assets/role-scenery-full.png'
 import './ReminderPage.css'
 
+const API_BASE =
+  import.meta.env.VITE_API_URL ||
+  (typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1")
+    ? "http://localhost:8000"
+    : "https://smritisetu-backend.onrender.com")
+
 const INITIAL_REMINDERS = [
-  { id: 'med',  labelAs: 'ঔষধ',       labelEn: 'Medicine', time: '08:00', img: remMedImg,  color: 'green'  },
-  { id: 'food', labelAs: 'খাদ্য', labelEn: 'Food',     time: '10:00', img: remFoodImg, color: 'red'    },
-  { id: 'doc',  labelAs: 'ডাক্তৰ', labelEn: 'Doctor',  time: '12:00', img: remDocImg,  color: 'orange' },
-  { id: 'walk', labelAs: 'হাঁটিব', labelEn: 'Walk',    time: '18:00', img: remWalkImg, color: 'green'  },
+  { id: 'med',  key: 'reminder_medicine', labelAs: 'ঔষধ',   labelEn: 'Medicine', time: '08:00', img: remMedImg,  color: 'green'  },
+  { id: 'food', key: 'reminder_food',     labelAs: 'খাদ্য', labelEn: 'Food',     time: '10:00', img: remFoodImg, color: 'red'    },
+  { id: 'doc',  key: 'reminder_doctor',   labelAs: 'ডাক্তৰ', labelEn: 'Doctor',  time: '12:00', img: remDocImg,  color: 'orange' },
+  { id: 'walk', key: 'reminder_walk',     labelAs: 'হাঁটিব', labelEn: 'Walk',    time: '18:00', img: remWalkImg, color: 'green'  },
 ]
 
 function fmt(t) {
+  if (!t) return '--:--'
   const [h, m] = t.split(':')
   const hour = parseInt(h, 10)
   const display = hour % 12 || 12
@@ -24,9 +34,28 @@ function fmt(t) {
 }
 
 function ReminderPage({ onBack }) {
+  const { lang, t } = useLanguage()
   const [reminders, setReminders] = useState(INITIAL_REMINDERS)
   const [editId, setEditId]       = useState(null)
   const [draft,  setDraft]        = useState('')
+
+  // Load configured times from backend
+  useEffect(() => {
+    let cancelled = false
+    fetch(`${API_BASE}/patient-config`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data || cancelled) return
+        setReminders(prev => prev.map(r => {
+          const remoteTime = data[r.key]
+          return remoteTime ? { ...r, time: remoteTime } : r
+        }))
+      })
+      .catch(err => {
+        console.warn('Could not fetch patient-config reminders:', err)
+      })
+    return () => { cancelled = true }
+  }, [])
 
   const openEdit = (rem) => { setEditId(rem.id); setDraft(rem.time) }
   const saveEdit = () => {
@@ -64,17 +93,20 @@ function ReminderPage({ onBack }) {
         <img src={rightBrooch} alt="" aria-hidden="true" className="rem-right-brooch" />
 
         {/* Home button */}
-        <button className="rem-home-btn" onClick={onBack} aria-label="Back to home">
+        <button className="rem-home-btn" onClick={onBack} aria-label={t('remBackAria')}>
           <span aria-hidden="true">⌂</span>
         </button>
 
+        {/* Language Toggle — top-right */}
+        <LanguageToggle className="rem-lang-toggle" />
+
         {/* Scrollable centre */}
         <div className="rem-center">
-          <h1 className="rem-title">মোৰ মনত পেলোৱা</h1>
+          <h1 className="rem-title">{t('remTitle')}</h1>
 
           {/* Enlarged Avatar without redundant dialogue box */}
           <div className="rem-avatar-wrap">
-            <img src={grandmaImg} alt="Grandma" className="rem-avatar" />
+            <img src={grandmaImg} alt={t('patientGrandmaAlt')} className="rem-avatar" />
           </div>
 
           {/* Reminder cards */}
@@ -87,12 +119,12 @@ function ReminderPage({ onBack }) {
                   tabIndex={0}
                   onClick={() => openEdit(rem)}
                   onKeyDown={(e) => handleCardKey(e, rem)}
-                  aria-label={rem.labelEn + ' reminder at ' + fmt(rem.time) + ', tap to edit'}
+                  aria-label={(lang === 'as' ? rem.labelAs : rem.labelEn) + ' reminder at ' + fmt(rem.time) + ', tap to edit'}
                 >
                   <button
                     className={'rem-speak-btn rem-speak-btn--' + rem.color}
                     onClick={(e) => speak(e, rem)}
-                    aria-label={'Play ' + rem.labelEn + ' reminder'}
+                    aria-label={'Play ' + (lang === 'as' ? rem.labelAs : rem.labelEn) + ' reminder'}
                   >
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                       <path d="M4 9v6h4l5 5V4L8 9H4z"/>
@@ -102,10 +134,10 @@ function ReminderPage({ onBack }) {
                   </button>
 
                   <div className={'rem-icon-wrap rem-icon-wrap--' + rem.color}>
-                    <img src={rem.img} alt={rem.labelEn} className="rem-icon-img" />
+                    <img src={rem.img} alt={lang === 'as' ? rem.labelAs : rem.labelEn} className="rem-icon-img" />
                   </div>
                   <div className="rem-card-text">
-                    <span className="rem-card-label">{rem.labelAs}</span>
+                    <span className="rem-card-label">{lang === 'as' ? rem.labelAs : rem.labelEn}</span>
                     <span className={'rem-card-time rem-card-time--' + rem.color}>
                       <svg className="rem-clock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
                         <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
@@ -119,10 +151,10 @@ function ReminderPage({ onBack }) {
           </ul>
         </div>
 
-        {/* Bottom scenery */}
-        <footer className="rem-scenery" aria-hidden="true">
-          <img src={sceneryImg} alt="" className="rem-scenery-img" />
-        </footer>
+        {/* Lower Gamusa Border Strip */}
+        <div className="rem-top-border" aria-hidden="true" style={{ marginTop: 'auto' }}>
+          <img src={topStripImg} alt="" className="rem-top-strip" />
+        </div>
       </div>
 
       {/* Time-edit modal */}
@@ -134,8 +166,8 @@ function ReminderPage({ onBack }) {
           onClick={(e) => e.target === e.currentTarget && setEditId(null)}
         >
           <div className="rem-modal">
-            <p className="rem-modal-name">{editing?.labelAs}</p>
-            <p className="rem-modal-sub">{editing?.labelEn}</p>
+            <p className="rem-modal-name">{lang === 'as' ? editing?.labelAs : editing?.labelEn}</p>
+            <p className="rem-modal-sub">{t('remTimeSet')}</p>
             <input
               type="time"
               className="rem-time-input"
@@ -144,8 +176,8 @@ function ReminderPage({ onBack }) {
               autoFocus
             />
             <div className="rem-modal-actions">
-              <button className="rem-modal-cancel" onClick={() => setEditId(null)}>বাতিল</button>
-              <button className="rem-modal-save"   onClick={saveEdit}>ৰাখক</button>
+              <button className="rem-modal-cancel" onClick={() => setEditId(null)}>{t('remCancel')}</button>
+              <button className="rem-modal-save"   onClick={saveEdit}>{t('remSave')}</button>
             </div>
           </div>
         </div>

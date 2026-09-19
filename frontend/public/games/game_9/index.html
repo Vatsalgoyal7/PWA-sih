@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>বাকি ক'তটা? — How Many Are Left?</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #FDF8F0;
+      color: #3D2314;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+      text-align: center;
+    }
+    .card {
+      background: #FFFFFF;
+      border: 3px solid #C41E3A;
+      border-radius: 24px;
+      max-width: 480px;
+      width: 100%;
+      padding: 40px 24px;
+      box-shadow: 0 8px 24px rgba(196, 30, 58, 0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+    .badge {
+      background: #FCE8EC;
+      color: #C41E3A;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 6px 16px;
+      border-radius: 20px;
+    }
+    .icon {
+      font-size: 64px;
+    }
+    h1 {
+      font-size: 28px;
+      color: #8B1A24;
+      line-height: 1.3;
+    }
+    h2 {
+      font-size: 18px;
+      color: #665;
+      font-weight: 500;
+    }
+    p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.5;
+    }
+    .btn-back {
+      margin-top: 12px;
+      background: #C41E3A;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 28px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .btn-back:hover {
+      background: #A01830;
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">শীঘ্ৰে আহিব • Coming Soon</span>
+    <div class="icon">🔢</div>
+    <h1>বাকি ক'তটা?</h1>
+    <h2>Game 9 — How Many Are Left?</h2>
+    <p>এই খেলটো অতি সোনকালে উপলব্ধ হ'ব।<br>This game will be available very soon.</p>
+    <button class="btn-back" onclick="exitGame()">← ঘৰলৈ উভতি যাওক / Back to Games</button>
+  </div>
+  <script>
+    function exitGame() {
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'EXIT_GAME' }, '*');
+          return;
+        }
+      } catch(e) {}
+      window.location.href = '/';
+    }
+  </script>
+</body>
+</html>

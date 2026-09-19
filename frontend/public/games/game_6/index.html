@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#C85A3A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="SmritiSetu - Loga Loi Jua: A cognitive care game for Assamese elderly">
+  
+  <!-- Google Fonts: Noto Sans Assamese (for offline: download & self-host later) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Assamese:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <title>মিলাই দিয়া - SmritiSetu</title>
+  <link rel="stylesheet" href="css/style.css?v=7">
+</head>
+<body>
+
+  <!-- Top Navigation / Header -->
+  <div class="app-container">
+
+    <!-- ================================================
+         SCREEN A: Home / Avatar Greeting
+         ================================================ -->
+    <section id="screen-home" class="screen active" aria-hidden="false" aria-label="Home">
+      <div class="top-bar">
+        <div class="top-bar-spacer"></div>
+        <button class="btn-lang" aria-label="Switch language">EN</button>
+      </div>
+
+      <div class="avatar-container">
+        <img src="assets/avatars/avatar_idle.png" alt="🙏" class="avatar-img">
+      </div>
+
+      <h1 class="title" data-i18n="app_title">লগা লৈ যুৱা</h1>
+      <p class="subtitle" data-i18n="app_subtitle">ক্ৰমত সজাওক</p>
+
+      <button id="btn-play" class="btn-primary" aria-label="Play">
+        <span data-i18n="btn_play">খেলো আহক</span>
+      </button>
+
+      <button class="btn-repeat" aria-label="Listen again" style="margin-top: 16px;">
+        <img src="assets/icons/icon_speaker.png" alt="🔊">
+      </button>
+    </section>
+
+    <!-- ================================================
+         SCREEN B: Scenario Selection
+         ================================================ -->
+    <section id="screen-scenarios" class="screen" aria-hidden="true" aria-label="Choose a routine">
+      <div class="top-bar">
+        <button class="btn-home" aria-label="Go home">
+          <img src="assets/icons/icon_home.png" alt="🏠">
+        </button>
+        <div class="top-bar-spacer"></div>
+        <button class="btn-repeat" aria-label="Listen again">
+          <img src="assets/icons/icon_speaker.png" alt="🔊">
+        </button>
+        <button class="btn-lang" aria-label="Switch language">EN</button>
+      </div>
+
+      <div class="avatar-container">
+        <img src="assets/avatars/avatar_idle.png" alt="🙏" class="avatar-img small">
+      </div>
+
+      <h2 class="title" data-i18n="choose_scenario">কি কাম কৰিব?</h2>
+      <p class="subtitle" data-i18n="choose_hint">এটা বাছক</p>
+
+      <div id="scenario-list">
+        <!-- Scenario cards rendered by app.js -->
+      </div>
+    </section>
+
+    <!-- ================================================
+         SCREEN C: Narrated Setup
+         ================================================ -->
+    <section id="screen-setup" class="screen" aria-hidden="true" aria-label="Instructions">
+      <div class="top-bar">
+        <button class="btn-home" aria-label="Go home">
+          <img src="assets/icons/icon_home.png" alt="🏠">
+        </button>
+        <div class="top-bar-spacer"></div>
+        <button class="btn-repeat" aria-label="Listen again">
+          <img src="assets/icons/icon_speaker.png" alt="🔊">
+        </button>
+        <button class="btn-lang" aria-label="Switch language">EN</button>
+      </div>
+
+      <div class="avatar-container">
+        <img src="assets/avatars/avatar_idle.png" alt="🙏" class="avatar-img">
+      </div>
+
+      <p id="setup-narration" class="narration-text"></p>
+
+      <button id="btn-start-game" class="btn-primary" data-i18n="btn_start">
+        আৰম্ভ কৰক
+      </button>
+    </section>
+
+    <!-- ================================================
+         SCREEN D: Game — Card Sequencing
+         ================================================ -->
+    <section id="screen-game" class="screen" aria-hidden="true" aria-label="Game">
+      <div class="top-bar">
+        <button class="btn-home" aria-label="Go home">
+          <img src="assets/icons/icon_home.png" alt="🏠">
+        </button>
+        <div class="top-bar-spacer"></div>
+        <button class="btn-repeat" aria-label="Listen again">
+          <img src="assets/icons/icon_speaker.png" alt="🔊">
+        </button>
+        <button class="btn-lang" aria-label="Switch language">EN</button>
+      </div>
+
+      <div class="avatar-container">
+        <img src="assets/avatars/avatar_idle.png" alt="" class="avatar-img small">
+      </div>
+
+      <div class="game-area">
+        <p id="game-instruction" class="instruction-text" data-i18n="instruction">
+          কাৰ্ডবোৰ সঠিক ক্ৰমত সজাওক
+        </p>
+
+        <!-- Shuffled cards appear here -->
+        <div id="card-deck" role="list" aria-label="Cards to arrange"></div>
+
+        <!-- Sequence tray with drop slots -->
+        <div class="slot-tray-wrapper">
+          <p class="slot-tray-label">▼ ক্ৰম ▼</p>
+          <div id="slot-tray" role="list" aria-label="Sequence slots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================
+         SCREEN F: Completion Celebration
+         ================================================ -->
+    <section id="screen-complete" class="screen" aria-hidden="true" aria-label="Complete">
+      <div class="top-bar">
+        <button class="btn-home" aria-label="Go home">
+          <img src="assets/icons/icon_home.png" alt="🏠">
+        </button>
+        <div class="top-bar-spacer"></div>
+        <button class="btn-lang" aria-label="Switch language">EN</button>
+      </div>
+
+      <div class="completion-container">
+        <div class="avatar-container completion-glow">
+          <img src="assets/avatars/avatar_happy.png" alt="😊" class="avatar-img">
+        </div>
+
+        <h2 class="title" data-i18n="completion_title">বৰ ভাল হ'ল!</h2>
+        <p class="subtitle" data-i18n="completion_msg">আপুনি সকলো ঠিককৈ সজালে!</p>
+
+        <div class="completion-buttons">
+          <button id="btn-next-scenario" class="btn-primary" data-i18n="btn_next">
+            পাছৰটো খেলক
+          </button>
+          <button id="btn-complete-home" class="btn-secondary" data-i18n="btn_home">
+            ঘৰ
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /app-container -->
+
+  <!-- Scripts (order matters: i18n → tts → game → app) -->
+  <script src="js/i18n.js"></script>
+  <script src="js/tts.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
