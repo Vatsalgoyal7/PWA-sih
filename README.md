@@ -5,6 +5,7 @@ Project repository for PWA application (Frontend & Backend).
 ## Structure
 - `frontend/` - React + Vite PWA application
 - `backend/` - FastAPI backend application
+- `games/` - Mini games (Game 4, Game 5, etc.)
 
 ## Setup & Run Instructions
 
