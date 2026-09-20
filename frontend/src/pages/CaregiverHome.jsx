@@ -102,6 +102,7 @@ export default function CaregiverHome({ onChangeRole }) {
           <CgDashboard
             patientName={patientName}
             onTab={(tab) => setActiveTab(tab)}
+            onChangeRole={onChangeRole}
           />
         )}
         {activeTab === 'reminders' && <CgReminders />}

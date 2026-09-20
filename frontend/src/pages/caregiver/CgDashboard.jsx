@@ -8,7 +8,7 @@ import {
 import { lsGet, LS, today, lastNDays, shortDay, REMINDER_DEFAULTS } from './CgShared'
 import './CgDashboard.css'
 
-export default function CgDashboard({ patientName = 'Patient', onTab }) {
+export default function CgDashboard({ patientName = 'Patient', onTab, onChangeRole }) {
   // 1. Reminders Count
   const reminders = lsGet(LS.REMINDERS, REMINDER_DEFAULTS)
   const activeRemindersCount = reminders.filter(r => r.enabled).length
@@ -49,9 +49,32 @@ export default function CgDashboard({ patientName = 'Patient', onTab }) {
     <div className="cgdash">
       {/* Header */}
       <header className="cgdash__header">
-        <p className="cgdash__greeting">Caring for</p>
-        <h1 className="cgdash__patient-name">{patientName}</h1>
-        <p className="cgdash__date">📅 {currentDateStr}</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <div>
+            <p className="cgdash__greeting">SmritiSetu Portal</p>
+            <h1 className="cgdash__patient-name">Caregiver Dashboard</h1>
+          </div>
+          {onChangeRole && (
+            <button
+              type="button"
+              onClick={onChangeRole}
+              style={{
+                background: 'rgba(255,255,255,0.2)',
+                color: '#fff',
+                border: '1px solid rgba(255,255,255,0.4)',
+                borderRadius: '8px',
+                padding: '5px 10px',
+                fontSize: '11px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              ← Switch Role
+            </button>
+          )}
+        </div>
+        <p className="cgdash__date">Monitoring Patient: {patientName || 'Meena Sharma'} • {currentDateStr}</p>
       </header>
 
       {/* Stats Cards */}
