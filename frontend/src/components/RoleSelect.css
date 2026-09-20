@@ -124,19 +124,10 @@
   z-index: 2;
 }
 
-/* Individual card wrapper — holds button + EN label below */
-.role-card-wrap {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
 /* Individual card button */
 .role-card-btn {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   border: none;
   background: transparent;
   padding: 0;
@@ -151,31 +142,6 @@
     filter 0.2s ease;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-}
-
-/* English title shown below avatar image only in EN mode */
-.role-en-title {
-  margin: 6px 0 0;
-  font-size: 13px;
-  font-weight: 700;
-  color: #8c2513;
-  text-align: center;
-  animation: fadeEnLabel 0.2s ease;
-}
-
-/* English label shown below each role card image */
-.role-card-en-label {
-  font-size: 13px;
-  font-weight: 700;
-  color: #b83a24;
-  text-align: center;
-  letter-spacing: 0.3px;
-  animation: fadeEnLabel 0.2s ease;
-}
-
-@keyframes fadeEnLabel {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 
 .role-card-img {

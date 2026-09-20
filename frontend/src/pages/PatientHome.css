@@ -178,29 +178,6 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Wrapper: holds button + EN label below */
-.patient-panel-wrap {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-}
-
-/* English label shown below each panel image (not overlaid) */
-.patient-panel-en-label {
-  font-size: 14px;
-  font-weight: 700;
-  color: #b83a24;
-  letter-spacing: 0.3px;
-  animation: fadeLabel 0.2s ease;
-}
-
-@keyframes fadeLabel {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
 .patient-panel-img {
   width: 100%;
   height: auto;

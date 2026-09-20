@@ -8,12 +8,10 @@ import gamesPanelImg from '../assets/games-panel.png'
 import sceneryImg from '../assets/role-scenery-full.png'
 import ReminderPage from './ReminderPage'
 import GamesPage from './GamesPage'
-import { useLanguage } from '../context/LanguageContext'
 import './PatientHome.css'
 
 function PatientHome({ onChangeRole }) {
   const [page, setPage] = useState('home') // 'home' | 'reminders' | 'games'
-  const { lang, t } = useLanguage()
 
   if (page === 'reminders') {
     return <ReminderPage onBack={() => setPage('home')} />
@@ -36,7 +34,7 @@ function PatientHome({ onChangeRole }) {
           type="button"
           className="patient-back-btn"
           onClick={onChangeRole}
-          aria-label={t('back')}
+          aria-label="Back to role selection"
         >
           &#8592;
         </button>
@@ -66,44 +64,32 @@ function PatientHome({ onChangeRole }) {
             />
           </header>
 
-          <main className="patient-panels-grid" role="group" aria-label={t('home')}>
-            {/* Reminders panel */}
-            <div className="patient-panel-wrap">
-              <button
-                type="button"
-                className="patient-panel-btn"
-                onClick={() => setPage('reminders')}
-                aria-label={t('reminders')}
-              >
-                <img
-                  src={reminderPanelImg}
-                  alt={t('reminders')}
-                  className="patient-panel-img"
-                />
-              </button>
-              {lang === 'en' && (
-                <span className="patient-panel-en-label">⏰ Reminders</span>
-              )}
-            </div>
+          <main className="patient-panels-grid" role="group" aria-label="Patient options">
+            <button
+              type="button"
+              className="patient-panel-btn"
+              onClick={() => setPage('reminders')}
+              aria-label="Open Reminders"
+            >
+              <img
+                src={reminderPanelImg}
+                alt="Reminder Panel"
+                className="patient-panel-img"
+              />
+            </button>
 
-            {/* Games panel */}
-            <div className="patient-panel-wrap">
-              <button
-                type="button"
-                className="patient-panel-btn"
-                onClick={() => setPage('games')}
-                aria-label={t('games')}
-              >
-                <img
-                  src={gamesPanelImg}
-                  alt={t('games')}
-                  className="patient-panel-img"
-                />
-              </button>
-              {lang === 'en' && (
-                <span className="patient-panel-en-label">🎮 My Games</span>
-              )}
-            </div>
+            <button
+              type="button"
+              className="patient-panel-btn"
+              onClick={() => setPage('games')}
+              aria-label="Open Games"
+            >
+              <img
+                src={gamesPanelImg}
+                alt="Games Panel"
+                className="patient-panel-img"
+              />
+            </button>
           </main>
         </div>
 

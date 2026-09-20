@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+﻿import { useState, useEffect } from "react"
 import topStripImg  from "../assets/role-gamusa-strip.png"
 import leftBrooch   from "../assets/upper-left-gamosa.png"
 import rightBrooch  from "../assets/upper-right-gamosa.png"
@@ -15,7 +15,6 @@ import game8  from "../assets/game8-milai-diya.png"
 import game9  from "../assets/game9-bak-kotota.png"
 import game10 from "../assets/game10-ki-koribo.png"
 import game11 from "../assets/game11-describe-day.png"
-import { useLanguage } from "../context/LanguageContext"
 import "./GamesPage.css"
 
 const API_BASE = import.meta.env.VITE_API_URL ?? "https://smritisetu-backend.onrender.com"
@@ -43,7 +42,6 @@ function GamesPage({ onBack }) {
   const [games, setGames]     = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError]     = useState(null)
-  const { lang, t } = useLanguage()
 
   // Fetch which games are active from the backend
   useEffect(() => {
@@ -75,16 +73,15 @@ function GamesPage({ onBack }) {
     e.stopPropagation()
     if (!("speechSynthesis" in window)) return
     window.speechSynthesis.cancel()
-    const text = lang === 'en' ? game.labelEn : game.labelAs
-    const utter = new SpeechSynthesisUtterance(text)
-    utter.lang = lang === 'en' ? "en-IN" : "as-IN"
+    const utter = new SpeechSynthesisUtterance(game.labelAs)
+    utter.lang = "as-IN"
     window.speechSynthesis.speak(utter)
   }
 
   const launch = (game) => {
     // Placeholder — route into the actual game when game components exist
     console.log("Launching game:", game.id)
-    alert(`${lang === 'en' ? 'Coming soon' : 'খেলা মাতি আনি আছে'}: ${lang === 'en' ? game.labelEn : game.labelAs}`)
+    alert(`খেলা মাতি আনি আছে: ${game.labelAs}`)
   }
 
   return (
@@ -102,26 +99,26 @@ function GamesPage({ onBack }) {
         <img src={rightBrooch} alt="" aria-hidden="true" className="gp-brooch gp-brooch--right" />
 
         {/* Home / back button */}
-        <button className="gp-home-btn" onClick={onBack} aria-label={t('home')}>
+        <button className="gp-home-btn" onClick={onBack} aria-label="Back to home">
           <span aria-hidden="true">⌂</span>
         </button>
 
         {/* Scrollable centre */}
         <div className="gp-center">
-          <h1 className="gp-title">{t('gameTitle')}</h1>
+          <h1 className="gp-title">মোৰ খেলা</h1>
 
           {/* Avatar + dialogue */}
           <div className="gp-avatar-wrap">
             <img src={grannyImg} alt="Granny gamer" className="gp-avatar" />
             <div className="gp-dialogue" aria-live="polite">
-              {t('gameDialogue')}
+              মনে ৰাখোঁ, আনন্দৰে খেলোঁ!
             </div>
           </div>
 
           {error && <p className="gp-error">{error}</p>}
 
           {loading ? (
-            <p className="gp-loading">{t('loading')}</p>
+            <p className="gp-loading">Loading…</p>
           ) : (
             <ul className="gp-grid" role="list">
               {games.map(game => (
@@ -132,13 +129,13 @@ function GamesPage({ onBack }) {
                     tabIndex={0}
                     onClick={() => launch(game)}
                     onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); launch(game) } }}
-                    aria-label={`${lang === 'en' ? game.labelEn : game.labelAs} — ${t('tapToPlay')}`}
+                    aria-label={`${game.labelEn} — tap to play`}
                   >
                     {/* Speaker button */}
                     <button
                       className={`gp-speak-btn gp-speak-btn--${game.color}`}
                       onClick={e => speak(e, game)}
-                      aria-label={`${t('speak')} ${lang === 'en' ? game.labelEn : game.labelAs}`}
+                      aria-label={`Read name of ${game.labelEn}`}
                     >
                       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path d="M4 9v6h4l5 5V4L8 9H4z"/>
@@ -148,12 +145,10 @@ function GamesPage({ onBack }) {
                     </button>
 
                     {/* Game image fills the tile */}
-                    <img src={game.img} alt={lang === 'en' ? game.labelEn : game.labelAs} className="gp-tile-img" />
+                    <img src={game.img} alt={game.labelEn} className="gp-tile-img" />
 
-                    {/* Label below image — switches with lang */}
-                    <span className="gp-tile-label">
-                      {lang === 'en' ? game.labelEn : game.labelAs}
-                    </span>
+                    {/* Label below image */}
+                    <span className="gp-tile-label">{game.labelAs}</span>
                   </div>
                 </li>
               ))}

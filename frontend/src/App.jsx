@@ -2,13 +2,11 @@ import { useState } from 'react'
 import RoleSelect from './components/RoleSelect'
 import PatientHome from './pages/PatientHome'
 import CaregiverHome from './pages/CaregiverHome'
-import { LanguageProvider } from './context/LanguageContext'
-import LanguageToggle from './components/LanguageToggle'
 import './App.css'
 
 const ROLE_KEY = 'smritisetu_device_role'
 
-function MainContent() {
+function App() {
   const [role, setRole] = useState(() => {
     try {
       const savedRole = localStorage.getItem(ROLE_KEY)
@@ -36,21 +34,14 @@ function MainContent() {
     setRole(null)
   }
 
-  return (
-    <>
-      {!role && <RoleSelect onSelect={handleSelectRole} />}
-      {role === 'patient' && <PatientHome onChangeRole={handleChangeRole} />}
-      {role === 'caregiver' && <CaregiverHome onChangeRole={handleChangeRole} />}
-      <LanguageToggle />
-    </>
-  )
-}
+  if (!role) {
+    return <RoleSelect onSelect={handleSelectRole} />
+  }
 
-function App() {
-  return (
-    <LanguageProvider>
-      <MainContent />
-    </LanguageProvider>
+  return role === 'patient' ? (
+    <PatientHome onChangeRole={handleChangeRole} />
+  ) : (
+    <CaregiverHome onChangeRole={handleChangeRole} />
   )
 }
 
