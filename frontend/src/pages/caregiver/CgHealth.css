@@ -1,0 +1,302 @@
+/* CgHealth.css */
+.cgh-root {
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+  min-height: 100%;
+}
+
+.cgh-header {
+  background: linear-gradient(135deg, #b83a24 0%, #9e2e18 100%);
+  color: #fff;
+  padding: 24px 20px 20px;
+}
+
+.cgh-header-title {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.cgh-header-sub {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.cgh-tabs-wrap {
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 8px 12px;
+}
+
+.cgh-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.cgh-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.cgh-tab-pill {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #dee2e6;
+  background: #f8f9fa;
+  color: #495057;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.cgh-tab-pill.active {
+  background: #b83a24;
+  color: #fff;
+  border-color: #b83a24;
+  box-shadow: 0 2px 8px rgba(184, 58, 36, 0.25);
+}
+
+.cgh-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cgh-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  border: 1px solid #edf2f7;
+}
+
+.cgh-card-title {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+/* Mood */
+.mood-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.mood-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 6px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mood-btn:hover {
+  border-color: #cbd5e1;
+}
+
+.mood-btn.selected {
+  border-color: #b83a24;
+  background: #fff5f3;
+  transform: scale(1.05);
+}
+
+.mood-emoji {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.mood-lbl {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Question cards for Cognitive */
+.cgh-q-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.cgh-q-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.cgh-btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.cgh-action-btn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cgh-action-btn.active {
+  background: #b83a24;
+  color: #fff;
+  border-color: #b83a24;
+}
+
+/* Score display */
+.cog-score-banner {
+  text-align: center;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.cog-score-val {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.cog-score-desc {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Vitals */
+.water-glasses {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+
+.water-glass {
+  width: 38px;
+  height: 48px;
+  border: 2px solid #38bdf8;
+  border-radius: 0 0 10px 10px;
+  background: #f0f9ff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: all 0.2s;
+}
+
+.water-glass.filled {
+  background: #0284c7;
+  color: #fff;
+}
+
+.slider-val {
+  font-size: 20px;
+  font-weight: 700;
+  color: #b83a24;
+  text-align: center;
+  margin: 8px 0;
+}
+
+/* Symptoms chips */
+.symptom-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.symptom-chip {
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.symptom-chip.selected {
+  background: #fee2e2;
+  border-color: #b83a24;
+  color: #991b1b;
+}
+
+.cgh-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 70px;
+  margin-bottom: 12px;
+}
+
+.cgh-save-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #b83a24;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cgh-save-btn:hover {
+  background: #9e2e18;
+}
+
+/* Log list */
+.log-item {
+  border-bottom: 1px solid #f1f5f9;
+  padding: 12px 0;
+}
+
+.log-item:last-child {
+  border-bottom: none;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.log-note {
+  font-size: 13px;
+  color: #1e293b;
+  line-height: 1.4;
+}

@@ -1,0 +1,226 @@
+/* CgReminders.css */
+.cg-reminders-page {
+  padding: 16px;
+  background: #f8f9fa;
+  min-height: 100%;
+}
+
+.cg-reminders-header {
+  background: linear-gradient(135deg, #b83a24 0%, #9e2e18 100%);
+  margin: -16px -16px 16px -16px;
+  padding: 24px 20px;
+  color: #fff;
+}
+
+.cg-reminders-header h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.cg-reminders-header p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.reminders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.reminder-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  border: 1.5px solid #edf2f7;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: all 0.2s;
+}
+
+.reminder-card.inactive {
+  opacity: 0.65;
+  background: #fcfcfc;
+}
+
+.reminder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.reminder-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reminder-icon {
+  font-size: 24px;
+}
+
+.reminder-names {
+  display: flex;
+  flex-direction: column;
+}
+
+.reminder-label-en {
+  font-weight: 700;
+  font-size: 15px;
+  color: #1e293b;
+}
+
+.reminder-label-as {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.field-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  min-width: 70px;
+}
+
+.reminder-time-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-top: 1px solid #f1f5f9;
+}
+
+.time-input {
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+  background: #f8fafc;
+}
+
+.reminder-days-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-top: 1px solid #f1f5f9;
+}
+
+.day-pills {
+  display: flex;
+  gap: 4px;
+}
+
+.day-pill {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.day-pill.day-active {
+  background: #b83a24;
+  color: #fff;
+  border-color: #b83a24;
+}
+
+.reminder-voice-row {
+  padding-top: 8px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.voice-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-record {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #b83a24;
+}
+
+.btn-record.secondary {
+  color: #64748b;
+}
+
+.recording-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recording-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.2); }
+}
+
+.recording-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ef4444;
+}
+
+.btn-stop-record {
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.voice-saved {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-play {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-delete-voice {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  font-size: 12px;
+  cursor: pointer;
+}

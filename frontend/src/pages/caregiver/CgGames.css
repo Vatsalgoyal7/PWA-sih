@@ -1,0 +1,182 @@
+/* CgGames.css */
+.cg-games-page {
+  padding: 16px;
+  background: #f8f9fa;
+  min-height: 100%;
+}
+
+.cg-games-header {
+  background: linear-gradient(135deg, #b83a24 0%, #9e2e18 100%);
+  margin: -16px -16px 16px -16px;
+  padding: 24px 20px;
+  color: #fff;
+}
+
+.cg-games-header h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.cg-games-header p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.cg-games-summary {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.cg-games-summary-text {
+  font-weight: 700;
+  color: #2d3748;
+  font-size: 14px;
+}
+
+.cg-games-badge {
+  background: #fee2e2;
+  color: #b83a24;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.games-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.game-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid #edf2f7;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  transition: all 0.2s;
+}
+
+.game-card.game-on {
+  border-color: #cbd5e1;
+}
+
+.game-card.game-off {
+  opacity: 0.6;
+  background: #fafafa;
+}
+
+.game-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.game-number-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.game-names {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-name-as {
+  font-weight: 700;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.game-name-en {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Toggle switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-track {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #cbd5e1;
+  transition: .25s;
+  border-radius: 24px;
+}
+
+.toggle-track:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .25s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-track {
+  background-color: #b83a24;
+}
+
+input:checked + .toggle-track:before {
+  transform: translateX(20px);
+}
+
+.game-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.diff-btn {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.diff-btn.diff-active {
+  background: #b83a24;
+  color: #fff;
+  border-color: #b83a24;
+}
