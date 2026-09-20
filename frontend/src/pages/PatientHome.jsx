@@ -67,41 +67,43 @@ function PatientHome({ onChangeRole }) {
           </header>
 
           <main className="patient-panels-grid" role="group" aria-label={t('home')}>
-            <button
-              type="button"
-              className="patient-panel-btn"
-              onClick={() => setPage('reminders')}
-              aria-label={t('reminders')}
-            >
-              <img
-                src={reminderPanelImg}
-                alt={t('reminders')}
-                className="patient-panel-img"
-              />
+            {/* Reminders panel */}
+            <div className="patient-panel-wrap">
+              <button
+                type="button"
+                className="patient-panel-btn"
+                onClick={() => setPage('reminders')}
+                aria-label={t('reminders')}
+              >
+                <img
+                  src={reminderPanelImg}
+                  alt={t('reminders')}
+                  className="patient-panel-img"
+                />
+              </button>
               {lang === 'en' && (
-                <div className="patient-panel-en-pill">
-                  <span>⏰ Reminders</span>
-                </div>
+                <span className="patient-panel-en-label">⏰ Reminders</span>
               )}
-            </button>
+            </div>
 
-            <button
-              type="button"
-              className="patient-panel-btn"
-              onClick={() => setPage('games')}
-              aria-label={t('games')}
-            >
-              <img
-                src={gamesPanelImg}
-                alt={t('games')}
-                className="patient-panel-img"
-              />
+            {/* Games panel */}
+            <div className="patient-panel-wrap">
+              <button
+                type="button"
+                className="patient-panel-btn"
+                onClick={() => setPage('games')}
+                aria-label={t('games')}
+              >
+                <img
+                  src={gamesPanelImg}
+                  alt={t('games')}
+                  className="patient-panel-img"
+                />
+              </button>
               {lang === 'en' && (
-                <div className="patient-panel-en-pill">
-                  <span>🎮 My Games</span>
-                </div>
+                <span className="patient-panel-en-label">🎮 My Games</span>
               )}
-            </button>
+            </div>
           </main>
         </div>
 

@@ -16,28 +16,14 @@ function RoleSelect({ onSelect }) {
       <div className="role-select-card">
         {/* Upper Gamusa Border Strip */}
         <div className="role-top-border-wrapper" aria-hidden="true">
-          <img
-            src={topStripImg}
-            alt=""
-            className="role-top-strip-img"
-          />
+          <img src={topStripImg} alt="" className="role-top-strip-img" />
         </div>
 
         {/* Extreme Top Corner Decorative Brooches */}
-        <img
-          src={topLeftBrooch}
-          alt=""
-          aria-hidden="true"
-          className="role-corner-brooch role-corner-left"
-        />
-        <img
-          src={topRightBrooch}
-          alt=""
-          aria-hidden="true"
-          className="role-corner-brooch role-corner-right"
-        />
+        <img src={topLeftBrooch} alt="" aria-hidden="true" className="role-corner-brooch role-corner-left" />
+        <img src={topRightBrooch} alt="" aria-hidden="true" className="role-corner-brooch role-corner-right" />
 
-        {/* Center: AI Avatar & Selection Cards aligned together with even spacing */}
+        {/* Center: AI Avatar & Selection Cards */}
         <div className="role-center-content">
           <header className="role-avatar-section">
             <img
@@ -45,53 +31,46 @@ function RoleSelect({ onSelect }) {
               alt={t('roleSelectTitle')}
               className="role-avatar-img"
             />
+            {/* English title — shown only in EN mode, below the image not over it */}
             {lang === 'en' && (
-              <div className="role-bubble-en-overlay">
-                Which role will you use as?
-              </div>
+              <p className="role-en-title">Which role will you use as?</p>
             )}
           </header>
 
           <main className="role-cards-grid" role="group" aria-label={t('roleSelectTitle')}>
-            <button
-              type="button"
-              className="role-card-btn"
-              onClick={() => onSelect('patient')}
-              aria-label={t('patient')}
-            >
-              <img
-                src={patientBtn}
-                alt={t('patient')}
-                className="role-card-img"
-              />
+            {/* Patient card */}
+            <div className="role-card-wrap">
+              <button
+                type="button"
+                className="role-card-btn"
+                onClick={() => onSelect('patient')}
+                aria-label={t('patient')}
+              >
+                <img src={patientBtn} alt={t('patient')} className="role-card-img" />
+              </button>
               {lang === 'en' && (
-                <div className="role-card-en-pill role-card-en-pill--patient">
-                  <span>👤 Patient</span>
-                </div>
+                <span className="role-card-en-label">Patient</span>
               )}
-            </button>
+            </div>
 
-            <button
-              type="button"
-              className="role-card-btn"
-              onClick={() => onSelect('caregiver')}
-              aria-label={t('caregiver')}
-            >
-              <img
-                src={caregiverBtn}
-                alt={t('caregiver')}
-                className="role-card-img"
-              />
+            {/* Caregiver card */}
+            <div className="role-card-wrap">
+              <button
+                type="button"
+                className="role-card-btn"
+                onClick={() => onSelect('caregiver')}
+                aria-label={t('caregiver')}
+              >
+                <img src={caregiverBtn} alt={t('caregiver')} className="role-card-img" />
+              </button>
               {lang === 'en' && (
-                <div className="role-card-en-pill role-card-en-pill--caregiver">
-                  <span>👥 Caregiver</span>
-                </div>
+                <span className="role-card-en-label">Caregiver</span>
               )}
-            </button>
+            </div>
           </main>
         </div>
 
-        {/* Bottom: River Scenery with traditional Gamusa embroidery border */}
+        {/* Bottom: River Scenery */}
         <footer className="role-scenery-section">
           <img
             src={sceneryImg}

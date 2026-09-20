@@ -124,10 +124,19 @@
   z-index: 2;
 }
 
-/* Individual card button */
-.role-card-btn {
+/* Individual card wrapper — holds button + EN label below */
+.role-card-wrap {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Individual card button */
+.role-card-btn {
+  width: 100%;
   border: none;
   background: transparent;
   padding: 0;
@@ -135,7 +144,6 @@
   border-radius: 18px;
   overflow: hidden;
   display: flex;
-  position: relative;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   transition:
     transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -145,65 +153,29 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* English speech bubble overlay */
-.role-bubble-en-overlay {
-  position: absolute;
-  top: 48%;
-  right: 18px;
-  background: #fffdfa;
-  border: 2px solid #b83a24;
-  border-radius: 16px;
-  padding: 6px 12px;
+/* English title shown below avatar image only in EN mode */
+.role-en-title {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 700;
   color: #8c2513;
-  font-size: 13px;
-  font-weight: 700;
-  box-shadow: 0 4px 12px rgba(184, 58, 36, 0.2);
-  z-index: 5;
-  animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  pointer-events: none;
+  text-align: center;
+  animation: fadeEnLabel 0.2s ease;
 }
 
-@keyframes popIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* English pill label across bottom of card */
-.role-card-en-pill {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
+/* English label shown below each role card image */
+.role-card-en-label {
   font-size: 13px;
   font-weight: 700;
+  color: #b83a24;
+  text-align: center;
   letter-spacing: 0.3px;
-  z-index: 3;
-  border-radius: 0 0 16px 16px;
-  animation: fadeIn 0.2s ease;
+  animation: fadeEnLabel 0.2s ease;
 }
 
-.role-card-en-pill--patient {
-  background: #c34b35;
-}
-
-.role-card-en-pill--caregiver {
-  background: #366d4c;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes fadeEnLabel {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .role-card-img {
