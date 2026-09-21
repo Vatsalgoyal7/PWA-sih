@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>কি কৰিব? - SmritiSetu</title>
+<style>
+:root {
+  --cream:#fffaf2; --cream2:#f4e8d3; --border:#ddc898;
+  --red:#c95735; --red-dark:#9f452f; --text:#2f241e; --muted:#6f645c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:"Noto Sans Bengali","Nirmala UI","Segoe UI",sans-serif;color:var(--text)}
+body{background:linear-gradient(rgba(255,250,242,.16),rgba(255,250,242,.16)),url("./assets/bg_main.png") center/cover fixed no-repeat}
+button{font:inherit}
+.app{min-height:100vh;padding:8px;display:flex;justify-content:center}
+.phone{width:min(100%,520px);min-height:calc(100vh - 16px);background:rgba(255,255,255,.86);border-radius:24px;overflow:hidden;box-shadow:0 14px 40px rgba(72,43,25,.17);display:flex;flex-direction:column}
+.header {
+  min-height: 64px;
+  height: 64px;
+  display: grid;
+  grid-template-columns: 44px 1fr auto; /* Sightly tighter home icon column */
+  align-items: center;
+  gap: 6px;
+  padding: 8px 6px;
+  background: rgba(255, 252, 247, .97);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-title {
+  text-align: center;
+  font-size: clamp(16px, 4.5vw, 22px); /* Scales font down dynamically on smaller screens */
+  font-weight: 900;
+  line-height: 1.1;
+  min-width: 0; /* Critical: prevents grid cell from bursting past its parent */
+  overflow: hidden;
+}
+
+.header-title span {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-subtitle {
+  display: block;
+  margin-top: 2px;
+  font-size: clamp(11px, 3vw, 13px); /* Responsive subtitle sizing */
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* Tighter gap between language and speaker buttons */
+}
+.icon-btn,.lang-btn{cursor:pointer;border:2px solid var(--border);box-shadow:0 3px 8px rgba(67,44,27,.10)}
+.icon-btn img{width:100%;height:100%;object-fit:contain;border-radius:50%}
+.lang-btn {
+  height: 42px;
+  min-width: 48px;
+  padding: 0 10px; 
+  border-radius: 21px;
+  background: var(--red);
+  border: 2px solid var(--red);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  padding: 5px;
+  background: #fff;
+  display: grid;
+  place-items: center;
+}
+.screen{display:none;flex:1;min-height:0;overflow-y:auto;padding:16px 14px 24px}
+.screen.active{display:flex;flex-direction:column}
+.welcome{justify-content:center;align-items:center;text-align:center;min-height:calc(100vh - 80px)}
+.welcome-avatar {
+    width: min(78vw, 340px);
+    height: min(78vw, 390px);
+    object-fit: contain;
+    display: block;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 8px 14px rgba(71,43,28,.16));
+}
+.welcome-title {
+    font-size: 34px;
+    color: var(--red-dark);
+    margin: 5px 0 10px;
+    font-weight: 900;
+}
+
+.welcome-text {
+    font-size: 21px;
+    color: var(--text);
+    line-height: 1.6;
+    max-width: 420px;
+    margin: 0 0 25px;
+    font-weight: 800;
+    text-align: center;
+}
+.primary-btn {
+    width: min(100%, 360px);
+    border: 0;
+    border-radius: 15px;
+    padding: 16px 18px;
+    background: var(--red);
+    color: #fff;
+    font-size: 21px;
+    font-weight: 900;
+    cursor: pointer;
+}
+.scenario{gap:12px}
+
+.scene-box{width:100%;background:#fff;border:3px solid var(--border);border-radius:18px;padding:6px;box-shadow:0 5px 15px rgba(72,48,31,.09)}
+.scene-image{display:block;width:100%;height:min(55vw,350px);min-height:230px;object-fit:contain;border-radius:12px;background:#f6eee1}
+.avatar-row{display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(255,255,255,.9);border:2px solid var(--border);border-radius:15px}
+.avatar-small{width:58px;height:72px;object-fit:contain}
+.avatar-name{font-size:14px;font-weight:900}
+.question {
+    background: rgba(255, 252, 246, .95);
+    border: 2px solid var(--border);
+    border-radius: 17px;
+    padding: 16px 14px;
+    text-align: center;
+    box-shadow: 0 4px 11px rgba(70,49,32,.07);
+}
+
+.question-as {
+    font-size: clamp(22px, 6vw, 28px);
+    line-height: 1.45;
+    font-weight: 900;
+    color: #2f241e;
+    text-align: center;
+}
+
+.question-en {
+    display: none;
+    margin-top: 6px;
+    font-size: clamp(19px, 5vw, 25px);
+    line-height: 1.5;
+    font-weight: 800;
+    color: #2f241e;
+    text-align: center;
+}
+
+body.english .question-as {
+    display: none;
+}
+
+body.english .question-en {
+    display: block;
+}
+
+
+/* Answer options */
+
+.choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 11px;
+}
+
+.choice {
+    min-height: 160px;
+    padding: 7px;
+    background: #f3e8cd;
+    border: 3px solid #ddc898;
+    border-radius: 16px;
+    box-shadow: 0 4px 11px rgba(70,49,32,.08);
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.choice:disabled {
+    opacity: .72;
+    cursor: default;
+}
+
+.choice img {
+    width: 100%;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #f3e8cd;
+}
+
+.choice-label {
+    width: 100%;
+    padding: 6px 3px;
+    background: #f3e8cd;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 900;
+    color: #2f241e;
+    text-align: center;
+}
+
+.choice-label-as {
+    display: block;
+}
+
+.choice-label-en {
+    display: none;
+    font-size: 15px;
+    font-weight: 800;
+    color: #5f5148;
+}
+
+body.english .choice-label-as {
+    display: none;
+}
+
+body.english .choice-label-en {
+    display: block;
+} 
+body.english .choice-en{display:block}
+.feedback {
+    position: fixed;
+    inset: 0;
+    display: none;
+    place-items: center;
+    padding: 14px;
+    background: rgba(45, 29, 20, .57);
+    z-index: 100;
+}
+
+.feedback.show {
+    display: grid;
+}
+
+.feedback-card {
+    width: min(100%, 460px);
+    max-height: 92vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 24px;
+    padding: 24px 18px 22px;
+    text-align: center;
+    box-shadow: 0 20px 45px rgba(0,0,0,.25);
+}
+
+.feedback-avatar {
+    width: min(75vw, 300px);
+    height: min(75vw, 360px);
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 12px;
+}
+
+.feedback-as {
+    font-size: clamp(22px, 6vw, 30px);
+    font-weight: 900;
+    color: var(--red-dark);
+    line-height: 1.45;
+}
+
+.feedback-en {
+    display: none;
+    margin-top: 10px;
+    font-size: clamp(18px, 5vw, 24px);
+    font-weight: 700;
+    color: #5f5148;
+    line-height: 1.5;
+}
+
+body.english .feedback-as {
+    display: none;
+}
+
+body.english .feedback-en {
+    display: block;
+}
+
+.continue {
+    width: 100%;
+    margin-top: 20px;
+    padding: 17px 18px;
+    font-size: 21px;
+    font-weight: 900;
+    border-radius: 16px;
+}
+@media (max-width: 380px) {
+
+    .feedback-card {
+        padding: 18px 14px 18px;
+        border-radius: 20px;
+    }
+
+    .feedback-avatar {
+        width: 68vw;
+        height: 75vw;
+        max-height: 300px;
+    }
+
+    .feedback-as {
+        font-size: 23px;
+    }
+
+    .feedback-en {
+        font-size: 18px;
+    }
+
+    .continue {
+        font-size: 20px;
+        padding: 15px;
+    }
+}
+.completion {
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    min-height: calc(100vh - 80px);
+    padding-top: 35px;
+}
+
+.completion-avatar {
+    width: min(75vw, 320px);
+    height: min(75vw, 390px);
+    object-fit: contain;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.completion-title {
+    font-size: clamp(32px, 8vw, 42px);
+    color: var(--red-dark);
+    font-weight: 900;
+    line-height: 1.2;
+    margin: 8px 0 10px;
+}
+
+.completion-sub {
+    font-size: clamp(19px, 5vw, 24px);
+    color: #5f5148;
+    font-weight: 700;
+    line-height: 1.55;
+    margin: 0 0 24px;
+    max-width: 430px;
+    text-align: center;
+}
+
+.completion-sub #completionAs,
+.completion-sub #completionEn {
+    font-weight: 700;
+}
+
+#restartBtn {
+    width: min(90%, 380px);
+    padding: 17px 18px;
+    font-size: 21px;
+    font-weight: 900;
+    border-radius: 16px;
+}
+@media (min-width:700px){
+  .phone{height:calc(100vh - 16px)}
+  .scene-image{height:400px}
+}
+@media (max-width: 380px) {
+
+    .completion {
+        padding-top: 20px;
+    }
+
+    .completion-avatar {
+        width: 76vw;
+        height: 76vw;
+        max-height: 330px;
+    }
+
+    .completion-title {
+        font-size: 34px;
+    }
+
+    .completion-sub {
+        font-size: 19px;
+        padding: 0 8px;
+    }
+
+    #restartBtn {
+        width: 92%;
+        font-size: 20px;
+        padding: 15px;
+    }
+}
+@media (max-width:380px){
+
+  .header{
+    height:58px;
+    grid-template-columns:42px 1fr auto;
+    padding:6px;
+  }
+
+  .icon-btn,.lang-btn{
+    height:40px;
+  }
+
+  .icon-btn{
+    width:40px;
+  }
+
+  .lang-btn{
+    min-width:47px;
+  }
+
+  .welcome-avatar{
+    width:78vw;
+    height:82vw;
+    max-height:360px;
+    object-fit:contain;
+  }
+
+  .scene-image{
+    height:53vw;
+    min-height:210px;
+  }
+
+  .choice{
+    min-height:135px;
+  }
+
+  .choice img{
+    height:98px;
+  }
+
+}
+</style>
+</head>
+<body>
+<div class="app"><div class="phone">
+
+<header class="header">
+  <button class="icon-btn" id="homeBtn" aria-label="Home"><img src="./assets/icon_home.png" alt="Home"></button>
+  <div class="header-title">
+  <span id="headerTitle">কি কৰিব?</span>
+  </div>
+  <div class="header-right">
+    <button class="lang-btn" id="langBtn" aria-label="Change language">EN</button>
+    <button class="icon-btn" id="speakerBtn" aria-label="Repeat question"><img src="./assets/icon_speaker.png" alt="Repeat"></button>
+  </div>
+</header>
+
+<section class="screen active welcome" id="welcomeScreen">
+  <img class="welcome-avatar" src="./assets/avatar_idle.png" alt="জয়া খুৰী">
+  <p class="welcome-text" id="welcomeText">তলৰ ছবিখন চাওঁক আৰু সঠিক বস্তুটো বাছি লওঁক।</p>
+  <button class="primary-btn" id="playBtn">খেলোঁ</button>
+</section>
+
+<section class="screen scenario" id="scenarioScreen">
+  <div class="scene-box"><img id="scenarioImage" class="scene-image" alt=""></div>
+  <div class="question">
+    <div id="questionAs" class="question-as"></div>
+    <div id="questionEn" class="question-en"></div>
+  </div>
+  <div id="choices" class="choices"></div>
+</section>
+
+<section class="screen completion" id="completionScreen">
+  <img id="completionAvatar" class="completion-avatar" src="./assets/avatar_happy.png" alt="জয়া খুৰী">
+  <div id="completionTitle" class="completion-title">দুৰ্দান্ত!</div>
+  <div class="completion-sub">
+    <span id="completionAs">আপুনি সকলো পৰিস্থিতি সম্পূৰ্ণ কৰিলে। বৰ ভাল!</span>
+    <span id="completionEn" style="display:none">You've completed all the scenarios. Great job!</span>
+  </div>
+  <button id="restartBtn" class="primary-btn">আকৌ খেলোঁ</button>
+</section>
+
+</div></div>
+
+<audio id="introAudio" preload="auto" autoplay>
+  <source src="./assets/g10_audio_intro_greeting.mp3" type="audio/mpeg">
+</audio>
+
+<div class="feedback" id="feedbackModal">
+  <div class="feedback-card">
+    <img id="feedbackAvatar" class="feedback-avatar" src="./assets/avatar_gentle.png" alt="জয়া খুৰী">
+    <div id="feedbackAs" class="feedback-as"></div>
+    <div id="feedbackEn" class="feedback-en"></div>
+    <button id="continueBtn" class="primary-btn continue">আগলৈ যাওঁ</button>
+  </div>
+</div>
+
+<script>
+const scenarios = [
+            {
+                id: 1,
+                sceneImage: './assets/g10_scene_raining_day.png',
+                questionAssamese: 'বাহিৰত বৰষুণ দি আছে। ওলাই গ\'লে আপুনি লগত কি নিব?',
+                questionEnglish: 'It is raining outside. If you step out, what will you carry with you?',
+                audioQuestion: './assets/g10_audio_q_raining_day.mp3',
+                choices: [
+                    {
+                        id: 'umbrella',
+                        image: './assets/g10_opt_umbrella.png',
+                        label: 'Umbrella',
+                        isCorrect: true,
+                        audioLabel: './assets/g10_audio_opt_umbrella.mp3'
+                    },
+                    {
+                        id: 'fan',
+                        image: './assets/g10_opt_hand_fan.png',
+                        label: 'Hand Fan',
+                        isCorrect: false,
+                        audioLabel: './assets/g10_audio_opt_hand_fan.mp3'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                sceneImage: './assets/g10_scene_guest_arrived.png',
+                questionAssamese: 'ঘৰলৈ মানুহ আহিছে। আপুনি প্ৰথমে কি আগবঢ়াই দিব?',
+                questionEnglish: 'A guest has arrived at home. What will you offer them first?',
+                audioQuestion: './assets/g10_audio_q_guest_arrived.mp3',
+                choices: [
+                    {
+                        id: 'paan',
+                        image: './assets/g10_opt_tamul_paan.png',
+                        label: 'Betel Nut & Leaf',
+                        isCorrect: true,
+                        audioLabel: './assets/g10_audio_opt_tamul_paan.mp3'
+                    },
+                    {
+                        id: 'broom',
+                        image: './assets/g10_opt_broom.png',
+                        label: 'Broom',
+                        isCorrect: false,
+                        audioLabel: './assets/g10_audio_opt_broom.mp3'
+                    }
+                ]
+            },
+            {
+                id: 3,
+                sceneImage: './assets/g10_scene_sunny_field.png',
+                questionAssamese: 'বৰ ৰ\'দ দি আছে। মূৰত কি ল\'লে ভাল হ\'ব?',
+                questionEnglish: 'The sun is very hot. What would be good to cover your head with?',
+                audioQuestion: './assets/g10_audio_q_sunny_field.mp3',
+                choices: [
+                    {
+                        id: 'jaapi',
+                        image: './assets/g10_opt_jaapi.png',
+                        label: 'Jaapi (Hat)',
+                        isCorrect: true,
+                        audioLabel: './assets/g10_audio_opt_jaapi.mp3'
+                    },
+                    {
+                        id: 'muffler',
+                        image: './assets/g10_opt_woolen_muffler.png',
+                        label: 'Woolen Muffler',
+                        isCorrect: false,
+                        audioLabel: './assets/g10_audio_opt_woolen_muffler.mp3'
+                    }
+                ]
+            }
+        ];
+const feedbackMessages = {
+            positive: [
+                { assamese: 'একদম সঠিক সিদ্ধান্ত! বৰ সুন্দৰ হ\'ল।', english: 'Absolutely right! That was perfect!' },
+                { assamese: 'বহুত ভাল! আপুনি একো কথা বুজি পালে।', english: 'Very good! You understand everything well.' },
+                { assamese: 'দুৰ্দান্ত সিদ্ধান্ত! মই আপোনাক ভালপাই।', english: 'Wonderful choice! I\'m so happy with you.' }
+            ],
+            encouragement: [
+                { assamese: 'একো কথা নাই, আমি আকৌ এবাৰ ভাবি সাম। চেষ্টা কৰাটোৱেই ডাঙৰ কথা!', english: 'No worries, we can think about it again. Trying is what matters most!' },
+                { assamese: 'চিন্তা নকৰিব, এইটো ঠিকে আছে। আপুনি বৰ ভাল কৰছেন।', english: 'Don\'t worry, that\'s okay. You\'re doing very well.' },
+                { assamese: 'কোন সমস্যা নাই। প্ৰতিটি চেষ্টা গুৰুত্বপূর্ণ।', english: 'No problem at all. Every try is important.' }
+            ]
+        };
+
+const labels = {
+  umbrella:{as:"ছাতি",en:"Umbrella"},
+  fan:{as:"হাত পাংখা",en:"Hand Fan"},
+  paan:{as:"তামোল-পাণ",en:"Betel Nut & Leaf"},
+  broom:{as:"সাৰি",en:"Broom"},
+  jaapi:{as:"জাপি",en:"Jaapi (Hat)"},
+  muffler:{as:"উলৰ মাফ্লাৰ",en:"Woolen Muffler"}
+};
+const ui = {
+  as: {
+    title: "কি কৰিব?", subtitle: "কি কৰিব লাগে?", welcomeTitle: "কি কি কৰিব?",
+    welcomeText: "তলৰ ছবিখন চাওঁক আৰু সঠিক বস্তুটো বাছি লওঁক।", play: "খেলোঁ",
+    next: "আগলৈ যাওঁ", progress: (n,t) => `পৰিস্থিতি ${n} / ${t}`,
+    completion: "দুৰ্দান্ত!", completionSub: "আপুনি সকলো পৰিস্থিতি সম্পূৰ্ণ কৰিলে। বৰ ভাল!",
+    restart: "আকৌ খেলোঁ", avatar: "জয়া খুৰী",
+    confirm: "ঘৰলৈ উভতি যাবনে? আপোনাৰ অগ্ৰগতি মচি যাব।"
+  },
+  en: {
+    title: "What Would You Do?", subtitle: "Choose the right thing to do.",
+    welcomeTitle: "What Would You Do?",
+    welcomeText: "Look at the picture and choose the right thing.", play: "Play",
+    next: "Continue", progress: (n,t) => `Scenario ${n} / ${t}`,
+    completion: "Excellent!", completionSub: "You've completed all the scenarios. Great job!",
+    restart: "Play Again", avatar: "Jaya Khuri",
+    confirm: "Go back home? Your progress will be lost."
+  }
+};
+
+let lang="as", index=0, started=false, activeAudio=null;
+const $=id=>document.getElementById(id);
+
+function stopAudio(){
+  if(activeAudio){activeAudio.pause();activeAudio.currentTime=0;activeAudio=null;}
+}
+function playAudio(src){
+  return new Promise(resolve=>{
+    if(!src){resolve();return;}
+    stopAudio();
+    const a=new Audio(src); activeAudio=a;
+    a.onended=()=>{if(activeAudio===a)activeAudio=null;resolve();};
+    a.onerror=()=>{if(activeAudio===a)activeAudio=null;resolve();};
+    a.play().catch(()=>resolve());
+  });
+}
+function show(screen){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  screen.classList.add("active");
+}
+function applyLanguage() {
+  document.body.classList.toggle("english", lang === "en");
+  
+  // Header
+  $("headerTitle").textContent = ui[lang].title;
+  $("headerTitle").appendChild(
+    Object.assign(document.createElement("span"), {
+      className: "header-subtitle",
+      textContent: ui[lang].subtitle
+    })
+  );
+  
+  // Welcome Screen
+  $("welcomeText").textContent = ui[lang].welcomeText;
+  $("playBtn").textContent = ui[lang].play;
+  
+  // Modal & Control Buttons
+  $("continueBtn").textContent = ui[lang].next;
+  $("restartBtn").textContent = ui[lang].restart;
+  if ($("avatarName")) $("avatarName").textContent = ui[lang].avatar;
+  
+  // Completion Screen
+  $("completionTitle").textContent = ui[lang].completion;
+  $("completionAs").style.display = lang === "as" ? "inline" : "none";
+  $("completionEn").style.display = lang === "en" ? "inline" : "none";
+  
+  // Toggle Button Label
+  $("langBtn").textContent = lang === "as" ? "EN" : "অসমীয়া";
+  
+  // Re-render active scenario if game is active
+  if (started && index < scenarios.length) render(false);
+}
+function render(autoPlay){
+  const s=scenarios[index];
+
+  $("scenarioImage").src=s.sceneImage;
+  $("scenarioImage").alt=lang==="as"?s.questionAssamese:s.questionEnglish;
+  $("questionAs").textContent=s.questionAssamese;
+  $("questionEn").textContent=s.questionEnglish;
+  $("choices").innerHTML="";
+s.choices.forEach(choice => {
+    const b = document.createElement("button");
+    b.className = "choice";
+    b.type = "button";
+
+    b.innerHTML = `
+        <img src="${choice.image}" alt="" class="choice-image">
+
+        <div class="choice-label">
+            <span class="choice-label-as">
+                ${labels[choice.id]?.as || choice.label}
+            </span>
+
+            <span class="choice-label-en">
+                ${labels[choice.id]?.en || choice.label}
+            </span>
+        </div>
+    `;
+
+    b.onclick = () => selectChoice(choice);
+    $("choices").appendChild(b);
+});
+  if(autoPlay)setTimeout(playQuestionAudio,300);
+}
+async function selectChoice(c){
+  document.querySelectorAll(".choice").forEach(b=>b.disabled=true);
+  const correct=c.isCorrect;
+  const list=correct?feedbackMessages.positive:feedbackMessages.encouragement;
+  const fb=list[Math.floor(Math.random()*list.length)];
+  await playAudio(c.audioLabel);
+  $("feedbackAvatar").src=correct?"./assets/avatar_happy.png":"./assets/avatar_gentle.png";
+  $("feedbackAs").textContent=fb.assamese;
+  $("feedbackEn").textContent=fb.english;
+  $("feedbackModal").classList.add("show");
+  await playAudio(correct?"./assets/g10_audio_feedback_correct.mp3":"./assets/g10_audio_feedback_incorrect_common.mp3");
+}
+async function playQuestionAudio(){
+  const s=scenarios[index];
+  if(!s?.audioQuestion)return;
+  $("speakerBtn").style.transform="scale(1.08)";
+  await playAudio(s.audioQuestion);
+  $("speakerBtn").style.transform="";
+}
+function startGame(){
+  const introAudio = $("introAudio");
+  if (introAudio) {
+    introAudio.pause();
+    introAudio.currentTime = 0;
+  }
+
+  started=true;
+  index=0;
+  show($("scenarioScreen"));
+  render(true);
+}
+function next(){
+  $("feedbackModal").classList.remove("show"); stopAudio(); index++;
+  if(index>=scenarios.length)show($("completionScreen"));
+  else{show($("scenarioScreen"));render(true);}
+}
+
+$("playBtn").onclick=startGame;
+$("continueBtn").onclick=next;
+$("restartBtn").onclick=()=>{stopAudio();index=0;started=true;show($("scenarioScreen"));render(true);};
+$("speakerBtn").onclick=playQuestionAudio;
+$("langBtn").onclick=()=>{lang=lang==="as"?"en":"as";applyLanguage();};
+$("homeBtn").onclick=()=>{if(confirm(ui[lang].confirm)){stopAudio();$("feedbackModal").classList.remove("show");started=false;index=0;show($("welcomeScreen"));applyLanguage();}};
+
+applyLanguage();
+
+/*
+  Try to start the intro immediately when the page loads.
+  Autoplay must also be allowed by the browser/site settings.
+*/
+window.addEventListener("load", () => {
+  const introAudio = $("introAudio");
+  if (!introAudio) return;
+
+  introAudio.volume = 1.0;
+  const result = introAudio.play();
+
+  if (result && typeof result.catch === "function") {
+    result.catch(err => {
+      console.log("Intro autoplay was blocked by the browser:", err);
+    });
+  }
+});
+</script>
+</body>
+</html>

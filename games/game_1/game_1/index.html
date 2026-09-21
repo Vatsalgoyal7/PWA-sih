@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SmritiSetu — Ki Utsav?</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app">
+
+    <!-- ========== HEADER (always visible) ========== -->
+    <header id="header">
+        <button id="btn-home" class="btn-circle btn-home" aria-label="Home" style="visibility:hidden;">
+            <img src="images/icon_home.png" alt="Home">
+        </button>
+        <button id="btn-lang" class="btn-circle btn-lang" aria-label="Toggle Language">
+            অ
+        </button>
+    </header>
+
+    <!-- ========== SCREEN: HOME ========== -->
+    <main id="screen-home" class="screen screen--active">
+        <div class="home">
+            <img src="images/avatar_idle.png" alt="SmritiSetu Avatar" class="home__avatar">
+            <h1 id="home-title" class="home__title">বছৰটোকি লাগে?</h1>
+            <div class="home__buttons">
+                <button id="btn-home-speak" class="btn-circle btn-speak" aria-label="Listen">
+                    <img src="images/icon_speaker.png" alt="Listen">
+                </button>
+                <button id="btn-play" class="btn-play">খেলক</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- ========== SCREEN: GAME ========== -->
+    <main id="screen-game" class="screen">
+        <div class="game">
+            <!-- Avatar + speaker -->
+            <div class="game__top">
+                <img id="game-avatar" src="images/avatar_idle.png" alt="Avatar" class="game__avatar">
+                <button id="btn-repeat" class="btn-circle btn-speak" aria-label="Repeat question">
+                    <img src="images/icon_speaker.png" alt="Repeat">
+                </button>
+            </div>
+
+            <!-- Question text in bordered box -->
+            <div class="game__question-box">
+                <p id="game-question">এইটো কি উৎসৱ?</p>
+            </div>
+
+            <!-- Photo (the main scene) -->
+            <div class="game__photo-wrapper">
+                <img id="game-photo" src="images/rongali_bihu_scene.jpg" alt="Festival photograph" class="game__photo">
+            </div>
+
+            <!-- Options — 3 stacked horizontal cards -->
+            <div id="options-area" class="game__options">
+                <!-- JS fills this -->
+            </div>
+        </div>
+
+        <!-- Feedback overlay -->
+        <div id="feedback-overlay" class="feedback" aria-live="polite">
+            <img id="feedback-avatar" src="images/avatar_happy.png" alt="" class="feedback__avatar">
+            <p id="feedback-text" class="feedback__text"></p>
+        </div>
+    </main>
+
+</div>
+
+<audio id="audio-player" preload="auto"></audio>
+<script src="js/script.js"></script>
+</body>
+</html>
