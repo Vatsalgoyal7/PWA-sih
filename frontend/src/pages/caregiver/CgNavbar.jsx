@@ -10,7 +10,6 @@ const NAV_ITEMS = [
   { id: 'games',     icon: '🎮', label: 'Games' },
   { id: 'health',    icon: '🧠', label: 'Health' },
   { id: 'reports',   icon: '📊', label: 'Reports' },
-  { id: 'profile',   icon: '👤', label: 'Profile' },
 ]
 
 export default function CgNavbar({ activeTab, onTab }) {

@@ -132,6 +132,8 @@ export default function CaregiverHome({ onChangeRole }) {
         {isEn ? 'Master Management Controls' : 'মাষ্টাৰ নিয়ন্ত্ৰণ তালিকা'}
       </div>
 
+
+      {/* 5 Core Management Modules */}
       <button
         type="button"
         className={`cg-drawer-item ${activeModule === 'dashboard' ? 'active' : ''}`}
@@ -191,18 +193,6 @@ export default function CaregiverHome({ onChangeRole }) {
         </div>
         <span className="cg-drawer-badge">Export</span>
       </button>
-
-      <button
-        type="button"
-        className={`cg-drawer-item ${activeModule === 'profile' ? 'active' : ''}`}
-        onClick={() => handleSelectModule('profile')}
-      >
-        <div className="cg-drawer-item-left">
-          <span>👤</span>
-          <span>{isEn ? 'Safety, SOS & PIN Lock' : 'সুৰক্ষা আৰু পিন লক'}</span>
-        </div>
-        <span className="cg-drawer-badge">Shield</span>
-      </button>
     </>
   )
 
@@ -250,10 +240,16 @@ export default function CaregiverHome({ onChangeRole }) {
             <span>{isEn ? 'EN' : 'অ'}</span>
           </button>
 
-          {/* Caregiver Initial Avatar */}
-          <div className="cg-avatar-badge" title="Caregiver Superuser">
-            C
-          </div>
+          {/* Interactive Settings / Profile Button (Instagram/Snapchat Style) */}
+          <button
+            type="button"
+            className={`cg-settings-btn ${activeModule === 'profile' ? 'active' : ''}`}
+            onClick={() => handleSelectModule('profile')}
+            title="Caregiver Profile & App Settings"
+          >
+            <span className="cg-settings-avatar">⚙️</span>
+            <span className="cg-btn-text-desktop">{isEn ? 'Settings' : 'ছেটিংছ'}</span>
+          </button>
 
           {/* Switch Role Back */}
           <button
