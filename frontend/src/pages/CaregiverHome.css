@@ -216,7 +216,7 @@
 .cg-content-inner {
   width: 100%;
   max-width: 100%;
-  margin: 0 auto;
+  margin: 0;
 }
 
 /* ── Mobile Drawer (For < 1024px) ── */
@@ -356,8 +356,9 @@
   }
 
   .cg-content-inner {
-    max-width: 720px;
-    padding: 0 16px;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
   }
 
   .cg-btn-text-desktop {
@@ -371,7 +372,7 @@
 
 /* ============================================================
    LAPTOP / DESKTOP RESPONSIVE (min-width: 1024px)
-   Chakravyuh Web Desk Architecture
+   Chakravyuh Web Desk Architecture — Fit to Screen
    ============================================================ */
 @media (min-width: 1024px) {
   /* Hide Mobile Drawer Toggle & Bottom Bar */
@@ -416,14 +417,17 @@
     background-color: var(--cg-surface-elevated);
   }
 
-  /* Main Content stretches for wide reading */
+  /* Main Content stretches edge-to-edge for 100% Fit to Screen */
   .cg-content {
     padding: 24px 32px;
     padding-bottom: 40px;
+    width: 100%;
   }
 
   .cg-content-inner {
-    max-width: 1100px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
     padding: 0;
   }
 }
@@ -433,11 +437,13 @@
    ============================================================ */
 @media (min-width: 1440px) {
   .cg-desktop-sidebar {
-    width: 290px;
+    width: 280px;
   }
 
   .cg-content-inner {
-    max-width: 1240px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
   }
 }
 

@@ -121,7 +121,7 @@ function MoodTab() {
   }
 
   return (
-    <div className="cgh-section">
+    <div className="cgh-section cgh-grid-2col">
       <div className="cgh-card">
         <h3 className="cgh-card-title">Today's Mood</h3>
         <p className="cgh-card-sub">How is the patient feeling today?</p>
@@ -552,7 +552,7 @@ function VitalsTab() {
   })
 
   return (
-    <div className="cgh-section">
+    <div className="cgh-section cgh-grid-2col">
       <div className="cgh-card">
         <h3 className="cgh-card-title">Log Today's Vitals</h3>
         <p className="cgh-card-sub">{todayStr}</p>

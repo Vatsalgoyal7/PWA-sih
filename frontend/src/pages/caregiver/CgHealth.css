@@ -52,6 +52,22 @@
   padding: 22px;
   box-shadow: var(--cg-shadow, 0 4px 14px rgba(0, 0, 0, 0.04));
   border: var(--cg-card-border, 1px solid #edf2f7);
+  width: 100%;
+}
+
+.cgh-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .cgh-grid-2col {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
 }
 
 .cgh-card-title {
