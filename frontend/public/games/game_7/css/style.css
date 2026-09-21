@@ -1,0 +1,352 @@
+/* Dementia-Friendly Design System for SmritiSetu */
+:root {
+    --primary: #C65D3E; /* Terracotta */
+    --primary-dark: #A3482D;
+    --background: #FAF3E8; /* Cream */
+    --surface: #FFFFFF;
+    --text-dark: #1A1A1A;
+    --text-light: #FFFFFF;
+    --accent-green: #6B8E6B;
+    --accent-yellow: #D4A03C;
+    
+    --font-size-base: 22px; /* > 20pt minimum */
+    --font-size-heading: 32px;
+    --font-weight-bold: 700;
+    
+    --target-min: 56px; /* Generous > 48px target */
+    --spacing-base: 16px;
+    --spacing-large: 24px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Noto Sans Bengali', 'Nunito', system-ui, sans-serif;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    background-color: var(--background);
+    background-image: url('../images/bg_main.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: var(--text-dark);
+    line-height: 1.4;
+    user-select: none; /* Prevent accidental text selection */
+    overflow-x: hidden;
+}
+
+/* Base UI Elements */
+button {
+    font-family: inherit;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-base);
+    border: none;
+    cursor: pointer;
+    min-height: var(--target-min);
+    min-width: var(--target-min);
+    border-radius: 12px;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Layout */
+.screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: var(--spacing-base);
+    padding-top: 80px; /* Space for nav */
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Top Navigation */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-base);
+    z-index: 100;
+}
+
+.nav-btn {
+    background-color: var(--primary);
+    color: var(--text-light);
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.nav-btn svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
+}
+
+.nav-btn.hidden {
+    visibility: hidden;
+}
+
+/* Avatars */
+.avatar-container {
+    height: 35vh;
+    margin-bottom: var(--spacing-large);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.avatar {
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.game-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: var(--spacing-large);
+}
+
+.avatar-container-small {
+    position: relative;
+    height: 240px; /* Greatly increased avatar size */
+    margin-bottom: var(--spacing-large);
+}
+
+.avatar-small {
+    height: 100%;
+}
+
+.small-speak {
+    position: absolute;
+    bottom: -15px;
+    right: -30px;
+    width: 88px; /* Bigger speaker button */
+    height: 88px;
+    border-radius: 50%;
+}
+
+/* Typography */
+.title-text {
+    font-size: var(--font-size-heading);
+    text-align: center;
+    margin-bottom: var(--spacing-large);
+    color: var(--text-dark);
+}
+
+.heading-text {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: var(--spacing-base);
+    background-color: var(--surface);
+    padding: 12px 24px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 2px solid var(--text-dark);
+}
+
+/* Actions */
+.action-row {
+    display: flex;
+    gap: var(--spacing-large);
+    align-items: center;
+    margin-top: 60px;
+    margin-bottom: var(--spacing-large);
+}
+
+.speak-btn {
+    background-color: var(--primary);
+    border-radius: 50%;
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(198, 93, 62, 0.4);
+}
+
+.speak-btn svg {
+    width: 36px;
+    height: 36px;
+    fill: white;
+}
+
+.primary-btn {
+    background-color: var(--primary);
+    color: var(--text-light);
+    padding: 0 40px;
+    border-radius: 36px;
+    height: 72px;
+    font-size: 28px;
+    box-shadow: 0 4px 8px rgba(198, 93, 62, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Scenarios */
+.scenario-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-large);
+    width: 100%;
+    max-width: 500px;
+}
+
+.scenario-card {
+    background-color: var(--surface);
+    border: 3px solid var(--primary);
+    border-radius: 20px;
+    padding: var(--spacing-large);
+    padding-right: 70px; /* Space for the speaker button */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-base);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    font-size: 26px;
+    color: var(--text-dark);
+    position: relative; /* For the speaker button */
+}
+
+.scenario-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Game Grid */
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-large);
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 120px;
+}
+
+.item-card {
+    background-color: var(--surface);
+    border: 4px solid #E0E0E0;
+    border-radius: 16px;
+    padding: var(--spacing-base);
+    padding-top: 50px; /* Space for the speaker button */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    min-height: 180px;
+    position: relative; /* For absolute positioning of speaker */
+}
+
+.item-card.selected {
+    border-color: var(--primary);
+    background-color: #FFF2ED; /* very light terracotta tint */
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(198, 93, 62, 0.2);
+}
+
+.card-speak-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(198, 93, 62, 0.4);
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: none;
+}
+
+.card-speak-btn:active {
+    transform: scale(0.9);
+}
+
+.card-speak-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+.item-icon {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.item-name {
+    text-align: center;
+    font-size: 22px;
+    line-height: 1.2;
+}
+
+.bottom-action {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, var(--background) 70%, transparent);
+    padding: var(--spacing-large);
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+}
+
+/* Feedback */
+.feedback-visuals {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-base);
+    margin-bottom: var(--spacing-large);
+    width: 100%;
+    max-width: 600px;
+}
+
+.feedback-visuals .item-card {
+    width: calc(50% - var(--spacing-base));
+    border-color: var(--accent-green);
+    background-color: #F0FFF0;
+}

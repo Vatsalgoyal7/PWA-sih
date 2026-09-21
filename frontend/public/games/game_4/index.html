@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>এইটো চাব! — Etu Cabo!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="game4.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- persistent top bar: translate+home (left), help+listen (right) -->
+  <header class="topbar">
+    <div class="topbar-group">
+      <button id="btnTranslate" class="icon-btn-round" aria-label="Toggle English translation">EN</button>
+      <button id="btnHome" class="icon-btn-round icon-btn-white" aria-label="Home / ঘৰলৈ যাওক">
+        <img src="Assets/icon_home.webp" alt="Home">
+      </button>
+    </div>
+    <div class="topbar-title translatable" data-as="এইটো চাব!" data-en="Look at This!">এইটো চাব!</div>
+    <div class="topbar-group">
+      <button id="btnHelp" class="icon-btn-round icon-btn-white" aria-label="Help / সহায়">
+        <img src="Assets/icon_help.webp" alt="Help">
+      </button>
+      <button id="btnRepeat" class="icon-btn-round icon-btn-white" aria-label="Repeat / Listen">
+        <img src="Assets/icon_speaker.webp" alt="Listen">
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ SCREEN A: AVATAR GREETING (HOME) ============ -->
+  <section id="screen-home" class="screen active">
+    <div class="avatar-banner" id="heroImage" aria-hidden="true"></div>
+    <p class="lead translatable" data-as="নদীৰ পাৰলৈ চাওক, কিবা এটা ওলালে লাহেকৈ চুই দিয়ক।" data-en="Look at the water, and gently tap whenever you see something appear.">নদীৰ পাৰলৈ চাওক, কিবা এটা ওলালে লাহেকৈ চুই দিয়ক।</p>
+    <button id="btnPlay" class="btn btn-primary btn-huge translatable" data-as="খেলক" data-en="Play">খেলক</button>
+  </section>
+
+  <!-- ============ SCREEN B: SUSTAINED ATTENTION SCENE ============ -->
+  <section id="screen-game" class="screen">
+    <p id="gamePrompt" class="prompt-as translatable" data-as="ভালদৰে চাওক আৰু মন দি থাকক!" data-en="Watch carefully and stay attentive!">ভালদৰে চাওক আৰু মন দি থাকক!</p>
+    
+    <div class="scene-wrapper">
+      <div class="scene-status">
+        <span class="translatable" data-as="মন কৰা বস্তু:" data-en="Spotted items:">মন কৰা বস্তু:</span>
+        <div class="status-dots" id="statusDots">
+          <div class="status-dot"></div>
+          <div class="status-dot"></div>
+          <div class="status-dot"></div>
+          <div class="status-dot"></div>
+          <div class="status-dot"></div>
+          <div class="status-dot"></div>
+          <div class="status-dot"></div>
+          <div class="status-dot"></div>
+          <div class="status-dot"></div>
+          <div class="status-dot"></div>
+        </div>
+      </div>
+
+      <!-- Peaceful interactive river scene -->
+      <div id="riverScene" class="river-scene" aria-label="River Observation Scene">
+        <div class="river-bank"></div>
+        <div class="water-ripple r1"></div>
+        <div class="water-ripple r2"></div>
+        <div class="water-ripple r3"></div>
+        <div class="lily-pad p1"></div>
+        <div class="lily-pad p2"></div>
+        <div class="river-reeds"></div>
+        
+        <!-- dynamic spawning container -->
+        <div id="targetContainer"></div>
+      </div>
+
+      <!-- Gentle feedback toast -->
+      <div id="gentleToast" class="gentle-toast translatable" data-as="বৰ ধুনীয়া! আপুনি দেখা পালে।" data-en="Wonderful! You spotted it.">বৰ ধুনীয়া! আপুনি দেখা পালে।</div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN C: LEVEL COMPLETE ============ -->
+  <section id="screen-complete" class="screen">
+    <div class="avatar-banner" id="heroImageComplete" aria-hidden="true"></div>
+    <p class="prompt-as translatable" data-as="বৰ ধুনীয়া হৈছে! আপোনাৰ মনযোগ বহুত ভাল।" data-en="Very well done! Your attention was wonderful.">বৰ ধুনীয়া হৈছে! আপোনাৰ মনযোগ বহুত ভাল।</p>
+    <button id="btnPlayAgain" class="btn btn-primary btn-huge translatable" data-as="আকৌ খেলক" data-en="Play again">আকৌ খেলক</button>
+    <button id="btnGoHome" class="btn btn-secondary btn-huge" aria-label="Home / ঘৰলৈ যাওক">
+      <img src="Assets/icon_home.webp" alt="Home" class="btn-icon">
+    </button>
+  </section>
+
+  <!-- ============ HELP MODAL ============ -->
+  <div id="helpModal" class="modal-backdrop">
+    <div class="modal">
+      <p class="prompt-as translatable" data-as="একো ভয় নকৰিব। ছবিখনলৈ চাওক, হাঁহ বা নাও ওলালে আঙুলিৰে চুই দিয়ক। কোনো খৰখেদা নাই।" data-en="Don't worry at all. Look at the picture, and tap when a duck or boat appears. There is no rush.">একো ভয় নকৰিব। ছবিখনলৈ চাওক, হাঁহ বা নাও ওলালে আঙুলিৰে চুই দিয়ক। কোনো খৰখেদা নাই।</p>
+      <button id="btnSpeakHelp" class="icon-btn-round icon-btn-white" style="margin: 6px auto 14px;" aria-label="Listen">
+        <img src="Assets/icon_speaker.webp" alt="Listen">
+      </button>
+      <button id="btnCloseHelp" class="btn btn-primary btn-huge translatable" data-as="বুজিলোঁ" data-en="Got it">বুজিলোঁ</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- audio player for voice cues -->
+<audio id="player" preload="none"></audio>
+
+<script src="game4.js"></script>
+</body>
+</html>

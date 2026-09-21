@@ -1,9 +1,8 @@
-﻿import { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import topStripImg  from "../assets/role-gamusa-strip.png"
 import leftBrooch   from "../assets/upper-left-gamosa.png"
 import rightBrooch  from "../assets/upper-right-gamosa.png"
 import grannyImg    from "../assets/granny_gamer.png"
-import sceneryImg   from "../assets/role-scenery-full.png"
 import game1  from "../assets/game1-ki-utsav.png"
 import game2  from "../assets/game2-ki-ki-silo.png"
 import game3  from "../assets/game3-kot-gol.png"
@@ -33,7 +32,7 @@ const ALL_GAMES = [
   { id: "game8",  labelAs: "মিলাই দিয়া",          labelEn: "Match them",               img: game8,  color: "teal"   },
   { id: "game9",  labelAs: "বাকি ক'তটা?",         labelEn: "How many are left?",       img: game9,  color: "pink"   },
   { id: "game10", labelAs: "কি কৰিব?",            labelEn: "What should be done?",     img: game10, color: "yellow" },
-  { id: "game11", labelAs: "বিশেষ খেলা",           labelEn: "Describe Your Day",        img: game11, color: "blue"   },
+  { id: "game11", labelAs: "দিনটো কওক",           labelEn: "Describe Your Day",        img: game11, color: "blue"   },
 ]
 
 const GAME_MAP = Object.fromEntries(ALL_GAMES.map(g => [g.id, g]))
@@ -81,7 +80,7 @@ function GamesPage({ onBack }) {
   const launch = (game) => {
     // Placeholder — route into the actual game when game components exist
     console.log("Launching game:", game.id)
-    alert(`খেলা মাতি আনি আছে: ${game.labelAs}`)
+    alert(`খেল আৰম্ভ কৰা হৈছে: ${game.labelAs}`)
   }
 
   return (
@@ -100,7 +99,7 @@ function GamesPage({ onBack }) {
 
         {/* Home / back button */}
         <button className="gp-home-btn" onClick={onBack} aria-label="Back to home">
-          <span aria-hidden="true">⌂</span>
+          <span aria-hidden="true">¦</span>
         </button>
 
         {/* Scrollable centre */}
@@ -155,14 +154,14 @@ function GamesPage({ onBack }) {
             </ul>
           )}
         </div>
-
-        {/* Bottom scenery */}
-        <footer className="gp-scenery" aria-hidden="true">
-          <img src={sceneryImg} alt="" className="gp-scenery-img" />
-        </footer>
+        {/* Lower Gamusa Border Strip */}
+        <div className="gp-top-border" aria-hidden="true" style={{ marginTop: 'auto' }}>
+          <img src={topStripImg} alt="" className="gp-top-strip" />
+        </div>
       </div>
     </div>
   )
 }
 
 export default GamesPage
+

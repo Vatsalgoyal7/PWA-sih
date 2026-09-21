@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>কোনটো বেলেগ? — Bhinno Ke?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="game5.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- persistent top bar: translate+home (left), help+listen (right) -->
+  <header class="topbar">
+    <div class="topbar-group">
+      <button id="btnTranslate" class="icon-btn-round" aria-label="Toggle English translation">EN</button>
+      <button id="btnHome" class="icon-btn-round icon-btn-white" aria-label="Home / ঘৰলৈ যাওক">
+        <img src="Assets/icon_home.webp" alt="Home">
+      </button>
+    </div>
+    <div class="topbar-title translatable" data-as="কোনটো বেলেগ?" data-en="Which Is Different?">কোনটো বেলেগ?</div>
+    <div class="topbar-group">
+      <button id="btnHelp" class="icon-btn-round icon-btn-white" aria-label="Help / সহায়">
+        <img src="Assets/icon_help.webp" alt="Help">
+      </button>
+      <button id="btnRepeat" class="icon-btn-round icon-btn-white" aria-label="Repeat / Listen">
+        <img src="Assets/icon_speaker.webp" alt="Listen">
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ SCREEN A: AVATAR GREETING (HOME) ============ -->
+  <section id="screen-home" class="screen active">
+    <div class="avatar-banner" id="heroImage" aria-hidden="true"></div>
+    <p class="lead translatable" data-as="ছবিবোৰলৈ চাওক আৰু ইয়াৰ মাজত কোনটো বেলেগ, বাছি লওক।" data-en="Look at the pictures and pick the one that is different.">ছবিবোৰলৈ চাওক আৰু ইয়াৰ মাজত কোনটো বেলেগ, বাছি লওক।</p>
+    <button id="btnPlay" class="btn btn-primary btn-huge translatable" data-as="খেলক" data-en="Play">খেলক</button>
+  </section>
+
+  <!-- ============ SCREEN B: SELECTIVE ATTENTION ROUND ============ -->
+  <section id="screen-game" class="screen">
+    <p id="gamePrompt" class="prompt-as translatable" data-as="চাওকচোন, ইয়াৰ মাজত কোনটো বেলেগ?" data-en="Take a look, which one is different?">চাওকচোন, ইয়াৰ মাজত কোনটো বেলেগ?</p>
+    
+    <div class="round-status">
+      <span id="roundLabel" class="translatable" data-as="পৰ্যায় ১ / ৭" data-en="Round 1 of 7">পৰ্যায় ১ / ৭</span>
+      <div class="round-dots" id="roundDots">
+        <div class="round-dot"></div>
+        <div class="round-dot"></div>
+        <div class="round-dot"></div>
+        <div class="round-dot"></div>
+        <div class="round-dot"></div>
+        <div class="round-dot"></div>
+        <div class="round-dot"></div>
+      </div>
+    </div>
+
+    <!-- 4 Cards Grid for Selective Discrimination -->
+    <div id="cardsGrid" class="cards-grid" role="group" aria-label="Item Choices"></div>
+
+    <!-- Gentle feedback toast -->
+    <div id="gentleToast" class="gentle-toast translatable" data-as="একদম শুদ্ধ! এইটোৱেই বেলেগ আছিল।" data-en="Exactly right! This was the different one.">একদম শুদ্ধ! এইটোৱেই বেলেগ আছিল।</div>
+  </section>
+
+  <!-- ============ SCREEN C: LEVEL COMPLETE ============ -->
+  <section id="screen-complete" class="screen">
+    <div class="avatar-banner" id="heroImageComplete" aria-hidden="true"></div>
+    <p class="prompt-as translatable" data-as="বৰ ধুনীয়া হৈছে! আপুনি সকলোবোৰ বেলেগ বস্তু শুদ্ধকৈ বাছিলে।" data-en="Very well done! You found all the different items correctly.">বৰ ধুনীয়া হৈছে! আপুনি সকলোবোৰ বেলেগ বস্তু শুদ্ধকৈ বাছিলে।</p>
+    <button id="btnPlayAgain" class="btn btn-primary btn-huge translatable" data-as="আকৌ খেলক" data-en="Play again">আকৌ খেলক</button>
+    <button id="btnGoHome" class="btn btn-secondary btn-huge" aria-label="Home / ঘৰলৈ যাওক">
+      <img src="Assets/icon_home.webp" alt="Home" class="btn-icon">
+    </button>
+  </section>
+
+  <!-- ============ HELP MODAL ============ -->
+  <div id="helpModal" class="modal-backdrop">
+    <div class="modal">
+      <p class="prompt-as translatable" data-as="একো চিন্তা নকৰিব। ছবি কেইখনলৈ চাওক, যিটো বস্তু বাকীবোৰতকৈ বেলেগ, তাত আঙুলিৰে চুই দিয়ক।" data-en="Don't worry at all. Look at the pictures, and tap the one that is different from the rest.">একো চিন্তা নকৰিব। ছবি কেইখনলৈ চাওক, যিটো বস্তু বাকীবোৰতকৈ বেলেগ, তাত আঙুলিৰে চুই দিয়ক।</p>
+      <button id="btnSpeakHelp" class="icon-btn-round icon-btn-white" style="margin: 6px auto 14px;" aria-label="Listen">
+        <img src="Assets/icon_speaker.webp" alt="Listen">
+      </button>
+      <button id="btnCloseHelp" class="btn btn-primary btn-huge translatable" data-as="বুজিলোঁ" data-en="Got it">বুজিলোঁ</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- audio player for voice cues -->
+<audio id="player" preload="none"></audio>
+
+<script src="game5.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+﻿# Extra reference & temporary files
+*.pdf
+*.txt
+smritisetu-uiux-doc*.md
+MEMORY.md
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

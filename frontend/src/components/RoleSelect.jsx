@@ -1,13 +1,16 @@
+import { useLanguage } from '../context/LanguageContext'
+import LanguageToggle from './LanguageToggle'
 import topStripImg from '../assets/role-gamusa-strip.png'
 import topLeftBrooch from '../assets/upper-left-gamosa.png'
 import topRightBrooch from '../assets/upper-right-gamosa.png'
 import headerImg from '../assets/role-select-header.png'
 import patientBtn from '../assets/role-patient-btn.png'
 import caregiverBtn from '../assets/role-caregiver-btn.png'
-import sceneryImg from '../assets/role-scenery-full.png'
 import './RoleSelect.css'
 
 function RoleSelect({ onSelect }) {
+  const { t, language } = useLanguage()
+
   return (
     <div className="role-select-viewport">
       <div className="role-select-card">
@@ -34,54 +37,74 @@ function RoleSelect({ onSelect }) {
           className="role-corner-brooch role-corner-right"
         />
 
+        {/* Language Toggle Button — top-most z-index */}
+        <LanguageToggle className="role-lang-toggle" />
+
         {/* Center: AI Avatar & Selection Cards aligned together with even spacing */}
         <div className="role-center-content">
           <header className="role-avatar-section">
             <img
               src={headerImg}
-              alt="আপুনি কোন হিচাপে ব্যৱহাৰ কৰিব? (Which role will you use as?)"
+              alt={t('rolePrompt')}
               className="role-avatar-img"
             />
+            {/* English Overlay for Speech Bubble */}
+            {language === 'en' && (
+              <div className="role-speech-bubble-overlay">
+                Who are you using this as?
+              </div>
+            )}
           </header>
 
-          <main className="role-cards-grid" role="group" aria-label="Role selection options">
+          <main className="role-cards-grid" role="group" aria-label={t('rolePrompt')}>
             <button
               type="button"
               className="role-card-btn"
               onClick={() => onSelect('patient')}
-              aria-label="পেচেণ্ট হিচাপে প্ৰৱেশ কৰক (Continue as Patient)"
+              aria-label={t('rolePatientAria')}
             >
               <img
                 src={patientBtn}
-                alt="পেচেণ্ট (Patient)"
+                alt={t('rolePatient')}
                 className="role-card-img"
               />
+              {/* English Overlay for Card Bar */}
+              {language === 'en' && (
+                <div className="role-card-bar-overlay">
+                  Patient
+                </div>
+              )}
             </button>
 
             <button
               type="button"
               className="role-card-btn"
               onClick={() => onSelect('caregiver')}
-              aria-label="কেয়াৰগিভাৰ হিচাপে প্ৰৱেশ কৰক (Continue as Caregiver)"
+              aria-label={t('roleCaregiverAria')}
             >
               <img
                 src={caregiverBtn}
-                alt="কেয়াৰগিভাৰ (Caregiver)"
+                alt={t('roleCaregiver')}
                 className="role-card-img"
               />
+              {/* English Overlay for Card Bar */}
+              {language === 'en' && (
+                <div className="role-card-bar-overlay">
+                  Caregiver
+                </div>
+              )}
             </button>
           </main>
         </div>
 
-        {/* Bottom: River Scenery with traditional Gamusa embroidery border */}
-        <footer className="role-scenery-section">
+        {/* Lower Gamusa Border Strip */}
+        <div className="role-top-border-wrapper" aria-hidden="true" style={{ marginTop: 'auto' }}>
           <img
-            src={sceneryImg}
-            alt="Assam scenery with river, boat, and Gamusa border"
-            aria-hidden="true"
-            className="role-scenery-img"
+            src={topStripImg}
+            alt=""
+            className="role-top-strip-img"
           />
-        </footer>
+        </div>
       </div>
     </div>
   )

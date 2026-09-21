@@ -1,0 +1,303 @@
+SmritiSetu — Cognitive Gaming Module
+Full Design Document: Games, Research Grounding & Voice
+Integration
+This document covers ONE part of the larger project — the gaming and cognitive training module. It stands as
+its own mini-project because it is the single largest piece of engineering and research work in the whole
+platform. Every game listed here is backed by either a real published study, a documented clinical task, or a
+validated commercial serious-game precedent — nothing here is invented from imagination.
+Part 1 — Why We Designed It This Way (The Thinking Behind the
+Whole Module)
+Before listing the games, it's worth writing down how we arrived at this list, because a judge or reviewer will
+ask "why these games and not others?"
+The core decision: don't build one game reskinned four times. The problem statement asks for four ability
+categories — memory, attention, daily routine recall, and pattern recognition. It would be easy (and lazy) to
+build one matching-pairs game and just swap the pictures four times to "cover" all four categories. We
+deliberately avoided this. Real cognitive science treats memory, attention, and executive function as
+separate mental abilities that need separate types of tasks to train — so we picked a different task mechanic
+for each ability, not just a different skin.
+The second decision: don't invent tasks — adapt tasks that already exist and have been tested. Every
+game below is built on top of either:
+A task type used in an actual published research study or clinical trial, or
+A task type used in a real, currently-selling serious game for dementia/cognitive decline
+We are not claiming our version has been clinically proven — that would be dishonest, since we haven't run a
+trial. What we ARE claiming is: this exact type of task has been tested before, on similar patients, and has
+shown real, published results — we are rebuilding that same task, in Assamese, with culturally familiar
+content, for our specific users. That is an honest, defensible claim.
+The third decision: no timers, no red "wrong" marks, no failure state. Multiple sources we studied
+(Memory Lane Games' design philosophy, published serious-game design guidance) specifically warn that
+speed pressure and harsh failure feedback increase anxiety in dementia patients and reduce engagement
+rather than helping. So difficulty in our games is scaled by how much information the person has to hold or
+process, not by how fast they must respond. Every wrong answer gets a gentle, encouraging response, never
+a buzzer or red cross.
+
+-- 1 of 9 --
+
+The fourth decision: real content, not stock content. Instead of generic shapes or Western-style photos,
+every game uses real Assamese cultural material — Bihu, local food, local objects, everyday routines familiar
+to someone who has lived in Assam their whole life. This isn't just a nice-to-have; recognition-based memory
+(does this feel familiar to me) works better than abstract recall for people with cognitive decline, which is
+exactly why reminiscence-therapy apps use personal/cultural photos as their core mechanic.
+Part 2 — The Full Game Arsenal (10 Games, One by One)
+For every game below, we explain: what ability it targets, why we say it targets that ability, what real-world
+research or product it is based on, and exactly what we would build.
+GAME 1: "Ki Utsav?" (What Festival?) — Episodic Memory / Reminiscence
+What ability it targets: Episodic memory — the ability to recall specific past events, experiences, and
+personally/culturally meaningful moments.
+Why we say it targets this ability: Episodic memory is one of the first types of memory to weaken in early
+cognitive decline, but long-held cultural and life memories (formed decades ago) tend to stay intact much
+longer than recent memories. Reminiscence-based recall tasks are specifically designed to reach into that
+older, more stable memory store rather than testing short-term memory, which is unfair to test in this
+population.
+Research basis: A serious game built specifically to target episodic memory used an "iPad Game Show"
+format aimed directly at addressing motivational deficits in older adults with memory impairment.
+Separately, commercial reminiscence-therapy apps (Memory Lane Games, AmuseIT) are built entirely
+around this same mechanic — showing an image and asking a recall or recognition question, explicitly
+avoiding "wrong answer" framing.
+What we build: A screen shows a photo — a Bihu celebration, a harvest scene, a common festival moment.
+The avatar asks, out loud in Assamese, a simple question like "What festival is this?" or "What do people
+usually eat during this time?" The person answers by tapping one of three large picture options, or by
+speaking the answer aloud. There is no penalty for a wrong answer — the avatar gently confirms the correct
+one and moves on. Over time, the app tracks (silently, never shown to the patient) how often recall is correct
+and how much prompting was needed.
+GAME 2: "Ki Ki Silo?" (What Were They?) — Working Memory
+What ability it targets: Working memory — the ability to briefly hold a small number of items in mind and
+recall them correctly a short time later.
+
+-- 2 of 9 --
+
+Why we say it targets this ability: This is a direct, simplified version of a task type used to measure short-
+term/working memory in real cognitive assessments — hold a small set of items, then recall them after a brief
+distraction. This is different from episodic memory because the "event" being remembered was invented
+seconds ago by the game, not decades ago by real life.
+Research basis: Working memory is explicitly listed as one of the trainable cognitive domains in CogniFit's
+validated 21-task computerized cognitive training program, which covers 14 distinct cognitive domains
+including working memory and visual short-term memory.
+What we build: The screen briefly shows 3 to 4 everyday objects (a cup, a gamosa, a mustard-oil bottle, a
+betel leaf) for a few seconds. They disappear. The person is then asked, "Which of these did you see?" from a
+slightly larger set of pictures, including a couple that weren't shown. Difficulty increases not by adding a
+timer, but by increasing the number of items shown or making the "distractor" objects more visually similar to
+the real ones.
+GAME 3: "Kot Gol?" (Where Did It Go?) — Spatial / Direction Memory
+What ability it targets: Spatial memory — remembering a location, path, or sequence of movement.
+Why we say it targets this ability: Spatial memory is a distinct cognitive skill from object memory or event
+memory — it's about "where," not "what" or "when." Difficulty with spatial memory (getting lost, forgetting
+the layout of a familiar place) is a commonly reported early symptom in cognitive decline, making it a
+meaningful skill to specifically track and gently train.
+Research basis: "Direction Memorizing" is one of five validated game types included in a published mobile
+brain-training platform designed for older adults with mild cognitive impairment, specifically built to target
+spatial processing as one of several distinct cognitive domains.
+What we build: A simple animated story — for example, a small boat moving down a river, or a person walking
+a path through a village — plays out on screen with narration. Afterward, the person is asked to recall or point
+out the path taken ("did the boat turn left or right at the tree?"). Kept extremely simple and short for MVP —
+2-3 steps in the path, not a maze.
+GAME 4: "Etu Cabo!" (Look at This!) — Sustained Attention
+What ability it targets: Sustained attention — the ability to stay focused on a task over a period of time
+without drifting.
+Why we say it targets this ability: This is a direct simplification of a well-established, validated clinical task:
+the "detection task," where a person is asked to respond as soon as a specific visual stimulus appears. This
+exact task format is used in real computerized cognitive test batteries to measure basic attention and
+information-processing speed.
+
+-- 3 of 9 --
+
+Research basis: The detection task (press a button as soon as a card turns face-up) is used in a well-
+validated simple reaction-time paradigm within a real clinical cognitive assessment battery. A separate 2026
+randomized controlled trial using a mobile attention-training game called "Descartes" found a statistically
+significant improvement in the attention domain of the MoCA (a standard cognitive assessment) compared
+to a control group.
+What we build: A calm scene (a pond, a market stall) is shown, and every so often, a specific object appears
+(a duck surfacing, a customer arriving). The person taps the screen whenever they see it appear. No timer
+countdown is shown, and there's no penalty for missing one — it's a gentle, ongoing awareness exercise, not a
+speed test.
+GAME 5: "Bhinno Ke?" (Which Is Different?) — Selective Attention
+What ability it targets: Selective attention — the ability to focus on the relevant detail while ignoring similar,
+distracting information.
+Why we say it targets this ability: This is different from sustained attention (Game 4) because the challenge
+here isn't staying alert over time — it's picking out one correct detail from several similar-looking options,
+which requires actively filtering out distractors.
+Research basis: This mirrors the "identification task" used in a real validated clinical cognitive battery, where
+a person must decide whether a specific card matches a target condition (e.g., "is it red?") among visually
+similar options — a well-established measure of visual/selective attention.
+What we build: A row of similar objects is shown (several gamosas, mostly one color, one a different color)
+and the person is asked to tap the one that's different, or the one matching a description spoken by the
+avatar. Difficulty scales by making the "different" item less obviously different over time — not by adding
+time pressure.
+GAME 6: "Loga Loi Jua" (Take Them Along) — Daily Routine Recall / Sequencing
+What ability it targets: Procedural memory and executive function — the ability to remember and correctly
+order the steps of a familiar daily task.
+Why we say it targets this ability: This is arguably the most important game category for real caregivers,
+because it mirrors actual Activities of Daily Living (ADL) — the real-world tasks whose breakdown is one of
+the clearest signs of worsening cognitive decline, and one of the most disruptive to independence.
+Research basis: A published point-and-click serious game used real cooking scenarios (toasting bread,
+making coffee) specifically to train planning ability and object recognition together, grounded in the idea that
+everyday, ecologically valid tasks transfer better to real life than abstract puzzle-style games.
+What we build: The person is shown 4-5 picture cards representing steps of a familiar routine — making saah
+(tea), preparing for Bihu, getting ready in the morning — shown out of order. They drag or tap the cards into
+
+-- 4 of 9 --
+
+the correct sequence, guided by voice narration if needed. Wrong order simply lets them try again with a
+gentle nudge, no penalty.
+GAME 7: "Bosarot Ki Lage?" (What Do We Need?) — Executive Function / Planning
+What ability it targets: Executive function, specifically planning and list-based reasoning — deciding what's
+needed for a task and tracking multiple items at once.
+Why we say it targets this ability: Planning is a distinct executive skill from simple recall — it requires
+holding a goal in mind (what am I preparing for?) and matching several items against that goal, which is a
+heavier cognitive load than a single memory-recall task.
+Research basis: A published serious game targeting exactly this ability used a shopping-list mechanic, where
+the person selects the correct items needed for a task from a larger set, and explicitly scaled difficulty by
+adjusting the number of items on the list and the amount of time allowed — chosen by the researchers
+specifically because it reflects a real activity of daily living, not an abstract test.
+What we build: The avatar says, "We're preparing for guests coming for tea — what do we need?" and shows
+a large set of pictured items (tea leaves, cups, biscuits, sugar, but also irrelevant items like a broom or a lamp).
+The person selects only the relevant ones. Difficulty scales by increasing the total number of items shown,
+exactly as in the cited research.
+GAME 8: "Milai Diya" (Match Them) — Pattern & Object Recognition
+What ability it targets: Visual pattern recognition and object-matching ability.
+Why we say it targets this ability: Matching requires comparing visual features (shape, color, category)
+across multiple items and identifying which belong together — a foundational visuospatial skill that's simpler
+and more forgiving than recall-based tasks, making it a good "easy win" game for confidence-building.
+Research basis: Picture-matching and picture-observation games (identifying colors, positions, or content
+of images) are among the earliest and most consistently used task types in dementia-focused serious games,
+cited specifically as tools for cognitive screening and gentle training in early-stage cognitive change.
+What we build: Classic pair-matching, but using real Assamese cultural objects — a jaapi, a xorai, a gamosa,
+local fruits — instead of generic shapes or cartoon icons. Grid size (4 pairs vs 6 pairs) is the difficulty lever,
+not speed.
+GAME 9: "Bak Kotota?" (How Many?) — Attention + Processing Speed
+What ability it targets: Sustained attention combined with basic numeric processing — counting under mild
+distraction.
+
+-- 5 of 9 --
+
+Why we say it targets this ability: Counting tasks are a simple, low-stakes way to measure whether a person
+can maintain focus while processing a small amount of numeric information — useful because numeric
+processing difficulty is often an early, subtle sign of cognitive change that's easy to gently monitor through a
+game.
+Research basis: "Rabbit Counting" and "Triangle Counting" are validated components of a published, tested
+mobile brain-training platform explicitly designed to target attention and processing speed together,
+alongside working memory and spatial tasks.
+What we build: A simple animated scene (ducks crossing a pond, boats on a river) where a small number of
+objects appear, and the person is asked "how many ducks did you see?" Kept to very small numbers (2 to 5)
+for MVP, since the goal is engagement and gentle monitoring, not a hard numeracy test.
+GAME 10: "Ki Koribo?" (What Would You Do?) — Simple Decision-Making
+What ability it targets: Basic decision-making and executive response — choosing between two or three
+simple options in a low-stakes scenario.
+Why we say it targets this ability: Decision-making tasks add a layer beyond memory and attention — they
+measure whether the person can weigh a small choice and commit to a response, which is a gentler,
+everyday-relevant version of executive function testing.
+Research basis: A Rock-Paper-Scissors-style decision task is included as a validated component of the same
+published five-game mobile brain-training platform used for several of the games above, chosen specifically
+because it's simple, familiar, and has an immediate, low-stakes outcome.
+What we build: Simple two-option or three-option "what would you do" scenarios grounded in daily life ("it's
+raining, what would you carry — an umbrella or a fan?"), spoken and shown visually, with warm, encouraging
+feedback regardless of the answer chosen.
+Part 3 — Honest Note on What the Evidence Actually Shows
+We want to be upfront rather than oversell this. The published research on cognitive games for dementia is
+genuinely mixed:
+Some studies show real, measurable benefits — one study found 16 weeks of combined cognitive-physical
+game training significantly improved working memory and executive function; another found computerized
+cognitive training was associated with increased gray matter volume in the brain.
+Other reviews found generic "brain games" showed no significant improvement in memory or cognitive
+function at all.
+The pattern that emerges across the literature is that purpose-built, ecologically valid games (mirroring
+real daily tasks) tend to outperform generic, abstract brain-training games — which is exactly why every
+game above is built around a real daily-life task or a validated clinical task type, not an arbitrary puzzle.
+
+-- 6 of 9 --
+
+For people already diagnosed with dementia (not just early mild cognitive impairment), the research is even
+more specific: the clearest, most meaningful benefits were found in interventions using immersive or
+movement-based technology (VR, motion-based games), not flat screen-tap games alone. This is an
+important scoping note — our MVP is screen-based, so we should be honest that this fits best for early-stage
+/ MCI users, with movement-based expansion as a possible future direction, not a claim we make now.
+What we do NOT claim: that this app cures or reverses dementia, or guarantees memory improvement.
+What we DO claim: these are the same task types used in real, published cognitive-training research,
+adapted respectfully and specifically for Assamese elderly users — offering meaningful cognitive
+engagement, monitoring, and stimulation, consistent with what the evidence supports.
+Part 4 — Voice Models: What We're Using and Why
+Which models, and why these specifically
+We use a hybrid combination of two Government of India–backed, open, Assamese-supporting voice AI
+systems: Bhashini (the national language AI mission) and AI4Bharat's IndicTTS/IndicConformer models
+(the research lab whose models power much of Bhashini itself).
+Why these and not a foreign commercial provider (Google, Amazon, etc.):
+Assamese is explicitly and natively supported by both — confirmed directly by checking Bhashini's own
+published service list, which names Assamese for ASR, TTS, and translation.
+They are free for non-commercial use and government-backed, which matters for both cost and for alignment
+with an MDoNER (Ministry of Development of North Eastern Region) submission — using another
+Government of India digital initiative strengthens the feasibility and policy-alignment story of our pitch.
+Commercial voice AI providers have very limited or no support for Assamese specifically — most Indic voice
+AI products focus on Hindi and a handful of major south Indian languages first, leaving low-resource
+languages like Assamese underserved. Bhashini/AI4Bharat is currently the most realistic, production-usable
+option for this specific language.
+What each part of the voice system actually does
+Text-to-Speech (TTS) — converts written text into spoken audio. This is the stronger, more reliable half of
+the system. It is used for the avatar's spoken instructions, encouragement, and reminders. Under the hood,
+this uses a two-stage pipeline: an "acoustic model" (AI4Bharat's FastPitch, or in newer releases, an end-to-
+end VITS-based model) turns text into a kind of sound blueprint, and a "vocoder" (HiFi-GAN) turns that
+blueprint into actual playable audio.
+Automatic Speech Recognition (ASR) — converts the person's spoken voice into text the app can
+understand. This is the weaker, riskier half — published research shows Assamese ASR error rates are
+meaningfully higher than Hindi or English (in some studies, around 19-30% character error rate), because far
+less training data exists for Assamese compared to bigger languages. We are honest about this limitation
+rather than pretending it isn't there.
+
+-- 7 of 9 --
+
+How this actually helps and personalizes each game
+Because ASR isn't fully reliable for open, free-form speech in Assamese yet, we don't rely on it to
+understand anything the person might say — only to recognize whether their answer matches one of a
+small number of expected options for that specific game screen. This is a much easier and more reliable
+task than general speech understanding, and it's what makes voice interaction usable today rather than
+something we have to wait years for.
+Concretely, per game:
+In "Ki Utsav?" (Game 1), when the avatar asks "what festival is this," it's only checking whether the spoken
+answer matches one of the 3 shown picture options — not understanding open conversation.
+In "Loga Loi Jua" (Game 6), voice is used mainly one-directionally — the avatar narrates the steps aloud so a
+person with reading difficulty can still follow the sequencing task, removing the need to read on-screen text
+at all.
+Across every game, TTS is what makes the game accessible to someone who may not read comfortably —
+every instruction, every question, every piece of encouragement is spoken aloud, not just displayed as text.
+Personalization angle: Because the caregiver dashboard allows a family member to type in personalized
+content (a specific memory, a specific relative's name, a custom question), that personalized text needs live
+TTS synthesis (since it can't be pre-recorded — it didn't exist until the caregiver typed it), while all the fixed,
+repeating instructions and feedback phrases across every game are recorded once and reused, keeping the
+app fast, offline-capable, and low-cost for the 90% of interactions that are predictable.
+Part 5 — Innovation Layer: What We're Adding Beyond the Existing
+Research
+To be clear about what is "proven precedent" versus what is "our own addition":
+Language and cultural localization itself is the core innovation. None of the cited research or products
+(CogniFit, Memory Lane, the five-game MCI platform, the shopping-list game) were built for Assamese-
+speaking users or Assamese cultural content — we are the adaptation layer, not the inventors of the
+underlying task science.
+Fixed-vocabulary voice interaction as an accessibility layer — using ASR only to recognize small, per-
+screen expected answers (rather than attempting general Assamese speech understanding, which isn't
+reliable yet) is our own practical design decision, built specifically around the real, published accuracy
+limitations of Assamese ASR.
+Silent background cognitive-trend logging (via our companion module, Echo) feeding a caregiver
+dashboard — turning ordinary gameplay into a longitudinal engagement/progress signal — is our own
+integration, layered on top of validated game mechanics, not something inherited from any single cited
+source.
+
+-- 8 of 9 --
+
+Part 6 — The Top 2 Games for MVP
+Given realistic hackathon build time, here are the two games we recommend building first, and why:
+1. "Ki Utsav?" (Game 1 — Episodic Memory / Reminiscence)
+Why this one first: It is the simplest to build technically (image + question + 3 picture-choice answers), has
+the strongest, most direct research precedent (reminiscence-therapy apps are an entire proven commercial
+category), and it doubles as your best demo piece — cultural content is immediately visually compelling to
+judges and clearly shows the "built for Assam" story at a glance.
+2. "Loga Loi Jua" (Game 6 — Daily Routine Recall / Sequencing)
+Why this one second: It directly and explicitly answers the problem statement's named requirement ("daily
+routine recall"), has strong research grounding (the cooking-scenario studies), and demonstrates a different
+interaction pattern (drag/sequence, not just tap-to-choose) — showing judges you've built more than one
+type of mechanic, not just one game reskinned.
+Together, these two cover two different cognitive domains, two different interaction styles, and both map
+directly and explicitly onto the problem statement's own wording — the strongest, most defensible MVP
+scope for the time available.
+Document prepared as part of the SmritiSetu gaming module design. All research citations reference publicly
+available published studies, clinical trial registrations, or documented commercial serious-game precedents
+found during project research — full source list available on request.
+
+-- 9 of 9 --
+

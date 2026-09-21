@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="as-IN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>কʼত গʼল? — SmritiSetu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- Persistent controls — [Home] [language toggle] — Title — [Listen] [Help]
+       On the home screen, Home and Help are hidden (JS: updateHeaderVisibility)
+       so only the language toggle and Listen show, matching the reference.
+       Every labelled element carries both language strings; the active
+       one is the ONLY one rendered — see setLanguage() in script.js.
+       Max one level of navigation throughout (Help is an overlay, not a route). -->
+  <header class="app-header">
+    <div class="header-cluster">
+      <button id="btn-home" class="icon-circle icon-circle--secondary" type="button" aria-label="Home">
+        <img src="Assets/item_home.png" alt="" />
+      </button>
+      <button id="btn-translate" class="icon-circle icon-circle--primary" type="button" aria-pressed="false">
+        <span id="lang-toggle-label">EN</span>
+      </button>
+    </div>
+
+    <p class="app-header-title" data-i18n-as="কʼত গʼল?" data-i18n-en="Where Did It Go?">কʼত গʼল?</p>
+
+    <div class="header-cluster">
+      <button id="btn-repeat" class="icon-circle icon-circle--primary icon-circle--light" type="button" aria-label="Listen">
+        <img src="Assets/item_speaker.png" alt="" />
+      </button>
+      <button id="btn-help" class="icon-circle icon-circle--secondary" type="button" aria-label="Help" aria-haspopup="dialog">?</button>
+    </div>
+  </header>
+
+  <!-- Help modal — an overlay, not a second navigation level -->
+  <div class="modal-overlay" id="help-modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
+      <h2 id="help-modal-title" data-i18n-as="কেনেকৈ খেলিব?" data-i18n-en="How to play">কেনেকৈ খেলিব?</h2>
+      <p data-i18n-as="প্ৰথমে ভালদৰে চাওক আৰু শুনক, তাৰ পিছত সঠিক দিশ বাছক।" data-i18n-en="Watch and listen carefully first, then choose the correct direction.">প্ৰথমে ভালদৰে চাওক আৰু শুনক, তাৰ পিছত সঠিক দিশ বাছক।</p>
+      <button id="btn-help-close" class="btn-primary" type="button" data-i18n-as="বুজিলোঁ" data-i18n-en="Got it">বুজিলোঁ</button>
+    </div>
+  </div>
+
+  <main id="screens">
+
+    <!-- Screen: Home / Avatar Greeting -->
+    <section class="screen" id="screen-home" data-screen="home">
+      <div class="content-card">
+        <img class="avatar avatar-lg" src="Assets/avatar_gentle.png" alt="" />
+        <p class="subtitle" data-i18n-as="আহক, আমি এটা সৰু ধুনীয়া খেয়ালী খেলিম" data-i18n-en="Come, let's play a nice little game together.">আহক, আমি এটা সৰু ধুনীয়া খেয়ালী খেলিম</p>
+        <button id="btn-play" class="btn-primary btn-block" type="button" data-i18n-as="খেলিবলৈ আৰম্ভ কৰক" data-i18n-en="Start Playing">খেলিবলৈ আৰম্ভ কৰক</button>
+      </div>
+    </section>
+
+    <!-- Screen: Scenario 1 — River (Observation Phase) -->
+    <section class="screen" id="screen-scene-river" data-screen="scene-river">
+      <div class="scene">
+        <img class="bg-full" src="Assets/bg_river_path_01.png" alt="" />
+        <img class="marker marker-tree" src="Assets/marker_tamul_tree.png" alt="তামোল গছ" />
+        <img class="focal-obj" id="boat" src="Assets/obj_assamese_boat.png" alt="নাও" />
+        <img class="avatar avatar-corner" src="Assets/avatar_idle.png" alt="" />
+      </div>
+      <p class="question-text" id="caption-river" aria-live="polite"></p>
+    </section>
+
+    <!-- Screen: Scenario 1 — River (Recall Phase) -->
+    <section class="screen" id="screen-prompt-river" data-screen="prompt-river">
+      <img class="avatar avatar-md" src="Assets/avatar_idle.png" alt="" />
+      <p class="question-text" aria-live="polite"
+         data-i18n-as="তামোল গছজোপাৰ ওচৰত আমাৰ নাওখন কোনফালে ঘূৰিছিল?"
+         data-i18n-en="Which way did our boat turn at the betel nut tree?">তামোল গছজোপাৰ ওচৰত আমাৰ নাওখন কোনফালে ঘূৰিছিল?</p>
+      <div class="choices" role="group" aria-label="Choose a direction" data-scenario="river">
+        <button class="choice-card" data-answer="left" type="button">
+          <img src="Assets/card_direction_left.png" alt="" />
+          <span data-i18n-as="বাওঁফালে" data-i18n-en="Left">বাওঁফালে</span>
+        </button>
+        <button class="choice-card" data-answer="right" type="button">
+          <img src="Assets/card_direction_right.png" alt="" />
+          <span data-i18n-as="সোঁফালে" data-i18n-en="Right">সোঁফালে</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Screen: Scenario 1 — River (Feedback) -->
+    <section class="screen" id="screen-feedback-river" data-screen="feedback-river">
+      <div class="feedback-panel" id="feedback-panel-river">
+        <img class="avatar avatar-lg" id="feedback-avatar-river" src="Assets/avatar_happy.png" alt="" />
+        <p class="feedback-text" id="feedback-text-river"></p>
+      </div>
+    </section>
+
+    <!-- Screen: Scenario 2 — Village (Observation Phase) -->
+    <section class="screen" id="screen-scene-village" data-screen="scene-village">
+      <div class="scene">
+        <img class="bg-full" src="Assets/bg_village_path_01.png" alt="" />
+        <img class="marker marker-chang" src="Assets/marker_chang_ghar.png" alt="চাং ঘৰ" />
+        <img class="focal-obj" id="walker" src="Assets/obj_village_walker.png" alt="মানুহজন" />
+        <img class="avatar avatar-corner" src="Assets/avatar_idle.png" alt="" />
+      </div>
+      <p class="question-text" id="caption-village" aria-live="polite"></p>
+    </section>
+
+    <!-- Screen: Scenario 2 — Village (Recall Phase) -->
+    <section class="screen" id="screen-prompt-village" data-screen="prompt-village">
+      <img class="avatar avatar-md" src="Assets/avatar_idle.png" alt="" />
+      <p class="question-text" aria-live="polite"
+         data-i18n-as="চাং ঘৰখনৰ ওচৰত আলিখন কোনফালে ঘূৰিছিল?"
+         data-i18n-en="Which way did the path turn near the stilt house?">চাং ঘৰখনৰ ওচৰত আলিখন কোনফালে ঘূৰিছিল?</p>
+      <div class="choices" role="group" aria-label="Choose a direction" data-scenario="village">
+        <button class="choice-card" data-answer="right" type="button">
+          <img src="Assets/card_direction_right.png" alt="" />
+          <span data-i18n-as="সোঁফালে" data-i18n-en="Right">সোঁফালে</span>
+        </button>
+        <button class="choice-card" data-answer="left" type="button">
+          <img src="Assets/card_direction_left.png" alt="" />
+          <span data-i18n-as="বাওঁফালে" data-i18n-en="Left">বাওঁফালে</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Screen: Scenario 2 — Village (Feedback) -->
+    <section class="screen" id="screen-feedback-village" data-screen="feedback-village">
+      <div class="feedback-panel" id="feedback-panel-village">
+        <img class="avatar avatar-lg" id="feedback-avatar-village" src="Assets/avatar_happy.png" alt="" />
+        <p class="feedback-text" id="feedback-text-village"></p>
+      </div>
+    </section>
+
+    <!-- Screen: Completion -->
+    <section class="screen" id="screen-complete" data-screen="complete">
+      <div class="content-card">
+        <img class="avatar avatar-lg" src="Assets/avatar_happy.png" alt="" />
+        <p class="subtitle" data-i18n-as="আজি আমাৰ লগত খেলি বৰ ভাল লাগিল!" data-i18n-en="It was so lovely playing together today! See you again soon.">আজি আমাৰ লগত খেলি বৰ ভাল লাগিল!</p>
+        <button id="btn-again" class="btn-primary btn-block" type="button" data-i18n-as="আকৌ খেলক" data-i18n-en="Play Again">আকৌ খেলক</button>
+      </div>
+    </section>
+
+  </main>
+
+  <audio id="audio-player" preload="auto"></audio>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
