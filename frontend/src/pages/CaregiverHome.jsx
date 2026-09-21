@@ -193,20 +193,66 @@ export default function CaregiverHome({ onChangeRole }) {
         </div>
         <span className="cg-drawer-badge">Export</span>
       </button>
+
+      {/* ── Divider ── */}
+      <div className="cg-drawer-divider" />
+
+      <div className="cg-drawer-section-label">
+        {isEn ? 'Preferences' : 'পছন্দ সমূহ'}
+      </div>
+
+      {/* Appearance Toggle */}
+      <button
+        type="button"
+        className="cg-drawer-item cg-drawer-item--action"
+        onClick={toggleTheme}
+      >
+        <div className="cg-drawer-item-left">
+          <span>{theme === 'light' ? '🌙' : '☀️'}</span>
+          <span>{isEn ? 'Appearance' : 'থিম'}</span>
+        </div>
+        <span className="cg-drawer-badge cg-badge-theme">
+          {theme === 'light' ? (isEn ? 'Light' : 'লাইট') : (isEn ? 'Dark' : 'ডাৰ্ক')}
+        </span>
+      </button>
+
+      {/* Settings / Profile */}
+      <button
+        type="button"
+        className={`cg-drawer-item cg-drawer-item--action ${activeModule === 'profile' ? 'active' : ''}`}
+        onClick={() => handleSelectModule('profile')}
+      >
+        <div className="cg-drawer-item-left">
+          <span>⚙️</span>
+          <span>{isEn ? 'Settings' : 'ছেটিংছ'}</span>
+        </div>
+      </button>
+
+      {/* Log Out */}
+      <button
+        type="button"
+        className="cg-drawer-item cg-drawer-item--logout"
+        onClick={onChangeRole}
+      >
+        <div className="cg-drawer-item-left">
+          <span>🚪</span>
+          <span>{isEn ? 'Log Out / Switch Role' : 'লগ আউট'}</span>
+        </div>
+      </button>
     </>
   )
 
   return (
     <div className={`cg-shell cg-theme-${theme}`}>
       
-      {/* Top Header Bar (Chakravyuh Inspired) */}
+      {/* Top Header Bar — Clean: only Hamburger + Logo */}
       <header className="cg-topbar">
         <div className="cg-topbar-left">
           <button
             type="button"
             className="cg-btn-hamburger"
             onClick={() => setDrawerOpen(true)}
-            aria-label="Open Master Controls Drawer"
+            aria-label="Open Menu"
           >
             ☰
           </button>
@@ -215,51 +261,6 @@ export default function CaregiverHome({ onChangeRole }) {
             <span className="cg-brand-text">SMRITISETU</span>
             <span className="cg-portal-tag">CAREGIVER DESK</span>
           </div>
-        </div>
-
-        <div className="cg-topbar-right">
-          {/* Theme Switcher */}
-          <button
-            type="button"
-            className="cg-icon-btn"
-            onClick={toggleTheme}
-            title="Toggle Light / Dark Mode"
-          >
-            <span>{theme === 'light' ? '🌙' : '☀️'}</span>
-            <span className="cg-btn-text-desktop">{theme === 'light' ? 'Dark' : 'Light'}</span>
-          </button>
-
-          {/* Language Switcher */}
-          <button
-            type="button"
-            className="cg-icon-btn"
-            onClick={toggleLang}
-            title="Toggle English / Assamese"
-          >
-            <span>🌐</span>
-            <span>{isEn ? 'EN' : 'অ'}</span>
-          </button>
-
-          {/* Interactive Settings / Profile Button (Instagram/Snapchat Style) */}
-          <button
-            type="button"
-            className={`cg-settings-btn ${activeModule === 'profile' ? 'active' : ''}`}
-            onClick={() => handleSelectModule('profile')}
-            title="Caregiver Profile & App Settings"
-          >
-            <span className="cg-settings-avatar">⚙️</span>
-            <span className="cg-btn-text-desktop">{isEn ? 'Settings' : 'ছেটিংছ'}</span>
-          </button>
-
-          {/* Switch Role Back */}
-          <button
-            type="button"
-            className="cg-switch-role-btn"
-            onClick={onChangeRole}
-            title="Switch to Patient View"
-          >
-            ↪ <span className="cg-switch-text-desktop">Role</span>
-          </button>
         </div>
       </header>
 

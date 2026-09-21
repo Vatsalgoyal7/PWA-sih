@@ -377,6 +377,46 @@
   border-color: var(--cg-primary);
 }
 
+/* ── Drawer Divider ── */
+.cg-drawer-divider {
+  height: 1px;
+  background: var(--cg-border);
+  margin: 8px 4px;
+}
+
+/* ── Action Items (Appearance, Settings) ── */
+.cg-drawer-item--action {
+  color: var(--cg-text-main);
+}
+
+.cg-drawer-item--action:hover {
+  background-color: var(--cg-surface-elevated);
+  border-color: transparent;
+}
+
+/* ── Logout Item ── */
+.cg-drawer-item--logout {
+  color: #ef4444;
+}
+
+.cg-drawer-item--logout:hover {
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+}
+
+/* ── Badge Variants ── */
+.cg-badge-theme {
+  background: var(--cg-amber-soft, #fef3c7);
+  color: var(--cg-amber, #92400e);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.cg-badge-lang {
+  background: var(--cg-sky-soft, #e0f2fe);
+  color: var(--cg-sky, #0284c7);
+  border-color: rgba(2, 132, 199, 0.3);
+}
+
 .cg-drawer-footer {
   padding: 12px 16px;
   border-top: 1px solid var(--cg-border);
