@@ -68,7 +68,7 @@
 .cg-topbar {
   background-color: var(--cg-surface);
   border-bottom: 1px solid var(--cg-border);
-  padding: 12px 20px;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -77,12 +77,14 @@
   z-index: 40;
   box-shadow: var(--cg-shadow);
   transition: all 0.25s ease;
+  gap: 8px;
 }
 
 .cg-topbar-left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 .cg-btn-hamburger {
@@ -108,14 +110,16 @@
 .cg-brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  user-select: none;
 }
 
 .cg-brand-text {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: -0.01em;
   color: var(--cg-text-main);
+  white-space: nowrap;
 }
 
 .cg-portal-tag {
@@ -132,7 +136,8 @@
 .cg-topbar-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .cg-icon-btn {
@@ -140,12 +145,12 @@
   border: 1px solid var(--cg-border);
   border-radius: 10px;
   color: var(--cg-text-main);
-  padding: 6px 12px;
+  padding: 6px 10px;
   font-size: 12px;
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -161,14 +166,14 @@
 .cg-settings-btn {
   background: var(--cg-surface-elevated);
   border: 1.5px solid var(--cg-border);
-  border-radius: 12px;
+  border-radius: 10px;
   color: var(--cg-text-main);
-  padding: 6px 12px;
-  font-size: 13px;
+  padding: 6px 10px;
+  font-size: 12px;
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -187,7 +192,7 @@
 }
 
 .cg-settings-avatar {
-  font-size: 16px;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -198,9 +203,9 @@
   border: 1px solid var(--cg-border);
   border-radius: 10px;
   color: var(--cg-text-muted);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  padding: 6px 10px;
+  padding: 6px 8px;
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -212,6 +217,23 @@
 
 .cg-switch-text-desktop {
   display: none;
+}
+
+@media (max-width: 380px) {
+  .cg-topbar {
+    padding: 8px 10px;
+    gap: 4px;
+  }
+  .cg-brand-text {
+    display: none;
+  }
+  .cg-topbar-right {
+    gap: 4px;
+  }
+  .cg-icon-btn, .cg-settings-btn, .cg-switch-role-btn {
+    padding: 5px 7px;
+    font-size: 11px;
+  }
 }
 
 /* ── Multi-Device Body Layout Wrapper ── */
@@ -232,7 +254,7 @@
   flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
 }
 
 .cg-content-inner {

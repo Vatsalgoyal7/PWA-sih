@@ -3,18 +3,18 @@
    ============================================================ */
 
 .cgdash-view {
-  padding: 16px;
+  padding: 12px 10px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 /* ── Hero Telemetry Card ── */
 .cg-hero-banner {
   background-color: var(--cg-surface);
   border: var(--cg-card-border);
-  border-radius: 20px;
-  padding: 18px;
+  border-radius: 18px;
+  padding: 16px 14px;
   box-shadow: var(--cg-shadow);
   position: relative;
   overflow: hidden;
@@ -255,17 +255,21 @@
   border-radius: 18px;
   padding: 14px;
   box-shadow: var(--cg-shadow);
+  overflow: hidden;
 }
 
 .cg-heatmap-grid {
   display: grid;
   grid-template-columns: repeat(15, 1fr);
-  gap: 6px;
+  gap: 5px;
   margin-top: 10px;
+  min-width: 270px;
+  overflow-x: auto;
 }
 
 .cg-heat-cell {
-  height: 20px;
+  height: 18px;
+  min-width: 12px;
   border-radius: 4px;
   background-color: var(--cg-surface-elevated);
   transition: transform 0.15s, opacity 0.15s;
@@ -290,6 +294,7 @@
   font-size: 9px;
   color: var(--cg-text-muted);
   margin-top: 8px;
+  flex-wrap: wrap;
 }
 
 /* ── Activity Chart Card ── */
@@ -299,6 +304,7 @@
   border-radius: 18px;
   padding: 14px 10px 6px;
   box-shadow: var(--cg-shadow);
+  overflow: hidden;
 }
 
 /* ============================================================
@@ -306,7 +312,7 @@
    ============================================================ */
 @media (min-width: 768px) {
   .cgdash-view {
-    padding: 20px 8px;
+    padding: 18px 16px;
     gap: 20px;
   }
 }

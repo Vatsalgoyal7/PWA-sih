@@ -1,5 +1,6 @@
 /* ============================================================
    CgReminders.css — Chakravyuh Routines & Voice Reminders
+   Multi-Device Responsive (Mobile, Tablet, Laptop)
    ============================================================ */
 
 .cg-reminders,
@@ -30,7 +31,7 @@
   animation: fadeIn 0.2s ease;
 }
 
-/* ── 2-Column Responsive Reminders Grid ── */
+/* ── Reminders Responsive Grid ── */
 .reminders-list {
   display: grid;
   grid-template-columns: 1fr;
@@ -41,13 +42,13 @@
 .reminder-card {
   background-color: var(--cg-surface, #ffffff);
   border-radius: 18px;
-  padding: 18px 20px;
+  padding: 16px 16px;
   border: var(--cg-card-border, 1px solid #edf2f7);
   box-shadow: var(--cg-shadow, 0 4px 14px rgba(0, 0, 0, 0.04));
   transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .reminder-card:hover {
@@ -60,58 +61,116 @@
   background-color: var(--cg-surface-elevated, #fcfcfc);
 }
 
+.reminder-card.active {
+  border-left: 4px solid var(--cg-primary, #b83a24);
+}
+
+/* ── Card Header ── */
 .reminder-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
 .reminder-identity {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
 }
 
 .reminder-icon {
-  font-size: 24px;
+  font-size: 26px;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
-.reminder-titles {
+.reminder-names {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
-.reminder-title-en {
+.reminder-label-en {
   font-weight: 800;
   font-size: 15px;
   color: var(--cg-text-main, #0f172a);
+  line-height: 1.2;
 }
 
-.reminder-title-as {
+.reminder-label-as {
   font-size: 12px;
   color: var(--cg-text-muted, #64748b);
   font-weight: 600;
 }
 
-/* ── Time & Day Pickers ── */
-.reminder-body {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-top: 8px;
-  border-top: 1px solid var(--cg-border-subtle, #f1f5f9);
+/* ── Toggle switch ── */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
-.time-row {
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-track {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--cg-border, #cbd5e1);
+  transition: .25s;
+  border-radius: 24px;
+}
+
+.toggle-track:before,
+.toggle-thumb {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .25s;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+input:checked + .toggle-track {
+  background-color: var(--cg-primary, #b83a24);
+}
+
+input:checked + .toggle-track:before {
+  transform: translateX(20px);
+}
+
+/* ── Form Rows in Card ── */
+.field-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cg-text-muted, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.reminder-time-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.time-row label {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--cg-text-main, #0f172a);
+  padding-top: 6px;
+  border-top: 1px solid var(--cg-border-subtle, #f1f5f9);
+  gap: 10px;
 }
 
 .time-input {
@@ -122,15 +181,32 @@
   color: var(--cg-text-main, #0f172a);
   font-size: 14px;
   font-weight: 700;
+  outline: none;
+  transition: border-color 0.15s;
 }
 
-.days-row {
+.time-input:focus {
+  border-color: var(--cg-primary, #b83a24);
+}
+
+/* ── Day Selection Pills ── */
+.reminder-days-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--cg-border-subtle, #f1f5f9);
+}
+
+.day-pills {
   display: flex;
   gap: 4px;
+  width: 100%;
 }
 
-.day-chip {
+.day-pill {
   flex: 1;
+  min-width: 0;
   padding: 6px 2px;
   border-radius: 8px;
   border: 1px solid var(--cg-border, #e2e8f0);
@@ -143,29 +219,40 @@
   text-align: center;
 }
 
-.day-chip.day-on {
+.day-pill:hover:not(:disabled) {
+  border-color: var(--cg-primary, #b83a24);
+  color: var(--cg-text-main, #0f172a);
+}
+
+.day-pill.day-active {
   background: var(--cg-primary, #b83a24);
   color: #fff;
   border-color: var(--cg-primary, #b83a24);
 }
 
-/* ── Voice Memo Controls ── */
-.voice-row {
+.day-pill:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Voice Reminder Section ── */
+.reminder-voice-row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 8px;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 6px;
   border-top: 1px solid var(--cg-border-subtle, #f1f5f9);
 }
 
-.voice-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--cg-text-muted, #64748b);
+.voice-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .btn-record {
-  padding: 6px 12px;
+  padding: 7px 14px;
   border-radius: 8px;
   border: 1px solid var(--cg-border, #e2e8f0);
   background: var(--cg-surface-elevated, #f8fafc);
@@ -173,7 +260,7 @@
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   transition: all 0.15s ease;
@@ -184,13 +271,42 @@
   color: var(--cg-primary, #b83a24);
 }
 
-.btn-stop-record {
-  padding: 6px 12px;
+.btn-record.secondary {
+  font-size: 11px;
+  padding: 6px 10px;
+}
+
+.recording-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
   border-radius: 8px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+}
+
+.recording-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: cgPulse 1s infinite;
+}
+
+.recording-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ef4444;
+}
+
+.btn-stop-record {
+  padding: 5px 10px;
+  border-radius: 6px;
   border: none;
   background: #ef4444;
   color: #fff;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -199,6 +315,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .btn-play {
@@ -221,9 +338,20 @@
   cursor: pointer;
 }
 
-@media (min-width: 768px) {
+/* ── Multi-Device Breakpoints ── */
+@media (min-width: 640px) {
+  .reminders-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
   .reminders-list {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+  }
+  .reminder-card {
+    padding: 18px 20px;
   }
 }

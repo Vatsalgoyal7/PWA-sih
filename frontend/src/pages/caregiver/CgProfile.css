@@ -442,3 +442,49 @@
   display: flex;
   justify-content: space-between;
 }
+
+/* ── Mobile Responsive Breakpoint (< 640px) ── */
+@media (max-width: 640px) {
+  .cg-profile-header-card,
+  .profile-form-card {
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+  .profile-hero-top {
+    gap: 14px;
+  }
+  .profile-avatar-wrap,
+  .profile-avatar-circle {
+    width: 58px;
+    height: 58px;
+    font-size: 26px;
+  }
+  .profile-name {
+    font-size: 18px;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .subtab-btn {
+    min-width: auto;
+    padding: 8px 10px;
+    font-size: 12px;
+    gap: 5px;
+  }
+  .contact-item-row {
+    padding: 10px 8px;
+    gap: 8px;
+  }
+  .pin-text-input {
+    max-width: 100%;
+    font-size: 20px !important;
+  }
+  .pin-btn-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .pin-btn-row button {
+    width: 100%;
+  }
+}

@@ -12,7 +12,7 @@
 .cg-report-card {
   background: var(--cg-surface, #ffffff);
   border-radius: 18px;
-  padding: 20px 22px;
+  padding: 16px 14px;
   border: var(--cg-card-border, 1px solid #edf2f7);
   box-shadow: var(--cg-shadow, 0 4px 14px rgba(0, 0, 0, 0.04));
   display: flex;
@@ -101,9 +101,18 @@
   background: var(--cg-primary-hover, #9e2e18);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 680px) {
   .cgreports-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cgreports-grid {
     gap: 20px;
+  }
+  .cg-report-card {
+    padding: 20px 22px;
   }
 }

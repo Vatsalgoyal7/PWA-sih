@@ -1,5 +1,7 @@
 /* ============================================================
    CgNavbar.css — Fixed bottom navigation bar
+   Multi-device responsive (Mobile & Tablet)
+   Supports Light & Dark Themes via CSS Variables
    ============================================================ */
 
 .cg-navbar {
@@ -8,12 +10,13 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: #ffffff;
-  border-top: 1px solid #e8e8e8;
+  background: var(--cg-surface, #ffffff);
+  border-top: 1px solid var(--cg-border, #e2e8f0);
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .cg-navbar__tab {
@@ -21,18 +24,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 8px 4px 6px;
+  padding: 8px 2px 6px;
   border: none;
   background: transparent;
   cursor: pointer;
   gap: 3px;
   transition: background 0.15s ease;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
   min-height: 56px;
+  position: relative;
 }
 
 .cg-navbar__tab:active {
-  background: #fdf0ee;
+  background: var(--cg-primary-soft, #fdf0ee);
 }
 
 .cg-navbar__icon {
@@ -42,10 +47,10 @@
 }
 
 .cg-navbar__label {
-  font-size: 9px;
-  font-weight: 500;
+  font-size: 10px;
+  font-weight: 600;
   letter-spacing: 0.02em;
-  color: #888;
+  color: var(--cg-text-muted, #64748b);
   text-transform: uppercase;
   transition: color 0.15s ease;
   white-space: nowrap;
@@ -53,42 +58,29 @@
 
 /* ── Active state ── */
 .cg-navbar__tab--active .cg-navbar__label {
-  color: #b83a24;
-  font-weight: 700;
+  color: var(--cg-primary, #b83a24);
+  font-weight: 800;
 }
 
 .cg-navbar__tab--active .cg-navbar__icon {
-  transform: translateY(-1px);
-}
-
-.cg-navbar__tab--active::after {
-  content: '';
-  display: block;
-  position: absolute;
-  bottom: calc(env(safe-area-inset-bottom, 0px));
-  width: 100%;
-  height: 0;
+  transform: translateY(-2px);
 }
 
 /* Active indicator dot above icon */
-.cg-navbar__tab {
-  position: relative;
-}
-
-.cg-navbar__tab--active .cg-navbar__dot {
-  display: block;
-}
-
 .cg-navbar__dot {
   display: none;
   position: absolute;
   top: 4px;
   left: 50%;
   transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: #b83a24;
+  background: var(--cg-primary, #b83a24);
+}
+
+.cg-navbar__tab--active .cg-navbar__dot {
+  display: block;
 }
 
 @media (min-width: 480px) {
@@ -97,6 +89,6 @@
   }
 
   .cg-navbar__label {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
