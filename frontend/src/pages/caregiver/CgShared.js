@@ -5,7 +5,6 @@
 
 export const API_BASE = import.meta.env.VITE_API_URL ?? "https://smritisetu-backend.onrender.com"
 
-// ── localStorage keys ──────────────────────────────────────
 export const LS = {
   PROFILE:        "setu_patient_profile",
   REMINDERS:      "setu_reminders",
@@ -18,6 +17,14 @@ export const LS = {
   MEMORY_PHOTOS:  "setu_memory_photos",
   PIN:            "setu_pin",
   ACTIVITY_PLAN:  "setu_activity_plan",
+  THEME:          "setu_cg_theme",
+  LANG:           "setu_cg_lang",
+  SAFEZONE:       "setu_safezone",
+  HANDOVER_NOTES: "setu_handover_notes",
+  FATIGUE_TIMER:  "setu_fatigue_timer",
+  AI_ADAPTIVE:    "setu_ai_adaptive",
+  PILLBOX_LOG:    "setu_pillbox_log",
+  SUNDOWNING_LOG: "setu_sundowning_log",
 }
 
 export const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -44,8 +51,8 @@ export const ALL_GAMES = [
 ]
 
 export const PROFILE_DEFAULT = {
-  name: "Patient",
-  age: "",
+  name: "Meena Sharma",
+  age: "72",
   stage: "early",
   diagnosis_date: "",
   doctor_name: "",

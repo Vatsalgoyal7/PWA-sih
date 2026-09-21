@@ -1,34 +1,447 @@
 /* ============================================================
-   CaregiverHome.css — Root shell layout for caregiver app
+   CaregiverHome.css — Multi-Device Responsive Architecture
+   Mobile (<768px) • Tablet (768-1023px) • Laptop/Desktop (>=1024px)
+   STRICTLY SCOPED TO CAREGIVER — PATIENT SIDE IS 100% UNTOUCHED
    ============================================================ */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* ── Light Mode Variables (Default - Zero Eye Strain) ── */
+.cg-theme-light {
+  --cg-bg: #f8fafc;
+  --cg-surface: #ffffff;
+  --cg-surface-elevated: #f1f5f9;
+  --cg-border: #e2e8f0;
+  --cg-border-subtle: #f1f5f9;
+  --cg-text-main: #0f172a;
+  --cg-text-muted: #64748b;
+  --cg-text-soft: #94a3b8;
+  --cg-primary: #b83a24;
+  --cg-primary-hover: #9e2e18;
+  --cg-primary-soft: #fee2e2;
+  --cg-emerald: #10b981;
+  --cg-emerald-soft: #d1fae5;
+  --cg-amber: #f59e0b;
+  --cg-amber-soft: #fef3c7;
+  --cg-sky: #0284c7;
+  --cg-sky-soft: #e0f2fe;
+  --cg-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  --cg-card-border: 1px solid #edf2f7;
 }
 
-/* ── Root shell ── */
+/* ── Dark Mode Variables (Chakravyuh Admin Style) ── */
+.cg-theme-dark {
+  --cg-bg: #090d16;
+  --cg-surface: #111827;
+  --cg-surface-elevated: #1e293b;
+  --cg-border: #1e293b;
+  --cg-border-subtle: #172033;
+  --cg-text-main: #f8fafc;
+  --cg-text-muted: #94a3b8;
+  --cg-text-soft: #64748b;
+  --cg-primary: #ef4444;
+  --cg-primary-hover: #dc2626;
+  --cg-primary-soft: rgba(239, 68, 68, 0.15);
+  --cg-emerald: #34d399;
+  --cg-emerald-soft: rgba(16, 185, 129, 0.15);
+  --cg-amber: #fbbf24;
+  --cg-amber-soft: rgba(245, 158, 11, 0.15);
+  --cg-sky: #38bdf8;
+  --cg-sky-soft: rgba(2, 132, 199, 0.15);
+  --cg-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --cg-card-border: 1px solid #1e293b;
+}
+
+/* ── Root Container ── */
 .cg-shell {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
   position: relative;
-  background: #f5f5f5;
+  background-color: var(--cg-bg);
+  color: var(--cg-text-main);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* ── Scrollable content area (leaves room for navbar) ── */
+/* ── Top Header Navigation Bar ── */
+.cg-topbar {
+  background-color: var(--cg-surface);
+  border-bottom: 1px solid var(--cg-border);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-shadow: var(--cg-shadow);
+  transition: all 0.25s ease;
+}
+
+.cg-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cg-btn-hamburger {
+  background: transparent;
+  border: 1px solid var(--cg-border);
+  border-radius: 10px;
+  color: var(--cg-text-main);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cg-btn-hamburger:hover {
+  background-color: var(--cg-surface-elevated);
+  border-color: var(--cg-primary);
+}
+
+.cg-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cg-brand-text {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--cg-text-main);
+}
+
+.cg-portal-tag {
+  display: none;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background-color: var(--cg-primary-soft);
+  color: var(--cg-primary);
+  letter-spacing: 0.04em;
+}
+
+.cg-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cg-icon-btn {
+  background: var(--cg-surface-elevated);
+  border: 1px solid var(--cg-border);
+  border-radius: 10px;
+  color: var(--cg-text-main);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cg-icon-btn:hover {
+  border-color: var(--cg-primary);
+}
+
+.cg-btn-text-desktop {
+  display: none;
+}
+
+.cg-avatar-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--cg-primary);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(184, 58, 36, 0.3);
+}
+
+.cg-switch-role-btn {
+  background: var(--cg-surface-elevated);
+  border: 1px solid var(--cg-border);
+  border-radius: 10px;
+  color: var(--cg-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cg-switch-role-btn:hover {
+  border-color: var(--cg-primary);
+  color: var(--cg-primary);
+}
+
+.cg-switch-text-desktop {
+  display: none;
+}
+
+/* ── Multi-Device Body Layout Wrapper ── */
+.cg-body-wrapper {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  min-height: calc(100dvh - 61px);
+}
+
+/* ── Desktop Permanent Left Sidebar (Hidden on Mobile/Tablet < 1024px) ── */
+.cg-desktop-sidebar {
+  display: none;
+}
+
+/* ── Content Viewport ── */
 .cg-content {
   flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  /* 64px ≈ navbar height + safe area buffer */
-  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
 }
 
-/* ── PIN lock screen ── */
+.cg-content-inner {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* ── Mobile Drawer (For < 1024px) ── */
+.cg-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+.cg-drawer {
+  width: 82%;
+  max-width: 320px;
+  height: 100%;
+  background-color: var(--cg-surface);
+  border-right: 1px solid var(--cg-border);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: slideInLeft 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cg-drawer-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--cg-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cg-drawer-brand {
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cg-drawer-close {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: var(--cg-text-muted);
+  cursor: pointer;
+}
+
+.cg-drawer-menu {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cg-drawer-section-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cg-primary);
+  padding: 8px 8px 4px;
+}
+
+.cg-drawer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--cg-text-main);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.cg-drawer-item:hover {
+  background-color: var(--cg-surface-elevated);
+}
+
+.cg-drawer-item.active {
+  background-color: var(--cg-primary-soft);
+  color: var(--cg-primary);
+  border-color: var(--cg-primary);
+  font-weight: 700;
+}
+
+.cg-drawer-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cg-drawer-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background-color: var(--cg-surface-elevated);
+  border: 1px solid var(--cg-border);
+  color: var(--cg-text-muted);
+}
+
+.cg-drawer-item.active .cg-drawer-badge {
+  background-color: var(--cg-primary);
+  color: #ffffff;
+  border-color: var(--cg-primary);
+}
+
+.cg-drawer-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--cg-border);
+  font-size: 10px;
+  color: var(--cg-text-soft);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ── Mobile Bottom Navigation ── */
+.cg-mobile-bottom-nav {
+  display: block;
+}
+
+/* ============================================================
+   TABLET RESPONSIVE (min-width: 768px)
+   ============================================================ */
+@media (min-width: 768px) {
+  .cg-portal-tag {
+    display: inline-block;
+  }
+
+  .cg-content-inner {
+    max-width: 720px;
+    padding: 0 16px;
+  }
+
+  .cg-btn-text-desktop {
+    display: inline;
+  }
+
+  .cg-switch-text-desktop {
+    display: inline;
+  }
+}
+
+/* ============================================================
+   LAPTOP / DESKTOP RESPONSIVE (min-width: 1024px)
+   Chakravyuh Web Desk Architecture
+   ============================================================ */
+@media (min-width: 1024px) {
+  /* Hide Mobile Drawer Toggle & Bottom Bar */
+  .cg-btn-hamburger {
+    display: none;
+  }
+
+  .cg-mobile-bottom-nav {
+    display: none;
+  }
+
+  /* Show Permanent Desktop Sidebar */
+  .cg-desktop-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 270px;
+    background-color: var(--cg-surface);
+    border-right: 1px solid var(--cg-border);
+    flex-shrink: 0;
+    position: sticky;
+    top: 61px;
+    height: calc(100dvh - 61px);
+    overflow: hidden;
+  }
+
+  .cg-desktop-sidebar-inner {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cg-desktop-sidebar-footer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--cg-border);
+    font-size: 10px;
+    color: var(--cg-text-soft);
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--cg-surface-elevated);
+  }
+
+  /* Main Content stretches for wide reading */
+  .cg-content {
+    padding: 24px 32px;
+    padding-bottom: 40px;
+  }
+
+  .cg-content-inner {
+    max-width: 1100px;
+    padding: 0;
+  }
+}
+
+/* ============================================================
+   LARGE DESKTOP (min-width: 1440px)
+   ============================================================ */
+@media (min-width: 1440px) {
+  .cg-desktop-sidebar {
+    width: 290px;
+  }
+
+  .cg-content-inner {
+    max-width: 1240px;
+  }
+}
+
+/* ── PIN Lock Screen (if enabled) ── */
 .cg-pin-screen {
   display: flex;
   flex-direction: column;
@@ -37,132 +450,73 @@
   min-height: 100dvh;
   padding: 32px 24px;
   background: linear-gradient(160deg, #b83a24 0%, #d94f37 50%, #e8775f 100%);
+  color: #ffffff;
 }
 
-.cg-pin-logo {
-  font-size: 56px;
-  margin-bottom: 8px;
-}
-
-.cg-pin-app-name {
-  font-size: 28px;
-  font-weight: 800;
-  color: #fff;
-  margin: 0 0 4px;
-  letter-spacing: 0.02em;
-}
-
-.cg-pin-subtitle {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 40px;
-}
+.cg-pin-logo { font-size: 52px; margin-bottom: 8px; }
+.cg-pin-app-name { font-size: 26px; font-weight: 800; margin: 0 0 4px; }
+.cg-pin-subtitle { font-size: 13px; opacity: 0.85; margin: 0 0 32px; }
 
 .cg-pin-card {
-  background: #fff;
+  background: #ffffff;
+  color: #0f172a;
   border-radius: 24px;
-  padding: 32px 28px;
+  padding: 28px 24px;
   width: 100%;
-  max-width: 340px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  max-width: 320px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-}
-
-.cg-pin-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #222;
-  margin: 0;
-}
-
-.cg-pin-desc {
-  font-size: 13px;
-  color: #666;
-  margin: -8px 0 4px;
-  text-align: center;
-}
-
-.cg-pin-dots {
-  display: flex;
   gap: 14px;
-  margin: 4px 0;
 }
 
+.cg-pin-title { font-size: 17px; font-weight: 700; margin: 0; }
+.cg-pin-desc { font-size: 12px; color: #64748b; margin: -4px 0 6px; text-align: center; }
+
+.cg-pin-dots { display: flex; gap: 12px; margin: 4px 0; }
 .cg-pin-dot {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   border: 2px solid #b83a24;
   background: transparent;
   transition: background 0.15s;
 }
-
-.cg-pin-dot--filled {
-  background: #b83a24;
-}
+.cg-pin-dot--filled { background: #b83a24; }
 
 .cg-pin-input {
   width: 100%;
-  padding: 14px 16px;
-  font-size: 28px;
+  padding: 12px;
+  font-size: 24px;
   letter-spacing: 12px;
   text-align: center;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #e2e8f0;
   border-radius: 12px;
   outline: none;
-  color: transparent;
-  caret-color: #b83a24;
-  background: #fafafa;
-  transition: border-color 0.2s;
 }
-
-.cg-pin-input:focus {
-  border-color: #b83a24;
-  background: #fff;
-}
-
-.cg-pin-input--error {
-  border-color: #e53935;
-  animation: cg-shake 0.35s ease;
-}
-
-.cg-pin-error {
-  color: #e53935;
-  font-size: 13px;
-  margin: -8px 0 0;
-  font-weight: 500;
-}
+.cg-pin-input:focus { border-color: #b83a24; }
+.cg-pin-input--error { border-color: #ef4444; }
+.cg-pin-error { color: #ef4444; font-size: 12px; font-weight: 600; margin: 0; }
 
 .cg-pin-unlock-btn {
   width: 100%;
-  padding: 14px;
+  padding: 12px;
   background: #b83a24;
-  color: #fff;
-  font-size: 16px;
+  color: #ffffff;
+  font-size: 14px;
   font-weight: 700;
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
 }
 
-.cg-pin-unlock-btn:active {
-  background: #9a3020;
-  transform: scale(0.98);
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.cg-pin-unlock-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-@keyframes cg-shake {
-  0%, 100% { transform: translateX(0); }
-  20%       { transform: translateX(-8px); }
-  40%       { transform: translateX(8px); }
-  60%       { transform: translateX(-6px); }
-  80%       { transform: translateX(6px); }
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
 }
