@@ -245,7 +245,7 @@ export default function CaregiverHome({ onChangeRole }) {
   return (
     <div className={`cg-shell cg-theme-${theme}`}>
       
-      {/* Top Header Bar — Clean: only Hamburger + Logo */}
+      {/* Top Header Bar — Clean: Hamburger + Logo + Live Status */}
       <header className="cg-topbar">
         <div className="cg-topbar-left">
           <button
@@ -260,6 +260,13 @@ export default function CaregiverHome({ onChangeRole }) {
             <span>🧠</span>
             <span className="cg-brand-text">SMRITISETU</span>
             <span className="cg-portal-tag">CAREGIVER DESK</span>
+          </div>
+        </div>
+
+        <div className="cg-topbar-right">
+          <div className="cg-topbar-status-chip">
+            <span className="cg-pulse-dot" />
+            <span>Active Care</span>
           </div>
         </div>
       </header>

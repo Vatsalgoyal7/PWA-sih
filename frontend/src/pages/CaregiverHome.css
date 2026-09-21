@@ -140,6 +140,28 @@
   flex-shrink: 0;
 }
 
+.cg-topbar-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background-color: var(--cg-emerald-soft, #d1fae5);
+  color: var(--cg-emerald, #10b981);
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  letter-spacing: 0.02em;
+}
+
+.cg-topbar-status-chip .cg-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--cg-emerald, #10b981);
+  animation: cgPulse 1.5s infinite;
+}
+
 .cg-icon-btn {
   background: var(--cg-surface-elevated);
   border: 1px solid var(--cg-border);

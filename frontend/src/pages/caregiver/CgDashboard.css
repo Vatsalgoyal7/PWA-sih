@@ -89,6 +89,25 @@
   50% { opacity: 0.4; transform: scale(1.3); }
 }
 
+.cg-hero-status-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cg-date-badge {
+  font-size: 11px;
+  color: var(--cg-text-muted);
+  font-weight: 600;
+}
+
+.cg-metric-denom {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.45;
+}
+
 /* ── 2x2 Metric Grid ── */
 .cg-metric-grid {
   display: grid;
