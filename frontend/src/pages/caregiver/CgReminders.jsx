@@ -212,19 +212,26 @@ export default function CgReminders() {
   const enabledCount = reminders.filter((r) => r.enabled).length
 
   return (
-    <div className="cg-reminders">
-      {/* Page header */}
-      <div className="page-header">
-        <h2 className="page-title">🔔 Reminders</h2>
-        <span className="enabled-badge">{enabledCount}/{reminders.length} Active</span>
-        {saved && <span className="save-toast">✓ Saved</span>}
+    <div className="cgdash-view">
+      {/* Hero Banner */}
+      <div className="cg-hero-banner">
+        <div className="cg-hero-tag">
+          <span>⏰</span>
+          <span>Routines & Voice Alarms</span>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
+          <div>
+            <h1 className="cg-hero-title">Daily <span>Routines & Voice Alarms</span></h1>
+            <p className="cg-hero-sub">Schedule medicine, nutrition, doctor visits and personalized voice memos for patient orientation.</p>
+          </div>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            <span className="enabled-badge">{enabledCount}/{reminders.length} Active</span>
+            {saved && <span className="save-toast">✓ Saved</span>}
+          </div>
+        </div>
       </div>
 
-      <p className="page-subtitle">
-        Set daily reminders for your patient. Changes save automatically.
-      </p>
-
-      {/* Reminder cards */}
+      {/* Reminder cards (2-column responsive grid) */}
       <div className="reminders-list">
         {reminders.map((r) => (
           <ReminderCard key={r.id} reminder={r} onChange={handleChange} />

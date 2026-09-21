@@ -122,42 +122,47 @@ export default function CgGames() {
   }
 
   return (
-    <div className="cg-games">
-      {/* Page header */}
-      <div className="page-header">
-        <h2 className="page-title">🎮 Cognitive Games</h2>
-        <span className={`sync-indicator ${syncing ? "syncing" : ""}`}>
-          {syncing ? "Syncing…" : syncMsg}
-        </span>
+    <div className="cgdash-view">
+      {/* Hero Banner */}
+      <div className="cg-hero-banner">
+        <div className="cg-hero-tag">
+          <span>🎮</span>
+          <span>Cognitive Stimulation Therapy</span>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
+          <div>
+            <h1 className="cg-hero-title">Cognitive <span>Game Prescriber</span></h1>
+            <p className="cg-hero-sub">Control which cognitive games appear for your patient and set individual difficulty levels.</p>
+          </div>
+          <span className={`sync-indicator ${syncing ? "syncing" : ""}`}>
+            {syncing ? "Syncing…" : syncMsg}
+          </span>
+        </div>
+
+        {/* Summary bar */}
+        <div className="games-summary-bar">
+          <div className="summary-count">
+            <span className="count-num">{activeCount}</span>
+            <span className="count-of"> of {games.length} games active</span>
+          </div>
+          <div className="summary-progress">
+            <div
+              className="summary-fill"
+              style={{ width: `${(activeCount / games.length) * 100}%` }}
+            />
+          </div>
+          <div className="summary-actions">
+            <button className="btn-bulk btn-enable-all" onClick={handleEnableAll}>
+              Enable All
+            </button>
+            <button className="btn-bulk btn-disable-all" onClick={handleDisableAll}>
+              Disable All
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Summary bar */}
-      <div className="games-summary-bar">
-        <div className="summary-count">
-          <span className="count-num">{activeCount}</span>
-          <span className="count-of"> of {games.length} games active</span>
-        </div>
-        <div className="summary-progress">
-          <div
-            className="summary-fill"
-            style={{ width: `${(activeCount / games.length) * 100}%` }}
-          />
-        </div>
-        <div className="summary-actions">
-          <button className="btn-bulk btn-enable-all" onClick={handleEnableAll}>
-            Enable All
-          </button>
-          <button className="btn-bulk btn-disable-all" onClick={handleDisableAll}>
-            Disable All
-          </button>
-        </div>
-      </div>
-
-      <p className="page-subtitle">
-        Control which cognitive games appear for your patient and set difficulty levels.
-      </p>
-
-      {/* Game cards */}
+      {/* Game cards (3-column responsive grid) */}
       <div className="games-list">
         {games.map((g, i) => (
           <GameCard key={g.id} game={g} index={i} onChange={handleChange} />

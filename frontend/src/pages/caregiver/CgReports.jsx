@@ -89,76 +89,90 @@ Note: Generated via SmritiSetu PWA Caregiver Module for Clinical Review.
   }
 
   return (
-    <div className="cgreports-page">
-      <header className="cgreports-header">
-        <h2>Analytics &amp; Clinical Reports</h2>
-        <p>Comprehensive cognitive and behavioral overview</p>
-      </header>
+    <div className="cgdash-view">
+      {/* Hero Banner */}
+      <div className="cg-hero-banner">
+        <div className="cg-hero-tag">
+          <span>📑</span>
+          <span>Analytics &amp; Medical Telemetry</span>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
+          <div>
+            <h1 className="cg-hero-title">Doctor Reports <span>&amp; Longitudinal Analytics</span></h1>
+            <p className="cg-hero-sub">Comprehensive cognitive progress, mood distribution, and exportable physician summaries.</p>
+          </div>
+          <button className="btn-copy-report" onClick={handleCopyReport}>
+            {copied ? '✓ Copied to Clipboard!' : '📋 Copy Doctor Summary'}
+          </button>
+        </div>
+      </div>
 
-      {/* Cognitive Score Trend */}
-      <section className="cg-report-card">
-        <div className="report-card-title-row">
-          <h3>🧠 Cognitive Score History (MMSE-Lite /30)</h3>
-          <span className="badge-normal">Target: 24+</span>
-        </div>
-        <p className="report-card-desc">Tracks orientation, recall, attention, and memory retention.</p>
-        <div className="report-chart-wrap">
-          <ResponsiveContainer width="100%" height={160}>
-            <LineChart data={cogData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
-              <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-              <YAxis domain={[10, 30]} tick={{ fontSize: 10 }} />
-              <Tooltip />
-              <ReferenceLine y={24} stroke="#22c55e" strokeDasharray="3 3" label={{ value: 'Normal (24)', fill: '#22c55e', fontSize: 10 }} />
-              <Line type="monotone" dataKey="score" stroke="#b83a24" strokeWidth={2.5} dot={{ r: 4, fill: '#b83a24' }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </section>
+      <div className="cgreports-grid">
+        {/* Cognitive Score Trend */}
+        <section className="cg-report-card">
+          <div className="report-card-title-row">
+            <h3>🧠 Cognitive Score History (MMSE-Lite /30)</h3>
+            <span className="badge-normal">Target: 24+</span>
+          </div>
+          <p className="report-card-desc">Tracks orientation, recall, attention, and memory retention.</p>
+          <div className="report-chart-wrap">
+            <ResponsiveContainer width="100%" height={160}>
+              <LineChart data={cogData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
+                <XAxis dataKey="date" tick={{ fontSize: 10 }} />
+                <YAxis domain={[10, 30]} tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <ReferenceLine y={24} stroke="#22c55e" strokeDasharray="3 3" label={{ value: 'Normal (24)', fill: '#22c55e', fontSize: 10 }} />
+                <Line type="monotone" dataKey="score" stroke="#b83a24" strokeWidth={2.5} dot={{ r: 4, fill: '#b83a24' }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </section>
 
-      {/* Mood Tracker Trend */}
-      <section className="cg-report-card">
-        <h3>😊 Weekly Mood Trend</h3>
-        <p className="report-card-desc">Daily affective tracking (1 = Very Bad, 5 = Great)</p>
-        <div className="report-chart-wrap">
-          <ResponsiveContainer width="100%" height={140}>
-            <AreaChart data={moodData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
-              <XAxis dataKey="day" tick={{ fontSize: 10 }} />
-              <YAxis domain={[1, 5]} tick={{ fontSize: 10 }} ticks={[1, 2, 3, 4, 5]} />
-              <Tooltip />
-              <Area type="monotone" dataKey="score" stroke="#b83a24" fill="#fee2e2" strokeWidth={2} />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </section>
+        {/* Mood Tracker Trend */}
+        <section className="cg-report-card">
+          <h3>😊 Weekly Mood Trend</h3>
+          <p className="report-card-desc">Daily affective tracking (1 = Very Bad, 5 = Great)</p>
+          <div className="report-chart-wrap">
+            <ResponsiveContainer width="100%" height={160}>
+              <AreaChart data={moodData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
+                <XAxis dataKey="day" tick={{ fontSize: 10 }} />
+                <YAxis domain={[1, 5]} tick={{ fontSize: 10 }} ticks={[1, 2, 3, 4, 5]} />
+                <Tooltip />
+                <Area type="monotone" dataKey="score" stroke="#b83a24" fill="#fee2e2" strokeWidth={2} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </section>
 
-      {/* Sleep & Water Adherence */}
-      <section className="cg-report-card">
-        <h3>💧 Vitals Adherence (Sleep &amp; Hydration)</h3>
-        <p className="report-card-desc">Hours of sleep vs glasses of water (Past 7 days)</p>
-        <div className="report-chart-wrap">
-          <ResponsiveContainer width="100%" height={150}>
-            <BarChart data={vitalsData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <XAxis dataKey="day" tick={{ fontSize: 10 }} />
-              <YAxis tick={{ fontSize: 10 }} />
-              <Tooltip />
-              <Bar dataKey="sleep" name="Sleep (hrs)" fill="#818cf8" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="water" name="Water (glasses)" fill="#38bdf8" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </section>
+        {/* Sleep & Water Adherence */}
+        <section className="cg-report-card">
+          <h3>💧 Vitals Adherence (Sleep &amp; Hydration)</h3>
+          <p className="report-card-desc">Hours of sleep vs glasses of water (Past 7 days)</p>
+          <div className="report-chart-wrap">
+            <ResponsiveContainer width="100%" height={160}>
+              <BarChart data={vitalsData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <XAxis dataKey="day" tick={{ fontSize: 10 }} />
+                <YAxis tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Bar dataKey="sleep" name="Sleep (hrs)" fill="#818cf8" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="water" name="Water (glasses)" fill="#38bdf8" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </section>
 
-      {/* Export Clinical Report */}
-      <div className="doctor-report-box">
-        <div className="doctor-report-icon">📑</div>
-        <div className="doctor-report-info">
-          <h4>Export Clinical Summary</h4>
-          <p>Formatted text summary for sharing with neurologist or geriatrician.</p>
-        </div>
-        <button className="btn-copy-report" onClick={handleCopyReport}>
-          {copied ? '✓ Copied to Clipboard!' : '📋 Copy Report'}
-        </button>
+        {/* Export Clinical Report Card */}
+        <section className="cg-report-card doctor-report-box">
+          <div className="doctor-report-icon">📑</div>
+          <div className="doctor-report-info">
+            <h4>Export Clinical Summary</h4>
+            <p>Formatted text summary for sharing with neurologist or geriatrician.</p>
+          </div>
+          <button className="btn-copy-report" onClick={handleCopyReport}>
+            {copied ? '✓ Copied to Clipboard!' : '📋 Copy Report'}
+          </button>
+        </section>
       </div>
     </div>
   )

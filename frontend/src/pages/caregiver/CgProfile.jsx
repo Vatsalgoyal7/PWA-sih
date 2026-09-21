@@ -61,32 +61,40 @@ export default function CgProfile({ onChangeRole }) {
   }
 
   return (
-    <div className="cgprofile-page">
-      <header className="cgprofile-header">
-        <h2>Settings &amp; Care Management</h2>
-        <p>Patient profile, emergency contacts &amp; security</p>
-      </header>
+    <div className="cgdash-view">
+      {/* Hero Banner */}
+      <div className="cg-hero-banner">
+        <div className="cg-hero-tag">
+          <span>👤</span>
+          <span>Security &amp; Administrative Setup</span>
+        </div>
+        <h1 className="cg-hero-title">Patient Profile <span>&amp; Care Security</span></h1>
+        <p className="cg-hero-sub">Manage elder demographics, configure emergency contacts, and set up 4-digit PIN security.</p>
 
-      {/* Sub Tabs */}
-      <div className="profile-subtabs">
-        <button
-          className={`subtab-btn ${activeSubTab === 'profile' ? 'active' : ''}`}
-          onClick={() => setActiveSubTab('profile')}
-        >
-          👤 Profile
-        </button>
-        <button
-          className={`subtab-btn ${activeSubTab === 'contacts' ? 'active' : ''}`}
-          onClick={() => setActiveSubTab('contacts')}
-        >
-          ☎️ Emergency
-        </button>
-        <button
-          className={`subtab-btn ${activeSubTab === 'security' ? 'active' : ''}`}
-          onClick={() => setActiveSubTab('security')}
-        >
-          🔒 Security
-        </button>
+        {/* Sub Tabs */}
+        <div className="profile-subtabs">
+          <button
+            type="button"
+            className={`subtab-btn ${activeSubTab === 'profile' ? 'active' : ''}`}
+            onClick={() => setActiveSubTab('profile')}
+          >
+            👤 Patient Profile
+          </button>
+          <button
+            type="button"
+            className={`subtab-btn ${activeSubTab === 'contacts' ? 'active' : ''}`}
+            onClick={() => setActiveSubTab('contacts')}
+          >
+            ☎️ Emergency SOS
+          </button>
+          <button
+            type="button"
+            className={`subtab-btn ${activeSubTab === 'security' ? 'active' : ''}`}
+            onClick={() => setActiveSubTab('security')}
+          >
+            🔒 PIN Lock Security
+          </button>
+        </div>
       </div>
 
       {/* SUBTAB 1: Profile */}

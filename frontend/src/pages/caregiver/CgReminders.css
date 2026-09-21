@@ -1,55 +1,69 @@
-/* CgReminders.css */
+/* ============================================================
+   CgReminders.css — Chakravyuh Routines & Voice Reminders
+   ============================================================ */
+
 .cg-reminders,
-.cg-reminders-page {
-  padding: 20px;
-  background: transparent;
-  min-height: 100%;
+.cg-reminders-view {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
 }
 
-.cg-reminders-header {
-  background: linear-gradient(135deg, #b83a24 0%, #9e2e18 100%);
-  margin: -16px -16px 16px -16px;
-  padding: 24px 20px;
-  color: #fff;
+.enabled-badge {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--cg-emerald-soft, #d1fae5);
+  color: var(--cg-emerald, #10b981);
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-.cg-reminders-header h2 {
-  margin: 0 0 6px;
-  font-size: 22px;
+.save-toast {
+  font-size: 11px;
   font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--cg-primary-soft, #fee2e2);
+  color: var(--cg-primary, #b83a24);
+  animation: fadeIn 0.2s ease;
 }
 
-.cg-reminders-header p {
-  margin: 0;
-  font-size: 13px;
-  opacity: 0.9;
-}
-
+/* ── 2-Column Responsive Reminders Grid ── */
 .reminders-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.reminder-card {
+  background-color: var(--cg-surface, #ffffff);
+  border-radius: 18px;
+  padding: 18px 20px;
+  border: var(--cg-card-border, 1px solid #edf2f7);
+  box-shadow: var(--cg-shadow, 0 4px 14px rgba(0, 0, 0, 0.04));
+  transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.reminder-card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 16px;
-  border: 1.5px solid #edf2f7;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  transition: all 0.2s;
+.reminder-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
 }
 
 .reminder-card.inactive {
-  opacity: 0.65;
-  background: #fcfcfc;
+  opacity: 0.6;
+  background-color: var(--cg-surface-elevated, #fcfcfc);
 }
 
 .reminder-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
 }
 
 .reminder-identity {
@@ -62,156 +76,137 @@
   font-size: 24px;
 }
 
-.reminder-names {
+.reminder-titles {
   display: flex;
   flex-direction: column;
 }
 
-.reminder-label-en {
-  font-weight: 700;
+.reminder-title-en {
+  font-weight: 800;
   font-size: 15px;
-  color: #1e293b;
+  color: var(--cg-text-main, #0f172a);
 }
 
-.reminder-label-as {
+.reminder-title-as {
   font-size: 12px;
-  color: #64748b;
+  color: var(--cg-text-muted, #64748b);
+  font-weight: 600;
 }
 
-.field-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: #64748b;
-  min-width: 70px;
+/* ── Time & Day Pickers ── */
+.reminder-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--cg-border-subtle, #f1f5f9);
 }
 
-.reminder-time-row {
+.time-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 0;
-  border-top: 1px solid #f1f5f9;
+}
+
+.time-row label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cg-text-main, #0f172a);
 }
 
 .time-input {
-  border: 1.5px solid #cbd5e1;
-  border-radius: 8px;
   padding: 6px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--cg-border, #cbd5e1);
+  background: var(--cg-surface-elevated, #f8fafc);
+  color: var(--cg-text-main, #0f172a);
   font-size: 14px;
   font-weight: 700;
-  color: #1e293b;
-  background: #f8fafc;
 }
 
-.reminder-days-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-top: 1px solid #f1f5f9;
-}
-
-.day-pills {
+.days-row {
   display: flex;
   gap: 4px;
 }
 
-.day-pill {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid #e2e8f0;
-  background: #fff;
-  font-size: 10px;
+.day-chip {
+  flex: 1;
+  padding: 6px 2px;
+  border-radius: 8px;
+  border: 1px solid var(--cg-border, #e2e8f0);
+  background: var(--cg-surface-elevated, #f8fafc);
+  color: var(--cg-text-muted, #64748b);
+  font-size: 11px;
   font-weight: 700;
-  color: #64748b;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.15s ease;
+  text-align: center;
 }
 
-.day-pill.day-active {
-  background: #b83a24;
+.day-chip.day-on {
+  background: var(--cg-primary, #b83a24);
   color: #fff;
-  border-color: #b83a24;
+  border-color: var(--cg-primary, #b83a24);
 }
 
-.reminder-voice-row {
-  padding-top: 8px;
-  border-top: 1px solid #f1f5f9;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.voice-controls {
+/* ── Voice Memo Controls ── */
+.voice-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid var(--cg-border-subtle, #f1f5f9);
+}
+
+.voice-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cg-text-muted, #64748b);
 }
 
 .btn-record {
-  padding: 8px 14px;
+  padding: 6px 12px;
   border-radius: 8px;
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  color: #b83a24;
-}
-
-.btn-record.secondary {
-  color: #64748b;
-}
-
-.recording-state {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.recording-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #ef4444;
-  animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(1.2); }
-}
-
-.recording-label {
+  border: 1px solid var(--cg-border, #e2e8f0);
+  background: var(--cg-surface-elevated, #f8fafc);
+  color: var(--cg-text-main, #0f172a);
   font-size: 12px;
   font-weight: 700;
-  color: #ef4444;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.btn-record:hover {
+  border-color: var(--cg-primary, #b83a24);
+  color: var(--cg-primary, #b83a24);
 }
 
 .btn-stop-record {
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
   background: #ef4444;
   color: #fff;
-  border: none;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
 }
 
 .voice-saved {
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap: 6px;
 }
 
 .btn-play {
   padding: 6px 12px;
-  border-radius: 6px;
-  background: #22c55e;
-  color: #fff;
+  border-radius: 8px;
   border: none;
+  background: var(--cg-emerald, #10b981);
+  color: #fff;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
@@ -219,27 +214,16 @@
 
 .btn-delete-voice {
   padding: 6px 10px;
-  border-radius: 6px;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  border: 1px solid var(--cg-border, #e2e8f0);
+  background: var(--cg-surface-elevated, #f8fafc);
   font-size: 12px;
   cursor: pointer;
 }
 
-/* Responsive Grid for Tablet & Laptop */
 @media (min-width: 768px) {
-  .cg-reminders,
-  .cg-reminders-page {
-    padding: 24px 8px;
-  }
   .reminders-list {
-    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    width: 100%;
-  }
-  .reminder-card {
-    margin: 0;
-    width: 100%;
+    gap: 20px;
   }
 }

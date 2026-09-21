@@ -791,25 +791,29 @@ export default function CgHealth() {
   const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <div className="cgh-root">
-      {/* Header */}
-      <div className="cgh-header">
-        <h2 className="cgh-header-title">Health Dashboard</h2>
-        <p className="cgh-header-sub">Track mood, cognition, vitals &amp; daily notes</p>
-      </div>
+    <div className="cgdash-view">
+      {/* Hero Banner */}
+      <div className="cg-hero-banner">
+        <div className="cg-hero-tag">
+          <span>🧠</span>
+          <span>Neuro-Cognitive Clinical Telemetry</span>
+        </div>
+        <h1 className="cg-hero-title">MMSE &amp; <span>Clinical Health Vitals</span></h1>
+        <p className="cg-hero-sub">Track daily mood trends, mini-mental state examinations (MMSE), physiological vitals &amp; clinical logs.</p>
 
-      {/* Tab Pills */}
-      <div className="cgh-tabs-wrap">
-        <div className="cgh-tabs">
-          {TABS.map((tab, i) => (
-            <button
-              key={tab}
-              className={`cgh-tab-pill ${activeTab === i ? 'active' : ''}`}
-              onClick={() => setActiveTab(i)}
-            >
-              {tab}
-            </button>
-          ))}
+        {/* Tab Pills */}
+        <div className="cgh-tabs-wrap">
+          <div className="cgh-tabs">
+            {TABS.map((tab, i) => (
+              <button
+                key={tab}
+                className={`cgh-tab-pill ${activeTab === i ? 'active' : ''}`}
+                onClick={() => setActiveTab(i)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
