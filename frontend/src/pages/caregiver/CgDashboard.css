@@ -1,23 +1,28 @@
 /* ============================================================
-   CgDashboard.css — Chakravyuh Inspired Telemetry Dashboard
+   CgDashboard.css — Modern Clinical Caregiver Dashboard
+   Vibrant Apple Health Aesthetics, AI Insights, & Interactive Timeline
    ============================================================ */
 
 .cgdash-view {
-  padding: 12px 10px;
+  padding: 14px 12px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
+  width: 100%;
 }
 
-/* ── Hero Telemetry Card ── */
+/* ── 1. Hero Patient Profile Banner ── */
 .cg-hero-banner {
-  background-color: var(--cg-surface);
-  border: var(--cg-card-border);
-  border-radius: 18px;
-  padding: 16px 14px;
-  box-shadow: var(--cg-shadow);
+  background-color: var(--cg-surface, #ffffff);
+  border: var(--cg-card-border, 1px solid #edf2f7);
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   transition: all 0.2s ease;
 }
 
@@ -26,89 +31,228 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 4px;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #6366f1 0%, #0ea5e9 50%, #10b981 100%);
+}
+
+.cg-hero-flex {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cg-hero-avatar-wrap {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.cg-hero-avatar {
+  width: 100%;
   height: 100%;
-  background: var(--cg-primary);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0e7ff 0%, #ede9fe 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.cg-online-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #10b981;
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+}
+
+.cg-hero-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
 }
 
 .cg-hero-tag {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 10px;
+  gap: 6px;
+  font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--cg-primary);
-  margin-bottom: 4px;
+  color: #6366f1;
 }
 
 .cg-hero-title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 900;
-  color: var(--cg-text-main);
-  margin: 0 0 4px;
+  color: var(--cg-text-main, #0f172a);
+  margin: 0;
   letter-spacing: -0.02em;
-}
-
-.cg-hero-title span {
-  color: var(--cg-primary);
+  line-height: 1.15;
 }
 
 .cg-hero-sub {
   font-size: 12px;
-  color: var(--cg-text-muted);
-  margin: 0 0 12px;
-  line-height: 1.45;
+  color: var(--cg-text-muted, #64748b);
+  margin: 0;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.cg-hero-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 10px;
+  border-top: 1px solid var(--cg-border-subtle, #f1f5f9);
 }
 
 .cg-status-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 20px;
-  background-color: var(--cg-emerald-soft);
-  color: var(--cg-emerald);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-  border: 1px solid var(--cg-emerald);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.cg-pill--green {
+  background-color: var(--cg-emerald-soft, #d1fae5);
+  color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.cg-pill--blue {
+  background-color: var(--cg-sky-soft, #e0f2fe);
+  color: #0369a1;
+  border: 1px solid rgba(14, 165, 233, 0.3);
 }
 
 .cg-pulse-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: var(--cg-emerald);
+  background-color: #10b981;
   animation: cgPulse 1.5s infinite;
-}
-
-@keyframes cgPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(1.3); }
-}
-
-.cg-hero-status-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
 }
 
 .cg-date-badge {
   font-size: 11px;
-  color: var(--cg-text-muted);
+  color: var(--cg-text-muted, #64748b);
   font-weight: 600;
+  margin-left: auto;
 }
 
-.cg-metric-denom {
+@keyframes cgPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.4); }
+}
+
+/* ── 2. AI Clinical Caregiver Insight Card (Smart Feature) ── */
+.cg-ai-insight-card {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.07) 0%, rgba(168, 85, 247, 0.04) 50%, var(--cg-surface, #ffffff) 100%);
+  border: 1.5px solid rgba(99, 102, 241, 0.22);
+  border-radius: 20px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.06);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cg-ai-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cg-ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #6366f1;
+  text-transform: uppercase;
+}
+
+.cg-ai-sparkle {
   font-size: 14px;
-  font-weight: 600;
-  opacity: 0.45;
 }
 
-/* ── 2x2 Metric Grid ── */
+.cg-ai-time {
+  font-size: 11px;
+  color: var(--cg-text-soft, #94a3b8);
+  font-weight: 600;
+}
+
+.cg-ai-text {
+  font-size: 13px;
+  color: var(--cg-text-main, #0f172a);
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 500;
+}
+
+.cg-ai-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+.cg-btn-ai-action {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+}
+
+.cg-btn-ai-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+}
+
+.cg-btn-ai-subtle {
+  padding: 8px 14px;
+  background: var(--cg-surface-elevated, #f8fafc);
+  color: var(--cg-text-main, #0f172a);
+  border: 1px solid var(--cg-border, #e2e8f0);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cg-btn-ai-subtle:hover {
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+/* ── 3. 4 Vibrant Metric Cards (Apple Health Color-Coded) ── */
 .cg-metric-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -116,120 +260,419 @@
 }
 
 .cg-metric-card {
-  background-color: var(--cg-surface);
-  border: var(--cg-card-border);
-  border-radius: 18px;
-  padding: 14px;
-  box-shadow: var(--cg-shadow);
+  background-color: var(--cg-surface, #ffffff);
+  border-radius: 20px;
+  padding: 16px;
+  border: 1.5px solid var(--cg-border, #edf2f7);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .cg-metric-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--cg-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Color Accent Variations */
+.cg-card--indigo {
+  border-color: rgba(99, 102, 241, 0.2);
+}
+.cg-card--indigo:hover {
+  border-color: #6366f1;
+}
+.cg-card--indigo .cg-metric-icon-badge {
+  background: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
+}
+.cg-card--indigo .cg-sub-dot {
+  background-color: #6366f1;
+}
+
+.cg-card--cyan {
+  border-color: rgba(14, 165, 233, 0.2);
+}
+.cg-card--cyan:hover {
+  border-color: #0ea5e9;
+}
+.cg-card--cyan .cg-metric-icon-badge {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0284c7;
+}
+.cg-card--cyan .cg-sub-dot {
+  background-color: #0ea5e9;
+}
+
+.cg-card--emerald {
+  border-color: rgba(16, 185, 129, 0.2);
+}
+.cg-card--emerald:hover {
+  border-color: #10b981;
+}
+.cg-card--emerald .cg-metric-icon-badge {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+}
+.cg-card--emerald .cg-sub-dot {
+  background-color: #10b981;
+}
+
+.cg-card--amber {
+  border-color: rgba(245, 158, 11, 0.2);
+}
+.cg-card--amber:hover {
+  border-color: #f59e0b;
+}
+.cg-card--amber .cg-metric-icon-badge {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+.cg-card--amber .cg-sub-dot {
+  background-color: #f59e0b;
 }
 
 .cg-metric-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--cg-text-muted);
+  margin-bottom: 8px;
+}
+
+.cg-metric-label {
+  font-size: 11px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+  color: var(--cg-text-muted, #64748b);
+}
+
+.cg-metric-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
 }
 
 .cg-metric-val {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 900;
-  color: var(--cg-text-main);
+  color: var(--cg-text-main, #0f172a);
   line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.cg-metric-val--text {
+  font-size: 18px;
+  font-weight: 800;
+  padding: 4px 0;
+}
+
+.cg-metric-denom {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cg-text-soft, #94a3b8);
 }
 
 .cg-metric-sub {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
-  margin-top: 6px;
+  margin-top: 8px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  color: var(--cg-text-main, #0f172a);
 }
 
-.cg-metric-sub--green { color: var(--cg-emerald); }
-.cg-metric-sub--amber { color: var(--cg-amber); }
-.cg-metric-sub--blue  { color: var(--cg-sky); }
+.cg-sub-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
 
-/* ── Sundowning Alert Banner (Clinical Intelligence) ── */
-.cg-sundowning-card {
-  background: linear-gradient(135deg, var(--cg-amber-soft) 0%, var(--cg-surface) 100%);
-  border: 1px solid var(--cg-amber);
-  border-radius: 16px;
-  padding: 12px 14px;
+/* ── 4. Today's Care Routine & Streak Timeline Card ── */
+.cg-timeline-card {
+  background-color: var(--cg-surface, #ffffff);
+  border: var(--cg-card-border, 1px solid #edf2f7);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+}
+
+.cg-timeline-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cg-timeline-title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--cg-text-main, #0f172a);
+}
+
+.cg-timeline-desc {
+  margin: 0;
+  font-size: 12px;
+  color: var(--cg-text-muted, #64748b);
+}
+
+.cg-streak-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fee2e2 100%);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  flex-shrink: 0;
+}
+
+.cg-streak-flame {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.cg-streak-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cg-streak-text strong {
+  font-size: 15px;
+  font-weight: 900;
+  color: #b45309;
+  line-height: 1;
+}
+
+.cg-streak-text span {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #92400e;
+}
+
+/* Timeline Interactive List */
+.cg-timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cg-timeline-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background-color: var(--cg-surface-elevated, #f8fafc);
+  border: 1px solid var(--cg-border, #e2e8f0);
+  cursor: pointer;
+  transition: all 0.15s ease;
   gap: 10px;
 }
 
-.cg-sundowning-text h4 {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--cg-text-main);
+.cg-timeline-item:hover {
+  transform: translateX(3px);
+  border-color: #6366f1;
 }
 
-.cg-sundowning-text p {
-  margin: 2px 0 0;
-  font-size: 10px;
-  color: var(--cg-text-muted);
+.cg-timeline-item.is-done {
+  background-color: rgba(16, 185, 129, 0.05);
+  border-color: rgba(16, 185, 129, 0.3);
 }
 
-.cg-btn-calm {
-  padding: 6px 12px;
-  background-color: var(--cg-amber);
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  font-size: 10px;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: opacity 0.15s;
-}
-
-.cg-btn-calm:hover {
-  opacity: 0.9;
-}
-
-/* ── Section Header ── */
-.cg-sec-head {
+.cg-timeline-left {
   display: flex;
   align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.cg-timeline-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.cg-timeline-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cg-timeline-task {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cg-text-main, #0f172a);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cg-timeline-item.is-done .cg-timeline-task {
+  color: var(--cg-text-muted, #64748b);
+}
+
+.cg-timeline-time {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cg-text-soft, #94a3b8);
+}
+
+.cg-badge-done {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background-color: #d1fae5;
+  color: #065f46;
+  white-space: nowrap;
+}
+
+.cg-badge-pending {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background-color: #f1f5f9;
+  color: #475569;
+  white-space: nowrap;
+}
+
+/* ── 5. Weekly Activity Wave Chart Card ── */
+.cg-chart-card {
+  background-color: var(--cg-surface, #ffffff);
+  border: var(--cg-card-border, 1px solid #edf2f7);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+}
+
+.cg-sec-head {
+  display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  gap: 10px;
 }
 
 .cg-sec-title {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--cg-text-main);
+  color: var(--cg-text-main, #0f172a);
+  display: block;
+}
+
+.cg-chart-sub {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: var(--cg-text-muted, #64748b);
+  font-weight: 500;
 }
 
 .cg-sec-tag {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--cg-primary);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 8px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 
-/* ── Quick Action Launcher (Chakravyuh Style) ── */
+.cg-tag--cyan {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid rgba(14, 165, 233, 0.25);
+}
+
+/* ── 6. Evening Sundowning Protocol Card ── */
+.cg-sundowning-card {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, var(--cg-surface, #ffffff) 100%);
+  border: 1.5px solid rgba(245, 158, 11, 0.35);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cg-sundowning-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #b45309;
+}
+
+.cg-sundowning-content h4 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #78350f;
+}
+
+.cg-sundowning-content p {
+  margin: 0;
+  font-size: 12px;
+  color: #92400e;
+  line-height: 1.45;
+}
+
+.cg-btn-calm {
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  box-shadow: 0 3px 12px rgba(217, 119, 6, 0.3);
+}
+
+.cg-btn-calm:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.4);
+}
+
+.cg-btn-calm.playing {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  box-shadow: 0 3px 12px rgba(239, 68, 68, 0.3);
+}
+
+.cg-calm-icon {
+  font-size: 16px;
+}
+
+/* ── 7. Quick Care Action Dispatcher ── */
+.cg-shortcuts-card {
+  background-color: var(--cg-surface, #ffffff);
+  border: var(--cg-card-border, 1px solid #edf2f7);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+}
+
 .cg-actions-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -237,101 +680,66 @@
 }
 
 .cg-quick-action {
-  background-color: var(--cg-surface);
-  border: var(--cg-card-border);
+  background-color: var(--cg-surface-elevated, #f8fafc);
+  border: 1px solid var(--cg-border, #e2e8f0);
   border-radius: 16px;
-  padding: 12px 8px;
+  padding: 14px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   gap: 6px;
   cursor: pointer;
-  box-shadow: var(--cg-shadow);
   transition: all 0.15s ease;
 }
 
 .cg-quick-action:hover {
-  border-color: var(--cg-primary);
-  background-color: var(--cg-surface-elevated);
+  transform: translateY(-2px);
+  border-color: #6366f1;
+  background-color: #ffffff;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.12);
 }
 
-.cg-quick-icon {
-  font-size: 22px;
-  line-height: 1;
+.cg-action-icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.cg-circle--indigo {
+  background-color: #ede9fe;
+}
+
+.cg-circle--cyan {
+  background-color: #e0f2fe;
+}
+
+.cg-circle--rose {
+  background-color: #fee2e2;
 }
 
 .cg-quick-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--cg-text-main, #0f172a);
+}
+
+.cg-quick-sub {
   font-size: 10px;
-  font-weight: 700;
-  color: var(--cg-text-main);
-  text-align: center;
-}
-
-/* ── 30-Day GitHub-Style Activity Heatmap ── */
-.cg-heatmap-card {
-  background-color: var(--cg-surface);
-  border: var(--cg-card-border);
-  border-radius: 18px;
-  padding: 14px;
-  box-shadow: var(--cg-shadow);
-  overflow: hidden;
-}
-
-.cg-heatmap-grid {
-  display: grid;
-  grid-template-columns: repeat(15, 1fr);
-  gap: 5px;
-  margin-top: 10px;
-  min-width: 270px;
-  overflow-x: auto;
-}
-
-.cg-heat-cell {
-  height: 18px;
-  min-width: 12px;
-  border-radius: 4px;
-  background-color: var(--cg-surface-elevated);
-  transition: transform 0.15s, opacity 0.15s;
-  cursor: pointer;
-}
-
-.cg-heat-cell:hover {
-  transform: scale(1.15);
-}
-
-.cg-heat--level-0 { background-color: var(--cg-surface-elevated); }
-.cg-heat--level-1 { background-color: rgba(16, 185, 129, 0.25); }
-.cg-heat--level-2 { background-color: rgba(16, 185, 129, 0.55); }
-.cg-heat--level-3 { background-color: rgba(16, 185, 129, 0.85); }
-.cg-heat--level-4 { background-color: #10b981; }
-
-.cg-heatmap-legend {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 4px;
-  font-size: 9px;
-  color: var(--cg-text-muted);
-  margin-top: 8px;
-  flex-wrap: wrap;
-}
-
-/* ── Activity Chart Card ── */
-.cg-chart-card {
-  background-color: var(--cg-surface);
-  border: var(--cg-card-border);
-  border-radius: 18px;
-  padding: 14px 10px 6px;
-  box-shadow: var(--cg-shadow);
-  overflow: hidden;
+  color: var(--cg-text-soft, #94a3b8);
+  font-weight: 600;
 }
 
 /* ============================================================
-   RESPONSIVE LAYOUT (Tablet & Laptop/Desktop)
+   RESPONSIVE BREAKPOINTS (Tablet & Laptop)
    ============================================================ */
 @media (min-width: 768px) {
   .cgdash-view {
-    padding: 18px 16px;
+    padding: 20px 16px;
     gap: 20px;
   }
 }
@@ -342,7 +750,7 @@
     gap: 24px;
   }
 
-  /* 4 Metric cards in a single row on laptop */
+  /* 4 Metric cards in a single row on desktop */
   .cg-metric-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
@@ -351,7 +759,7 @@
   /* 2-column widescreen split */
   .cgdash-desktop-grid {
     display: grid;
-    grid-template-columns: 1.25fr 1fr;
+    grid-template-columns: 1.35fr 1fr;
     gap: 24px;
     align-items: start;
   }
