@@ -61,39 +61,40 @@ function GamesPage({ onBack }) {
   const [error, setError]         = useState(null)
   const [activeGame, setActiveGame] = useState(null)  // game object when iframe is open
 
-  // Fetch which games are active from backend (or localStorage fallback)
+  // ── INSTANT LOAD from localStorage (no spinner!) ──
+  // Backend fetch happens silently in background to sync if it's online
   useEffect(() => {
-    let cancelled = false
-    fetch(`${API_BASE}/patient-config`)
-      .then(r => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`)
-        return r.json()
-      })
-      .then(data => {
-        if (cancelled) return
-        const ids = Array.isArray(data.game_selection) ? data.game_selection : []
-        // Filter to only playable games that are enabled by caregiver
-        const active = PLAYABLE_GAMES.filter(g => ids.includes(g.id))
-        setGames(active.length >= 3 ? active : PLAYABLE_GAMES)
-        setLoading(false)
-      })
-      .catch(err => {
-        if (cancelled) return
-        console.error("GamesPage fetch failed:", err)
-        // Offline fallback: try localStorage saved games config
-        try {
-          const saved = JSON.parse(localStorage.getItem("setu_games") || "[]")
+    // 1. Load immediately from localStorage (instant, no wait)
+    const loadFromLocal = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem("setu_games") || "[]")
+        if (saved.length > 0) {
           const active = PLAYABLE_GAMES.filter(g => {
             const cfg = saved.find(s => s.id === g.id)
             return cfg ? cfg.enabled : true
           })
-          setGames(active.length >= 2 ? active : PLAYABLE_GAMES)
-        } catch {
-          setGames(PLAYABLE_GAMES)
+          return active.length >= 2 ? active : PLAYABLE_GAMES
         }
-        setLoading(false)
-        setError("Offline mode — caregiver config loaded from device")
+      } catch {}
+      return PLAYABLE_GAMES
+    }
+
+    setGames(loadFromLocal())
+    setLoading(false)
+
+    // 2. Try backend silently in background (don't block UI)
+    let cancelled = false
+    fetch(`${API_BASE}/patient-config`, { signal: AbortSignal.timeout(8000) })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (cancelled || !data) return
+        const ids = Array.isArray(data.game_selection) ? data.game_selection : []
+        if (ids.length > 0) {
+          const active = PLAYABLE_GAMES.filter(g => ids.includes(g.id))
+          if (active.length >= 2) setGames(active)
+        }
       })
+      .catch(() => {/* silent fail — already showing local data */})
     return () => { cancelled = true }
   }, [])
 
