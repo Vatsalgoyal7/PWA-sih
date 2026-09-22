@@ -1,310 +1,367 @@
-/* Full viewport container that centers the mobile card on desktop/tablets */
-.role-select-viewport {
+/* ============================================================
+   RoleSelect.css — Modern Apple Health Style Starting Screen
+   Clean, Warm, Minimalist & Dignified UI
+   ============================================================ */
+
+/* ── Full Viewport Centering Container ── */
+.role-modern-viewport {
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px;
+  background: linear-gradient(145deg, #fdfbf7 0%, #f4efe6 100%);
+  padding: 16px;
   box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Framed app card with Assamese traditional red rounded border */
-.role-select-card {
+/* ── Floating Modern Mobile Frame ── */
+.role-modern-card {
   position: relative;
   width: 100%;
-  max-width: 440px;
-  /* Maintain comfortable height on desktop; fill screen on mobile */
-  height: min(calc(100dvh - 16px), 820px);
-  min-height: 600px;
-  background-color: #fdf8ee;
-  border: 2.5px solid #b83a24;
-  border-radius: 22px;
+  max-width: 420px;
+  height: min(calc(100dvh - 32px), 820px);
+  min-height: 620px;
+  background-color: #ffffff;
+  border-radius: 32px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
   box-shadow:
-    0 20px 48px -12px rgba(184, 58, 36, 0.12),
-    0 8px 24px -6px rgba(0, 0, 0, 0.08),
-    0 1px 3px rgba(0, 0, 0, 0.04);
+    0 25px 60px -15px rgba(184, 58, 36, 0.08),
+    0 10px 25px -5px rgba(0, 0, 0, 0.04),
+    0 1px 3px rgba(0, 0, 0, 0.02);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  padding: 24px 20px 20px;
   overflow: hidden;
   box-sizing: border-box;
 }
 
-/* 1. Top Section: Upper Gamusa Border Strip (matches bottom strip) */
-.role-top-border-wrapper {
-  width: 100%;
-  flex-shrink: 0;
-  line-height: 0;
+/* ── Subtle Ambient Glow Behind Cards ── */
+.role-ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.role-glow-top {
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  background: rgba(184, 58, 36, 0.08);
+}
+
+.role-glow-bottom {
+  bottom: 40px;
+  left: -40px;
+  width: 160px;
+  height: 160px;
+  background: rgba(16, 185, 129, 0.06);
+}
+
+/* ── Top Bar Header ── */
+.role-modern-header {
   position: relative;
   z-index: 2;
-  pointer-events: none;
-}
-
-.role-top-strip-img {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  height: auto;
-  display: block;
-  user-select: none;
-  -webkit-user-drag: none;
 }
 
-/* Extreme Top Corner Brooches covering corner white spaces */
-.role-corner-brooch {
-  position: absolute;
-  top: 0;
-  width: 26%;
-  max-width: 115px;
-  height: auto;
-  display: block;
-  z-index: 4;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
+.role-brand-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 6px 14px 6px 10px;
+  border-radius: 20px;
 }
 
-.role-corner-left {
-  left: 0;
+.role-brand-icon {
+  font-size: 20px;
 }
 
-.role-corner-right {
-  right: 0;
-}
-
-.role-lang-toggle {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 100;
-  cursor: pointer;
-  pointer-events: auto;
-}
-
-/* 2. Center Section: Avatar + Selection Cards balanced with even whitespace */
-.role-center-content {
-  width: 100%;
+.role-brand-text {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  /* margin: auto 0 creates perfectly balanced, even whitespace between top border and bottom scenery */
-  margin: auto 0;
-  position: relative;
-  z-index: 2;
-  box-sizing: border-box;
 }
 
-/* AI Avatar & Speech bubble */
-.role-avatar-section {
-  width: 100%;
-  padding: 0 14px;
-  box-sizing: border-box;
+.role-app-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.role-app-tag {
+  font-size: 10px;
+  font-weight: 600;
+  color: #b83a24;
+  letter-spacing: 0.02em;
+}
+
+/* ── Welcome Heading Block ── */
+.role-welcome-block {
+  position: relative;
+  z-index: 2;
+  margin: 12px 0 8px;
+}
+
+.role-welcome-title {
+  font-size: 32px;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.role-title-dot {
+  color: #b83a24;
+}
+
+.role-welcome-sub {
+  font-size: 14px;
+  color: #64748b;
+  margin: 6px 0 0;
+  font-weight: 500;
+}
+
+/* ── Selection Cards Container ── */
+.role-cards-container {
+  position: relative;
+  z-index: 2;
   display: flex;
-  justify-content: center;
-  position: relative;
-  z-index: 2;
-}
-
-.role-avatar-img {
-  width: 100%;
-  max-width: 410px;
-  height: auto;
-  display: block;
-  object-fit: contain;
-  /* Negative margin pulls the cards flush up against her saree drape */
-  margin-bottom: -16px;
-  position: relative;
-  z-index: 2;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-/* Side-by-side selection cards */
-.role-cards-grid {
-  width: 100%;
-  padding: 0 14px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 12px;
-  position: relative;
-  z-index: 2;
-}
-
-/* Individual card button */
-.role-card-btn {
+  flex-direction: column;
+  gap: 16px;
   flex: 1;
-  min-width: 0;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+/* ── Individual Selection Card ── */
+.role-selection-card {
+  width: 100%;
   border: none;
-  background: transparent;
+  background: #ffffff;
+  border-radius: 24px;
   padding: 0;
   cursor: pointer;
-  border-radius: 18px;
+  text-align: left;
+  position: relative;
   overflow: hidden;
-  display: flex;
-  position: relative; /* Ensure overlays are scoped to this card */
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  transition:
-    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.22s ease,
-    filter 0.2s ease;
-  touch-action: manipulation;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  border: 1.5px solid #edf2f7;
   -webkit-tap-highlight-color: transparent;
 }
 
-.role-card-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 18px;
-  user-select: none;
-  -webkit-user-drag: none;
+.role-selection-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.09);
 }
 
-/* Hover, active, and focus micro-interactions */
-.role-card-btn:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 10px 24px -4px rgba(184, 58, 36, 0.22);
-  filter: brightness(1.02);
+.role-selection-card:active {
+  transform: scale(0.98);
 }
 
-.role-card-btn:active {
-  transform: scale(0.96);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  filter: brightness(0.95);
+/* Senior Card Color Accents */
+.role-card--senior {
+  border-color: #fee2e2;
+  background: linear-gradient(180deg, #ffffff 0%, #fffbf8 100%);
 }
 
-.role-card-btn:focus-visible {
-  outline: 3px solid #b83a24;
-  outline-offset: 3px;
+.role-card--senior:hover {
+  border-color: #b83a24;
 }
 
-/* 3. Bottom Section: Assam Scenery with bottom Gamusa embroidery */
-.role-scenery-section {
-  width: 100%;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
+/* Caregiver Card Color Accents */
+.role-card--caregiver {
+  border-color: #e2e8f0;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.role-card--caregiver:hover {
+  border-color: #0284c7;
+}
+
+.role-card-inner {
+  padding: 18px 18px 14px;
   display: flex;
-  align-items: flex-end;
-  line-height: 0;
-  pointer-events: none;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.role-scenery-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  user-select: none;
-  -webkit-user-drag: none;
+.role-card-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Responsive tweaks for narrow mobile screens */
-@media (max-width: 380px) {
-  .role-select-viewport {
-    padding: 4px;
-  }
-
-  .role-select-card {
-    border-radius: 18px;
-  }
-
-  .role-corner-brooch {
-    width: 28%;
-    max-width: 95px;
-  }
-
-  .role-avatar-section {
-    padding: 0 10px;
-  }
-
-  .role-avatar-img {
-    margin-bottom: -12px;
-  }
-
-  .role-cards-grid {
-    padding: 0 10px;
-    gap: 8px;
-  }
-
-  .role-card-btn {
-    border-radius: 14px;
-  }
-
-  .role-card-img {
-    border-radius: 14px;
-  }
-}
-
-/* Responsive tweaks for tall phone viewports */
-@media (min-height: 780px) and (max-width: 500px) {
-  .role-select-card {
-    height: calc(100dvh - 12px);
-    max-height: none;
-  }
-}
-
-/* Safeguard for very short screens (landscape or compact devices) */
-@media (max-height: 640px) {
-  .role-select-viewport {
-    padding: 4px;
-    align-items: flex-start;
-  }
-
-  .role-select-card {
-    height: auto;
-    min-height: auto;
-    max-height: none;
-    overflow-y: auto;
-  }
-
-  .role-avatar-img {
-    margin-bottom: -8px;
-  }
-}
-/* Language Overlays for English Mode */
-.role-speech-bubble-overlay {
-  position: absolute;
-  top: 15%; /* Adjust to vertically align with the original speech bubble */
-  left: 20%;
-  right: 20%;
-  text-align: center;
-  font-size: 1.2rem;
+.role-card-pill {
+  font-size: 11px;
   font-weight: 700;
-  color: #b83a24;
-  pointer-events: none;
-  background-color: #fff; /* Cover the original Assamese text if possible */
-  border-radius: 8px;
-  padding: 4px 8px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.02em;
 }
 
-.role-card-bar-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 25%; /* Covers the bottom band containing Assamese text */
-  background-color: #b83a24; /* Red color of the button bar */
-  color: white;
+.role-pill--warm {
+  background: #fee2e2;
+  color: #b83a24;
+}
+
+.role-pill--clinical {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.role-card-arrow {
+  font-size: 15px;
+  color: #94a3b8;
+  transition: transform 0.2s;
+}
+
+.role-selection-card:hover .role-card-arrow {
+  transform: translateX(4px);
+  color: #0f172a;
+}
+
+/* Card Content: Avatar + Text */
+.role-card-main-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.role-card-avatar-wrap {
+  flex-shrink: 0;
+}
+
+.role-card-avatar-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fee2e2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
-  font-weight: bold;
-  pointer-events: none;
-  border-bottom-left-radius: 18px;
-  border-bottom-right-radius: 18px;
+  font-size: 30px;
+  box-shadow: 0 4px 12px rgba(184, 58, 36, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
 }
 
+.role-avatar--caregiver {
+  background: linear-gradient(135deg, #e0f2fe 0%, #ede9fe 100%);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.12);
+}
+
+.role-card-text {
+  flex: 1;
+}
+
+.role-card-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.role-card-caption {
+  font-size: 12px;
+  color: #64748b;
+  margin: 3px 0 0;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+/* Action Bar along bottom of card */
+.role-card-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.role-action--senior {
+  background: #fff1ee;
+  color: #b83a24;
+}
+
+.role-selection-card:hover .role-action--senior {
+  background: #b83a24;
+  color: #ffffff;
+}
+
+.role-action--caregiver {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.role-selection-card:hover .role-action--caregiver {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.role-action-chevron {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ── Modern Minimalist Footer ── */
+.role-modern-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.role-footer-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.role-footer-text {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ── Compact screens tweak ── */
 @media (max-width: 380px) {
-  .role-speech-bubble-overlay {
-    font-size: 1rem;
+  .role-modern-card {
+    padding: 16px 14px 14px;
+    border-radius: 24px;
   }
-  .role-card-bar-overlay {
-    font-size: 1rem;
-    border-bottom-left-radius: 14px;
-    border-bottom-right-radius: 14px;
+  .role-welcome-title {
+    font-size: 26px;
+  }
+  .role-card-avatar-circle {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+  .role-card-name {
+    font-size: 16px;
   }
 }
