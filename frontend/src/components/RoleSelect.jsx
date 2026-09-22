@@ -1,5 +1,6 @@
 import { useLanguage } from '../context/LanguageContext'
 import LanguageToggle from './LanguageToggle'
+import grandmaIllustration from '../assets/namaskar-grandma.png'
 import './RoleSelect.css'
 
 function RoleSelect({ onSelect }) {
@@ -35,21 +36,30 @@ function RoleSelect({ onSelect }) {
           </h1>
           <p className="role-welcome-sub">
             {isEn
-              ? 'Choose your interface to continue'
-              : 'আপোনাৰ সুবিধা অনুসৰি বিকল্প বাছক'}
+              ? 'Select your experience to begin'
+              : 'আগবাঢ়িবলৈ আপোনাৰ মাধ্যম বাছনি কৰক'}
           </p>
         </div>
 
         {/* ── Selection Cards (Senior Companion vs Caregiver Desk) ── */}
         <main className="role-cards-container">
           
-          {/* Card 1: Senior Citizen / Grandmother Mode */}
+          {/* Card 1: Senior Companion Mode (Rich illustration with warm backdrop) */}
           <button
             type="button"
             className="role-selection-card role-card--senior"
             onClick={() => onSelect('patient')}
             aria-label={isEn ? 'Continue as Senior Companion' : 'আইতাৰ বাবে প্ৰৱেশ কৰক'}
           >
+            {/* Card Graphic Backdrop */}
+            <div className="role-card-art-backdrop role-art--senior">
+              <img
+                src={grandmaIllustration}
+                alt="Grandmother avatar"
+                className="role-art-grandma-img"
+              />
+            </div>
+
             <div className="role-card-inner">
               <div className="role-card-badge-row">
                 <span className="role-card-pill role-pill--warm">
@@ -59,24 +69,20 @@ function RoleSelect({ onSelect }) {
               </div>
 
               <div className="role-card-main-content">
-                <div className="role-card-avatar-wrap">
-                  <div className="role-card-avatar-circle">👵</div>
-                </div>
-                
                 <div className="role-card-text">
                   <h2 className="role-card-name">
                     {isEn ? 'Senior Companion' : 'আইতাৰ সংগী'}
                   </h2>
                   <p className="role-card-caption">
                     {isEn
-                      ? 'Tactile memory games, vocal daily routines & family memories'
-                      : 'স্মৃতি খেল, দৈনন্দিন নিয়ম আৰু আনন্দদায়ক অনুভৱ'}
+                      ? 'Simple touch games, voice daily routines & memories'
+                      : 'সহজ স্মৃতি খেল, দৈনন্দিন নিয়ম আৰু আনন্দদায়ক অনুভৱ'}
                   </p>
                 </div>
               </div>
 
               <div className="role-card-action-bar role-action--senior">
-                <span>{isEn ? 'Tap to open Senior Mode' : 'আইতাৰ সংগী খোলক'}</span>
+                <span>{isEn ? 'Open Senior Companion' : 'আইতাৰ সংগী খোলক'}</span>
                 <span className="role-action-chevron">›</span>
               </div>
             </div>
@@ -89,6 +95,13 @@ function RoleSelect({ onSelect }) {
             onClick={() => onSelect('caregiver')}
             aria-label={isEn ? 'Continue to Caregiver Portal' : 'কেয়াৰগিভাৰ ডেস্কলৈ যাওক'}
           >
+            {/* Card Graphic Backdrop */}
+            <div className="role-card-art-backdrop role-art--caregiver">
+              <div className="role-art-caregiver-badge">
+                <span>🩺</span>
+              </div>
+            </div>
+
             <div className="role-card-inner">
               <div className="role-card-badge-row">
                 <span className="role-card-pill role-pill--clinical">
@@ -98,17 +111,13 @@ function RoleSelect({ onSelect }) {
               </div>
 
               <div className="role-card-main-content">
-                <div className="role-card-avatar-wrap">
-                  <div className="role-card-avatar-circle role-avatar--caregiver">🩺</div>
-                </div>
-
                 <div className="role-card-text">
                   <h2 className="role-card-name">
                     {isEn ? 'Caregiver Portal' : 'তত্ত্বাৱধায়ক ডেস্ক'}
                   </h2>
                   <p className="role-card-caption">
                     {isEn
-                      ? 'Medication pillbox, MMSE cognitive gauge, safe zone & clinical PDF'
+                      ? 'Health tracking, pillbox schedule & daily oversight'
                       : 'ঔষধ সময়সূচী, স্নায়ু পৰীক্ষা আৰু পৰিয়ালৰ নিৰাপত্তা'}
                   </p>
                 </div>
@@ -123,7 +132,7 @@ function RoleSelect({ onSelect }) {
 
         </main>
 
-        {/* ── Modern Minimalist Footer (No extra buttons) ── */}
+        {/* ── Modern Minimalist Footer (Clean & balanced) ── */}
         <footer className="role-modern-footer">
           <span className="role-footer-dot" />
           <span className="role-footer-text">
