@@ -15,12 +15,13 @@ import CgHealth       from './caregiver/CgHealth'
 import CgReports      from './caregiver/CgReports'
 import CgMemoryBoard  from './caregiver/CgMemoryBoard'
 import CgProfile      from './caregiver/CgProfile'
+import CgSettings     from './caregiver/CgSettings'
 import CgNavbar       from './caregiver/CgNavbar'
 import CgAuth         from './caregiver/CgAuth'
 import { lsGet, lsSet, LS, PROFILE_DEFAULT } from './caregiver/CgShared'
 import './CaregiverHome.css'
 
-// ── Sidebar Nav Structure (3 sections) ────────────────────
+// ── Sidebar Nav Structure (4 sections) ────────────────────
 const NAV_SECTIONS = [
   {
     section: 'PATIENT MONITORING',
@@ -46,13 +47,19 @@ const NAV_SECTIONS = [
       { id: 'health',   icon: '📋', label: 'Health Log & Vitals',  badge: 'Log',    badgeClass: 'badge-neutral' },
       { id: 'reports',  icon: '📑', label: 'Doctor Reports & PDF', badge: 'Export', badgeClass: 'badge-neutral' },
       { id: 'memory',   icon: '🖼️', label: 'Memory Photo Board',   badge: 'Photos', badgeClass: 'badge-neutral' },
-      { id: 'profile',  icon: '👤', label: 'Profile, SOS & PIN',   badge: 'Shield', badgeClass: 'badge-neutral' },
+    ]
+  },
+  {
+    section: 'PROFILES & SYSTEM',
+    items: [
+      { id: 'profile',  icon: '👥', label: 'Patient & Caregivers Team', badge: 'Team',   badgeClass: 'badge-live' },
+      { id: 'settings', icon: '⚙️', label: 'System Settings & Audit',    badge: 'Config', badgeClass: 'badge-warn' },
     ]
   }
 ]
 
 // ── Module Renderer ────────────────────────────────────────
-function renderModule(activeModule, patientName, handleSelectModule, onChangeRole, lang, theme, toggleTheme) {
+function renderModule(activeModule, patientName, handleSelectModule, onChangeRole, handleLogout, lang, theme, toggleTheme) {
   switch (activeModule) {
     case 'dashboard': return <CgDashboard patientName={patientName} onSelectModule={handleSelectModule} lang={lang}/>
     case 'cognitive': return <CgCognitive/>
@@ -65,7 +72,8 @@ function renderModule(activeModule, patientName, handleSelectModule, onChangeRol
     case 'health':    return <CgHealth/>
     case 'reports':   return <CgReports/>
     case 'memory':    return <CgMemoryBoard/>
-    case 'profile':   return <CgProfile onChangeRole={onChangeRole} theme={theme} onToggleTheme={toggleTheme}/>
+    case 'profile':   return <CgProfile/>
+    case 'settings':  return <CgSettings theme={theme} onToggleTheme={toggleTheme} onChangeRole={onChangeRole} onLogout={handleLogout}/>
     default:          return <CgDashboard patientName={patientName} onSelectModule={handleSelectModule} lang={lang}/>
   }
 }
@@ -229,6 +237,16 @@ export default function CaregiverHome({ onChangeRole }) {
         </div>
 
         <div className="cg-topbar-right">
+          {/* Quick Settings Shortcut */}
+          <button
+            type="button"
+            className={`cg-icon-btn ${activeModule === 'settings' ? 'active' : ''}`}
+            onClick={() => handleSelectModule('settings')}
+            title="System Settings & Audit"
+          >
+            <span>⚙️</span>
+          </button>
+
           {/* Language Switcher */}
           <button type="button" className="cg-icon-btn" onClick={toggleLang} title="Toggle English / Assamese">
             <span>🌐</span>
@@ -254,7 +272,7 @@ export default function CaregiverHome({ onChangeRole }) {
         {/* Scrollable Content */}
         <main className="cg-content">
           <div className="cg-content-inner">
-            {renderModule(activeModule, patientName, handleSelectModule, handleLogout, lang, theme, toggleTheme)}
+            {renderModule(activeModule, patientName, handleSelectModule, onChangeRole, handleLogout, lang, theme, toggleTheme)}
           </div>
         </main>
       </div>

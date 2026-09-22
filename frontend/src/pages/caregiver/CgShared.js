@@ -25,6 +25,8 @@ export const LS = {
   AI_ADAPTIVE:    "setu_ai_adaptive",
   PILLBOX_LOG:    "setu_pillbox_log",
   SUNDOWNING_LOG: "setu_sundowning_log",
+  CAREGIVERS:     "setu_caregivers_team",
+  AUDIT_LOG:      "setu_audit_log",
 }
 
 export const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -53,17 +55,71 @@ export const ALL_GAMES = [
 export const PROFILE_DEFAULT = {
   name: "Meena Sharma",
   age: "72",
+  gender: "Female",
   stage: "early",
-  diagnosis_date: "",
-  doctor_name: "",
-  doctor_phone: "",
+  blood_group: "B+",
+  allergies: "Penicillin, Dust",
+  diagnosis_date: "2024-03-15",
+  doctor_name: "Dr. Bhupen Hazarika (Neurologist)",
+  doctor_phone: "+91 94350 99887",
+  health_id: "ABHA-AS-2026-8891",
   photo_b64: null,
 }
 
+export const CAREGIVERS_DEFAULT = [
+  {
+    id: "cg_1",
+    name: "Vatsal Goyal",
+    role: "Son (Primary Caregiver)",
+    category: "family",
+    phone: "+91 98765 43210",
+    email: "vatsal@smritisetu.org",
+    accessLevel: "Superuser (Full Control)",
+    active: true,
+    addedDate: "2026-09-01",
+    avatar: "👨"
+  },
+  {
+    id: "cg_2",
+    name: "Ananya Baruah",
+    role: "ASHA Community Health Worker",
+    category: "asha",
+    phone: "+91 98123 45678",
+    email: "ananya.asha@assamhealth.gov.in",
+    healthCenter: "Guwahati Urban Health Post #4",
+    accessLevel: "Vitals & Cognitive Monitoring",
+    active: true,
+    addedDate: "2026-09-05",
+    avatar: "👩‍⚕️"
+  },
+  {
+    id: "cg_3",
+    name: "Pranjal Das",
+    role: "Home Care Attendant / Nurse",
+    category: "nurse",
+    phone: "+91 94350 11223",
+    email: "pranjal.nurse@careplus.in",
+    shift: "Day Shift (08:00 AM – 04:00 PM)",
+    accessLevel: "Pillbox & Routine Tracking",
+    active: true,
+    addedDate: "2026-09-12",
+    avatar: "👨‍⚕️"
+  }
+]
+
+export const AUDIT_LOG_DEFAULT = [
+  { id: "aud_1", actor: "Vatsal Goyal (Son)", action: "Morning Aspirin 75mg marked as Taken in Pillbox", time: "Today, 08:15 AM", type: "meds", badge: "Pillbox" },
+  { id: "aud_2", actor: "Ananya Baruah (ASHA Worker)", action: "Completed MMSE Screening (Score: 24/30)", time: "Today, 11:30 AM", type: "clinical", badge: "MMSE" },
+  { id: "aud_3", actor: "System AI Engine", action: "Evening Sundowning Agitation Advisory flagged for 05:30 PM", time: "Today, 02:00 PM", type: "ai", badge: "AI Advisory" },
+  { id: "aud_4", actor: "Pranjal Das (Nurse)", action: "Day Shift Handover Notes logged & approved", time: "Yesterday, 04:00 PM", type: "handover", badge: "Handover" },
+  { id: "aud_5", actor: "Vatsal Goyal (Son)", action: "Caregiver PIN & Emergency SOS Directory verified", time: "21 Sept, 09:30 PM", type: "security", badge: "Security" },
+]
+
 export const CONTACTS_DEFAULT = [
-  { id: "c1", name: "Doctor", phone: "", type: "doctor"    },
-  { id: "c2", name: "Family", phone: "", type: "family"    },
-  { id: "c3", name: "Ambulance", phone: "108", type: "emergency" },
+  { id: "c1", name: "Dr. Bhupen Hazarika (Neurology)", phone: "+91 94350 99887", type: "doctor" },
+  { id: "c2", name: "Vatsal Goyal (Son)", phone: "+91 98765 43210", type: "family" },
+  { id: "c3", name: "Ananya Baruah (ASHA Worker)", phone: "+91 98123 45678", type: "asha" },
+  { id: "c4", name: "Emergency Ambulance", phone: "108", type: "emergency" },
 ]
 
 // ── helpers ────────────────────────────────────────────────
