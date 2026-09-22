@@ -1,0 +1,284 @@
+/* CgCognitive.css — MMSE Cognitive Assessment Styles */
+
+/* ── Score Layout ──────────────────────────────────────── */
+.cog-tab-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.cog-tab-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1.5px solid var(--cg-border);
+  background: var(--cg-surface);
+  color: var(--cg-text);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cog-tab-btn.active {
+  background: var(--cg-primary);
+  color: #fff;
+  border-color: var(--cg-primary);
+}
+
+/* ── Score Layout ──────────────────────────────────────── */
+.cog-score-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 900px) {
+  .cog-score-layout {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ── Gauge Card ─────────────────────────────────────────── */
+.cog-gauge-card {
+  background: var(--cg-surface);
+  border: 1px solid var(--cg-border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.mmse-gauge-wrap {
+  width: 100%;
+  max-width: 320px;
+}
+.mmse-gauge-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.mmse-progress-arc {
+  transition: stroke-dasharray 0.8s ease;
+}
+.mmse-needle {
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.mmse-score-text {
+  font-family: inherit;
+}
+.mmse-label {
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+.cog-gauge-desc {
+  background: var(--cg-bg);
+  border-left: 4px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--cg-text);
+  line-height: 1.6;
+  width: 100%;
+}
+.cog-saved-badge {
+  background: #d1fae5;
+  color: #065f46;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ── Domains Card ───────────────────────────────────────── */
+.cog-domains-card {
+  background: var(--cg-surface);
+  border: 1px solid var(--cg-border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.cog-domains-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cog-domains-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cg-text);
+  margin: 0;
+}
+.cog-total-pill {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 4px 14px;
+}
+.cog-domains-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Domain Row */
+.cog-domain-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cog-domain-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cog-domain-icon { font-size: 18px; flex-shrink: 0; }
+.cog-domain-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.cog-domain-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cg-text);
+}
+.cog-domain-desc {
+  font-size: 11px;
+  color: var(--cg-text-dim);
+}
+.cog-domain-score {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.cog-domain-input {
+  width: 42px;
+  text-align: center;
+  border: 1.5px solid var(--cg-border);
+  border-radius: 6px;
+  padding: 3px 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cg-text);
+  background: var(--cg-bg);
+}
+.cog-domain-max {
+  font-size: 12px;
+  color: var(--cg-text-dim);
+}
+.cog-domain-bar-track {
+  height: 6px;
+  background: var(--cg-border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.cog-domain-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.cog-save-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--cg-primary);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.cog-save-btn:hover { opacity: 0.85; }
+
+/* ── Shared Card ─────────────────────────────────────────── */
+.cog-card {
+  background: var(--cg-surface);
+  border: 1px solid var(--cg-border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.cog-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cog-card-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cg-text);
+  margin: 0;
+}
+.cog-card-sub {
+  font-size: 12px;
+  color: var(--cg-text-dim);
+}
+.cog-empty {
+  text-align: center;
+  color: var(--cg-text-dim);
+  padding: 32px 0;
+  font-size: 14px;
+}
+
+/* Trend legend */
+.cog-trend-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--cg-text-dim);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.cog-legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+/* ── Session Log Table ───────────────────────────────────── */
+.cog-log-table {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cog-log-thead {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr 1fr;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cg-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--cg-bg);
+  border-radius: 8px;
+}
+.cog-log-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr 1fr;
+  padding: 10px 12px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--cg-border);
+  align-items: center;
+  color: var(--cg-text);
+}
+.cog-log-row:last-child { border-bottom: none; }
+.cog-status-chip {
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+}

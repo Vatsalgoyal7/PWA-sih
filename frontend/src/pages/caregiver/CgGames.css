@@ -274,3 +274,131 @@ input:checked + .toggle-track:before {
     gap: 18px;
   }
 }
+
+/* ── Analytics Tab ── */
+.games-analytics-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 900px) {
+  .games-analytics-layout { grid-template-columns: 1fr 1fr; }
+}
+
+.games-analytics-card {
+  background: var(--cg-surface);
+  border: 1px solid var(--cg-border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.games-domain-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.games-domain-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.games-domain-name {
+  width: 90px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cg-text-dim);
+  flex-shrink: 0;
+}
+
+.games-domain-bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--cg-border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.games-domain-bar-fill {
+  height: 100%;
+  background: var(--cg-primary);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.games-domain-count {
+  font-size: 11px;
+  color: var(--cg-text-dim);
+  width: 50px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Alias for tab styles from CgCognitive */
+.cog-tab-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cog-tab-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1.5px solid var(--cg-border);
+  background: var(--cg-surface);
+  color: var(--cg-text-main);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cog-tab-btn.active {
+  background: var(--cg-primary);
+  color: #fff;
+  border-color: var(--cg-primary);
+}
+
+.cog-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cog-card-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cg-text-main);
+  margin: 0;
+}
+
+.cog-card-sub {
+  font-size: 12px;
+  color: var(--cg-text-muted);
+}
+
+/* Diff button row reference */
+.game-diff-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.diff-label {
+  font-size: 11px;
+  color: var(--cg-text-muted, #64748b);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.diff-buttons {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}

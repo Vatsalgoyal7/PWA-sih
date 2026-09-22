@@ -25,6 +25,9 @@
   --cg-sky-soft: #e0f2fe;
   --cg-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
   --cg-card-border: 1px solid #edf2f7;
+  /* Aliases for sub-modules */
+  --cg-text: #0f172a;
+  --cg-text-dim: #64748b;
 }
 
 /* ── Dark Mode Variables (Chakravyuh Admin Style) ── */
@@ -48,6 +51,9 @@
   --cg-sky-soft: rgba(2, 132, 199, 0.15);
   --cg-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   --cg-card-border: 1px solid #1e293b;
+  /* Aliases for sub-modules */
+  --cg-text: #f8fafc;
+  --cg-text-dim: #94a3b8;
 }
 
 /* ── Root Container ── */
@@ -631,4 +637,220 @@
 @keyframes slideInLeft {
   from { transform: translateX(-100%); }
   to { transform: translateX(0); }
+}
+
+/* ============================================================
+   NEW 3-SECTION SIDEBAR NAV STYLES
+   ============================================================ */
+
+/* Avatar Badge in Topbar */
+.cg-avatar-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--cg-primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 2px solid var(--cg-primary-soft);
+}
+
+/* btn-switch-role fallback */
+.btn-switch-role {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  color: #0f172a;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* Sidebar Nav (shared between sidebar and drawer) */
+.cg-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cg-nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-bottom: 4px;
+}
+
+.cg-nav-section-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cg-primary);
+  padding: 10px 12px 4px;
+}
+
+.cg-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--cg-text-main);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.cg-nav-item:hover {
+  background-color: var(--cg-surface-elevated);
+}
+
+.cg-nav-item.active {
+  background-color: var(--cg-primary-soft);
+  color: var(--cg-primary);
+  border-color: rgba(184,58,36,0.2);
+  font-weight: 700;
+  border-left: 3px solid var(--cg-primary);
+}
+
+.cg-nav-item-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+.cg-nav-item-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Nav Badges */
+.cg-nav-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  border: 1px solid var(--cg-border);
+  background: var(--cg-surface-elevated);
+  color: var(--cg-text-muted);
+}
+
+.badge-live {
+  background: #b83a24;
+  color: #fff;
+  border-color: #b83a24;
+  animation: pulseLive 1.5s ease infinite;
+}
+
+@keyframes pulseLive {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+.badge-warn {
+  background: #fef3c7;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.badge-neutral {
+  background: var(--cg-surface-elevated);
+  color: var(--cg-text-muted);
+  border-color: var(--cg-border);
+}
+
+/* Active nav item badge override */
+.cg-nav-item.active .cg-nav-badge {
+  background: var(--cg-primary);
+  color: #fff;
+  border-color: var(--cg-primary);
+  animation: none;
+}
+
+/* Patient Info Strip in Drawer */
+.cg-drawer-patient-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--cg-surface-elevated);
+  border-bottom: 1px solid var(--cg-border);
+}
+
+.cg-drawer-patient-avatar {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.cg-drawer-patient-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cg-text-main);
+}
+
+.cg-drawer-patient-sub {
+  font-size: 11px;
+  color: var(--cg-text-muted);
+  margin-top: 2px;
+}
+
+/* Toggle switch (used in multiple sub-modules) */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 26px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggle-track {
+  position: absolute;
+  inset: 0;
+  background: var(--cg-border);
+  border-radius: 99px;
+  transition: background 0.2s;
+}
+
+.toggle-switch input:checked + .toggle-track {
+  background: var(--cg-primary);
+}
+
+.toggle-thumb {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.toggle-switch input:checked + .toggle-track .toggle-thumb {
+  transform: translateX(20px);
 }

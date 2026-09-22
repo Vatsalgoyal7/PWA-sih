@@ -1,0 +1,219 @@
+/* CgPillbox.css — Visual Pillbox Styles */
+
+.pillbox-progress-card {
+  background: var(--cg-surface);
+  border: 1px solid var(--cg-border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pillbox-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pillbox-progress-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cg-text);
+}
+.pillbox-progress-sub {
+  font-size: 12px;
+  color: var(--cg-text-dim);
+  margin-top: 2px;
+}
+.pillbox-pct-badge {
+  font-size: 22px;
+  font-weight: 800;
+  border-radius: 12px;
+  padding: 8px 16px;
+}
+.pillbox-progress-track {
+  height: 10px;
+  background: var(--cg-border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.pillbox-progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+
+/* Shifts Grid */
+.pillbox-shifts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .pillbox-shifts-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.pillbox-shift-card {
+  background: var(--cg-surface);
+  border: 1px solid var(--cg-border);
+  border-radius: 16px;
+  overflow: hidden;
+  border-top: 4px solid var(--shift-color);
+}
+.pillbox-shift-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--cg-bg);
+}
+.pillbox-shift-icon { font-size: 24px; }
+.pillbox-shift-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cg-text);
+}
+.pillbox-shift-time { font-size: 12px; color: var(--cg-text-dim); }
+.pillbox-shift-count {
+  margin-left: auto;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--shift-color);
+}
+
+.pillbox-meds-list {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pillbox-empty-shift {
+  font-size: 13px;
+  color: var(--cg-text-dim);
+  text-align: center;
+  padding: 12px 0;
+}
+
+.pillbox-med-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--cg-bg);
+  border: 1.5px solid var(--cg-border);
+  transition: all 0.2s;
+}
+.med-taken {
+  border-color: var(--shift-color);
+  background: color-mix(in srgb, var(--shift-color) 8%, var(--cg-bg));
+}
+.pillbox-med-info { flex: 1; }
+.pillbox-med-name { font-size: 13px; font-weight: 600; color: var(--cg-text); }
+.pillbox-med-dose { font-size: 11px; color: var(--cg-text-dim); }
+
+.pillbox-check-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 2px solid var(--cg-border);
+  background: var(--cg-surface);
+  color: var(--cg-text);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  min-width: 54px;
+}
+.pillbox-check-btn:not(.checked):hover {
+  border-color: var(--cg-primary);
+  color: var(--cg-primary);
+}
+.pillbox-check-btn.checked {
+  color: #fff;
+  border-color: transparent;
+}
+.pill-time { font-size: 9px; font-weight: 400; opacity: 0.85; }
+
+/* Chart Card */
+.pillbox-chart-card {
+  background: var(--cg-surface);
+  border: 1px solid var(--cg-border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.pillbox-compliance-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--cg-text-dim);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.pill-legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+/* Warning Modal */
+.pillbox-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.pillbox-modal {
+  background: var(--cg-surface);
+  border-radius: 20px;
+  padding: 32px 28px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.pillbox-modal-icon { font-size: 48px; margin-bottom: 12px; }
+.pillbox-modal h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--cg-text);
+  margin: 0 0 12px;
+}
+.pillbox-modal p { font-size: 14px; color: var(--cg-text); margin: 0 0 8px; line-height: 1.6; }
+.pillbox-modal-sub { font-size: 13px; color: var(--cg-text-dim) !important; }
+.pillbox-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+.pillbox-modal-cancel, .pillbox-modal-confirm {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+.pillbox-modal-cancel {
+  background: var(--cg-bg);
+  color: var(--cg-text);
+  border: 1.5px solid var(--cg-border);
+}
+.pillbox-modal-confirm {
+  background: #b83a24;
+  color: #fff;
+}
