@@ -1,0 +1,334 @@
+/* ============================================================
+   CgAuth.css — Caregiver Login & Registration Portal
+   Responsive layout for mobile, tablet, and widescreen desktop
+   ============================================================ */
+
+.cg-auth-viewport {
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.cg-auth-card {
+  width: 100%;
+  max-width: 460px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 28px 24px;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.cg-auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #b83a24 0%, #ea580c 50%, #f59e0b 100%);
+}
+
+/* ── Header ── */
+.cg-auth-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cg-auth-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cg-auth-logo {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.cg-auth-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cg-auth-brand-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.cg-auth-portal-badge {
+  font-size: 10px;
+  font-weight: 800;
+  color: #b83a24;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cg-auth-sub {
+  margin: 0;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+/* ── Tabs ── */
+.cg-auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #f1f5f9;
+  border-radius: 14px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.cg-auth-tab {
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cg-auth-tab.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Form & Inputs ── */
+.cg-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cg-auth-alert-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cg-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cg-input-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.cg-input-box {
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0 12px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.cg-input-box:focus-within {
+  border-color: #b83a24;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(184, 58, 36, 0.1);
+}
+
+.cg-input-icon {
+  font-size: 15px;
+  margin-right: 8px;
+  opacity: 0.8;
+}
+
+.cg-input-field {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 11px 0;
+  font-size: 13px;
+  color: #0f172a;
+  outline: none;
+  font-family: inherit;
+}
+
+.cg-select-field {
+  cursor: pointer;
+}
+
+.cg-pwd-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  opacity: 0.7;
+}
+
+.cg-pwd-toggle:hover {
+  opacity: 1;
+}
+
+/* ── 2-Col Form Row ── */
+.cg-form-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 400px) {
+  .cg-form-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Options Row ── */
+.cg-auth-row-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.cg-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #475569;
+  cursor: pointer;
+}
+
+.cg-forgot-link {
+  color: #b83a24;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cg-forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Primary Button ── */
+.cg-btn-auth-primary {
+  width: 100%;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #b83a24 0%, #991b1b 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 14px rgba(184, 58, 36, 0.25);
+  margin-top: 4px;
+}
+
+.cg-btn-auth-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(184, 58, 36, 0.35);
+}
+
+.cg-btn-auth-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Divider ── */
+.cg-auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 6px 0;
+}
+
+.cg-auth-divider::before,
+.cg-auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.cg-auth-divider span {
+  padding: 0 10px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+/* ── Demo Button ── */
+.cg-btn-demo {
+  width: 100%;
+  padding: 11px 16px;
+  background: #f8fafc;
+  color: #0f172a;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.cg-btn-demo:hover {
+  background: #ffffff;
+  border-color: #f59e0b;
+  color: #b45309;
+  box-shadow: 0 3px 12px rgba(245, 158, 11, 0.15);
+}
+
+/* ── Footer Back Button ── */
+.cg-auth-footer {
+  padding-top: 8px;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
+}
+
+.cg-btn-back-role {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.cg-btn-back-role:hover {
+  color: #0f172a;
+  background: #f1f5f9;
+}

@@ -41,6 +41,49 @@
   box-shadow: 0 4px 14px rgba(184, 58, 36, 0.35);
 }
 
+.profile-avatar-img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  border: 2px solid var(--cg-surface, #ffffff);
+}
+
+.profile-photo-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cg-primary, #b83a24);
+  color: #ffffff;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--cg-surface, #ffffff);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.profile-remove-photo-btn {
+  background: #fee2e2;
+  color: #b83a24;
+  border: 1px solid #fca5a5;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.profile-remove-photo-btn:hover {
+  background: #b83a24;
+  color: #ffffff;
+}
+
 .profile-online-dot {
   position: absolute;
   bottom: 2px;

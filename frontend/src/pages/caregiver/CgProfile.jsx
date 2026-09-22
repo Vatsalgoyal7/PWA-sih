@@ -1,17 +1,14 @@
-// ============================================================
-// CgProfile.jsx — Caregiver Profile, Security & Account Settings
-// (Instagram & Snapchat Inspired Account Console)
-// ============================================================
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { lsGet, lsSet, LS, PROFILE_DEFAULT, CONTACTS_DEFAULT } from './CgShared'
 import './CgProfile.css'
 
-export default function CgProfile({ onChangeRole }) {
+export default function CgProfile({ onChangeRole, theme = 'light', onToggleTheme }) {
   const [activeSubTab, setActiveSubTab] = useState('profile') // 'profile' | 'security' | 'contacts' | 'account'
 
   // Profile State
   const [profile, setProfile] = useState(() => lsGet(LS.PROFILE, PROFILE_DEFAULT))
   const [profileSaved, setProfileSaved] = useState(false)
+  const fileInputRef = useRef(null)
 
   // Contacts State
   const [contacts, setContacts] = useState(() => lsGet(LS.CONTACTS, CONTACTS_DEFAULT))
@@ -21,6 +18,28 @@ export default function CgProfile({ onChangeRole }) {
   const [currentPin, setCurrentPin] = useState(() => lsGet(LS.PIN, ''))
   const [pinInput, setPinInput] = useState('')
   const [pinMsg, setPinMsg] = useState('')
+
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      const b64 = event.target.result
+      const updated = { ...profile, photo_b64: b64 }
+      setProfile(updated)
+      lsSet(LS.PROFILE, updated)
+      setProfileSaved(true)
+      setTimeout(() => setProfileSaved(false), 2200)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleRemovePhoto = () => {
+    const updated = { ...profile, photo_b64: null }
+    setProfile(updated)
+    lsSet(LS.PROFILE, updated)
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
 
   const handleSaveProfile = (e) => {
     e.preventDefault()
@@ -66,25 +85,42 @@ export default function CgProfile({ onChangeRole }) {
       {/* ── 1. Instagram/Snapchat Inspired Profile Header ── */}
       <div className="cg-profile-header-card">
         <div className="profile-hero-top">
-          <div className="profile-avatar-wrap">
-            <div className="profile-avatar-circle">
-              <span>👤</span>
-            </div>
-            <span className="profile-online-dot" title="Authenticated Caregiver" />
+          <div className="profile-avatar-wrap" onClick={() => fileInputRef.current?.click()} style={{ cursor: 'pointer' }} title="Click to change patient photo">
+            {profile.photo_b64 ? (
+              <img src={profile.photo_b64} alt={profile.name} className="profile-avatar-img" />
+            ) : (
+              <div className="profile-avatar-circle">
+                <span>👵</span>
+              </div>
+            )}
+            <span className="profile-photo-badge" title="Upload Photo">📷</span>
+            <span className="profile-online-dot" title="Authenticated Patient Profile" />
           </div>
+          <input
+            type="file"
+            ref={fileInputRef}
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={handlePhotoUpload}
+          />
 
           <div className="profile-hero-info">
             <div className="profile-name-row">
               <h1 className="profile-name">{profile.name || 'Meena Sharma'}</h1>
-              <span className="profile-verified-badge" title="Superuser Privileges">✓ Superuser</span>
+              <span className="profile-verified-badge" title="Active Patient">✓ Active Patient</span>
             </div>
-            <p className="profile-handle">Caregiver Administration Desk &bull; SmritiSetu PWA</p>
+            <p className="profile-handle">Patient Profile &bull; SmritiSetu Caregiver Portal</p>
             <div className="profile-chips-row">
-              <span className="profile-stat-chip">👵 Age: {profile.age || 70} yrs</span>
-              <span className="profile-stat-chip">🧠 Stage: {profile.stage || 'Early'}</span>
+              <span className="profile-stat-chip">👵 Age: {profile.age || 72} yrs</span>
+              <span className="profile-stat-chip">🧠 Stage: {profile.stage || 'Early Stage MCI'}</span>
               <span className={`profile-stat-chip ${currentPin ? 'chip-green' : 'chip-amber'}`}>
                 {currentPin ? '🔒 PIN Active' : '🔓 No PIN'}
               </span>
+              {profile.photo_b64 && (
+                <button type="button" className="profile-remove-photo-btn" onClick={(e) => { e.stopPropagation(); handleRemovePhoto(); }}>
+                  ✕ Remove Photo
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -281,12 +317,28 @@ export default function CgProfile({ onChangeRole }) {
         </form>
       )}
 
-      {/* SECTION 4: Instagram/Snapchat Style Account Actions & Logout */}
+      {/* SECTION 4: Instagram/Snapchat Style Account Actions, Theme & Logout */}
       {activeSubTab === 'account' && (
         <div className="profile-form-card">
           <div className="section-title-wrap">
-            <h3 className="section-title">Session &amp; Role Management</h3>
-            <p className="section-sub">Switch between Patient Interactive Mode and Caregiver Administrative Mode.</p>
+            <h3 className="section-title">Console Settings &amp; Role Management</h3>
+            <p className="section-sub">Configure display appearance and switch between Patient Interactive Mode and Caregiver Administrative Mode.</p>
+          </div>
+
+          {/* Theme / Appearance Toggle (Moved here from topbar) */}
+          <div className="account-action-card">
+            <div className="account-action-info">
+              <h4>Display Theme Appearance</h4>
+              <p>Current theme: <strong>{theme === 'dark' ? '🌙 Dark Mode' : '☀️ Eye-Comfort Light Mode'}</strong>. Toggle between soft light and high-contrast dark theme.</p>
+            </div>
+            <button
+              type="button"
+              className="btn-switch-primary"
+              onClick={onToggleTheme}
+              style={{ background: theme === 'dark' ? '#334155' : '#f8fafc', color: theme === 'dark' ? '#f8fafc' : '#0f172a', border: '1.5px solid var(--cg-border)' }}
+            >
+              <span>{theme === 'dark' ? '☀️ Switch to Light' : '🌙 Switch to Dark'}</span>
+            </button>
           </div>
 
           <div className="account-action-card">

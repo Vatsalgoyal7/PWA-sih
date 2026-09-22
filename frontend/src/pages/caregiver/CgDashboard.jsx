@@ -74,6 +74,11 @@ export default function CgDashboard({
     }))
   }
 
+  const profile = lsGet(LS.PROFILE, {})
+  const patientPhoto = profile?.photo_b64 || null
+  const patientAge = profile?.age || 72
+  const patientStage = profile?.stage === 'early' ? 'Early Stage MCI' : profile?.stage === 'moderate' ? 'Moderate Impairment' : profile?.stage === 'advanced' ? 'Advanced Dementia' : (profile?.stage || 'Early Stage MCI')
+
   const currentDateStr = new Date().toLocaleDateString(isEn ? 'en-IN' : 'as-IN', {
     weekday: 'long',
     month: 'short',
@@ -93,8 +98,12 @@ export default function CgDashboard({
       {/* ── 1. Hero Patient Profile & Live Vitals Banner ── */}
       <section className="cg-hero-banner">
         <div className="cg-hero-flex">
-          <div className="cg-hero-avatar-wrap">
-            <div className="cg-hero-avatar">👵</div>
+          <div className="cg-hero-avatar-wrap" onClick={() => onSelectModule && onSelectModule('profile')} style={{ cursor: 'pointer' }} title="View / Edit Patient Profile">
+            {patientPhoto ? (
+              <img src={patientPhoto} alt={patientName} className="cg-hero-avatar-img" />
+            ) : (
+              <div className="cg-hero-avatar">👵</div>
+            )}
             <span className="cg-online-indicator" title="Live Telemetry Connected" />
           </div>
 
@@ -108,8 +117,8 @@ export default function CgDashboard({
             </h1>
             <p className="cg-hero-sub">
               {isEn
-                ? 'Age 70 • Mild Cognitive Impairment (MCI) • Caregiver: Family Desk'
-                : 'বয়স ৭০ • প্ৰাৰম্ভিক স্মৃতি বিভ্ৰম • তত্ত্বাৱধায়ক: পৰিয়াল ডেস্ক'}
+                ? `Age ${patientAge} • ${patientStage} • Caregiver: Family Desk`
+                : `বয়স ${patientAge} • ${patientStage} • তত্ত্বাৱধায়ক: পৰিয়াল ডেস্ক`}
             </p>
           </div>
         </div>

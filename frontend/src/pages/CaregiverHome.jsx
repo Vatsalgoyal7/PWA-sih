@@ -16,6 +16,7 @@ import CgReports      from './caregiver/CgReports'
 import CgMemoryBoard  from './caregiver/CgMemoryBoard'
 import CgProfile      from './caregiver/CgProfile'
 import CgNavbar       from './caregiver/CgNavbar'
+import CgAuth         from './caregiver/CgAuth'
 import { lsGet, lsSet, LS, PROFILE_DEFAULT } from './caregiver/CgShared'
 import './CaregiverHome.css'
 
@@ -51,7 +52,7 @@ const NAV_SECTIONS = [
 ]
 
 // ── Module Renderer ────────────────────────────────────────
-function renderModule(activeModule, patientName, handleSelectModule, onChangeRole, lang) {
+function renderModule(activeModule, patientName, handleSelectModule, onChangeRole, lang, theme, toggleTheme) {
   switch (activeModule) {
     case 'dashboard': return <CgDashboard patientName={patientName} onSelectModule={handleSelectModule} lang={lang}/>
     case 'cognitive': return <CgCognitive/>
@@ -64,17 +65,37 @@ function renderModule(activeModule, patientName, handleSelectModule, onChangeRol
     case 'health':    return <CgHealth/>
     case 'reports':   return <CgReports/>
     case 'memory':    return <CgMemoryBoard/>
-    case 'profile':   return <CgProfile onChangeRole={onChangeRole}/>
+    case 'profile':   return <CgProfile onChangeRole={onChangeRole} theme={theme} onToggleTheme={toggleTheme}/>
     default:          return <CgDashboard patientName={patientName} onSelectModule={handleSelectModule} lang={lang}/>
   }
 }
 
 // ── Main Component ─────────────────────────────────────────
 export default function CaregiverHome({ onChangeRole }) {
+  // Caregiver Authentication Session State (Ready for Supabase Auth)
+  const [caregiverUser, setCaregiverUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('setu_caregiver_session')
+      return saved ? JSON.parse(saved) : null
+    } catch {
+      return null
+    }
+  })
+
   const [theme, setTheme]           = useState(() => lsGet(LS.THEME, 'light'))
   const [lang, setLang]             = useState(() => lsGet(LS.LANG, 'en'))
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [activeModule, setActiveModule] = useState('dashboard')
+
+  // Handle Caregiver Sign Out
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem('setu_caregiver_session')
+    } catch (e) {
+      console.warn(e)
+    }
+    setCaregiverUser(null)
+  }
 
   // PIN lock
   const storedPin = lsGet(LS.PIN, '')
@@ -83,7 +104,7 @@ export default function CaregiverHome({ onChangeRole }) {
   const [pinError, setPinError]   = useState(false)
 
   const profile     = lsGet(LS.PROFILE, PROFILE_DEFAULT)
-  const patientName = profile.name || 'Meena Sharma'
+  const patientName = profile.name || caregiverUser?.patientName || 'Meena Sharma'
 
   const toggleTheme = () => {
     const next = theme === 'light' ? 'dark' : 'light'
@@ -105,7 +126,17 @@ export default function CaregiverHome({ onChangeRole }) {
     else { setPinError(true); setPinInput('') }
   }
 
-  // ── PIN Screen ────────────────────────────────────────────
+  // ── 1. Auth Screen: Login / Register (if not authenticated) ──
+  if (!caregiverUser) {
+    return (
+      <CgAuth
+        onLoginSuccess={(user) => setCaregiverUser(user)}
+        onBackToRoles={onChangeRole}
+      />
+    )
+  }
+
+  // ── 2. PIN Screen (if PIN is set in settings) ─────────────
   if (!unlocked && storedPin) {
     return (
       <div className="cg-pin-screen">
@@ -131,8 +162,8 @@ export default function CaregiverHome({ onChangeRole }) {
           <button type="submit" className="cg-pin-unlock-btn" disabled={pinInput.length !== 4}>
             Unlock Dashboard
           </button>
-          <button type="button" className="btn-switch-role" onClick={onChangeRole} style={{ marginTop: '8px' }}>
-            ← Back to Role Select
+          <button type="button" className="btn-switch-role" onClick={handleLogout} style={{ marginTop: '8px' }}>
+            ← Sign Out / Switch Account
           </button>
         </form>
       </div>
@@ -161,6 +192,22 @@ export default function CaregiverHome({ onChangeRole }) {
           ))}
         </div>
       ))}
+
+      {/* Caregiver Session Sign Out */}
+      <div className="cg-nav-section" style={{ marginTop: '10px', borderTop: '1px solid var(--cg-border-subtle, #f1f5f9)', paddingTop: '8px' }}>
+        <div className="cg-nav-section-label">CAREGIVER SESSION</div>
+        <button
+          type="button"
+          className="cg-nav-item"
+          onClick={handleLogout}
+          style={{ color: '#dc2626' }}
+          title="Sign Out of Caregiver Portal"
+        >
+          <span className="cg-nav-item-icon">🚪</span>
+          <span className="cg-nav-item-label">Sign Out Caregiver</span>
+          <span className="cg-nav-badge" style={{ backgroundColor: '#fee2e2', color: '#dc2626' }}>Exit</span>
+        </button>
+      </div>
     </div>
   )
 
@@ -182,17 +229,10 @@ export default function CaregiverHome({ onChangeRole }) {
         </div>
 
         <div className="cg-topbar-right">
-          <button type="button" className="cg-icon-btn" onClick={toggleTheme} title="Toggle Light / Dark">
-            <span>{theme === 'light' ? '🌙' : '☀️'}</span>
-            <span className="cg-btn-text-desktop">{theme === 'light' ? 'Dark' : 'Light'}</span>
-          </button>
-          <button type="button" className="cg-icon-btn" onClick={toggleLang} title="Toggle EN / Assamese">
+          {/* Language Switcher */}
+          <button type="button" className="cg-icon-btn" onClick={toggleLang} title="Toggle English / Assamese">
             <span>🌐</span>
             <span>{isEn ? 'EN' : 'অ'}</span>
-          </button>
-          <div className="cg-avatar-badge" title="Caregiver Superuser">C</div>
-          <button type="button" className="cg-switch-role-btn" onClick={onChangeRole} title="Switch Role">
-            ↪ <span className="cg-switch-text-desktop">Role</span>
           </button>
         </div>
       </header>
@@ -214,7 +254,7 @@ export default function CaregiverHome({ onChangeRole }) {
         {/* Scrollable Content */}
         <main className="cg-content">
           <div className="cg-content-inner">
-            {renderModule(activeModule, patientName, handleSelectModule, onChangeRole, lang)}
+            {renderModule(activeModule, patientName, handleSelectModule, handleLogout, lang, theme, toggleTheme)}
           </div>
         </main>
       </div>
@@ -241,11 +281,15 @@ export default function CaregiverHome({ onChangeRole }) {
 
             {/* Patient Info Strip */}
             <div className="cg-drawer-patient-strip">
-              <span className="cg-drawer-patient-avatar">👵</span>
+              {profile.photo_b64 ? (
+                <img src={profile.photo_b64} alt={patientName} className="cg-drawer-patient-img" />
+              ) : (
+                <span className="cg-drawer-patient-avatar">👵</span>
+              )}
               <div>
                 <div className="cg-drawer-patient-name">{patientName}</div>
                 <div className="cg-drawer-patient-sub">
-                  {lsGet(LS.PROFILE, PROFILE_DEFAULT).age} yrs · {lsGet(LS.PROFILE, PROFILE_DEFAULT).stage || 'Early Stage'}
+                  {profile.age || 72} yrs · {profile.stage || 'Early Stage MCI'}
                 </div>
               </div>
             </div>

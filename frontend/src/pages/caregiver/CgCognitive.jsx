@@ -55,10 +55,10 @@ function MMSEGauge({ score, maxScore = 30, animated = true }) {
   }, [score, animated])
 
   // SVG arc math
-  const cx = 160, cy = 160, r = 120
+  const cx = 160, cy = 135, r = 95
   const startAngle = 180
   const totalAngle = 180
-  const pct = Math.min(displayScore / maxScore, 1)
+  const pct = Math.min(Math.max(displayScore / maxScore, 0), 1)
   const needleAngle = startAngle + pct * totalAngle
 
   function polarToXY(angle, radius = r) {
@@ -73,71 +73,71 @@ function MMSEGauge({ score, maxScore = 30, animated = true }) {
     return `M ${s.x} ${s.y} A ${radius} ${radius} 0 ${large} 1 ${e.x} ${e.y}`
   }
 
-  const needle = polarToXY(needleAngle, r - 20)
-  const needleBase1 = polarToXY(needleAngle - 90, 10)
-  const needleBase2 = polarToXY(needleAngle + 90, 10)
+  const needle = polarToXY(needleAngle, r - 12)
+  const needleBase1 = polarToXY(needleAngle - 90, 8)
+  const needleBase2 = polarToXY(needleAngle + 90, 8)
   const color = scoreColor(displayScore)
 
-  // Zone boundaries: red 0-17 (0-57%), yellow 18-23 (60-77%), green 24-30 (80-100%)
-  const redEnd   = 180 + (17/30) * 180
-  const yellowEnd= 180 + (23/30) * 180
+  // Zone boundaries: red 0-17, yellow 18-23, green 24-30
+  const redEnd    = 180 + (17/30) * 180
+  const yellowEnd = 180 + (23/30) * 180
 
   return (
     <div className="mmse-gauge-wrap">
-      <svg viewBox="0 0 320 190" className="mmse-gauge-svg">
+      <svg viewBox="0 0 320 200" className="mmse-gauge-svg">
         {/* Track background */}
-        <path d={arc(180, 360, r + 12)} fill="none" stroke="var(--cg-border)" strokeWidth="28" strokeLinecap="round"/>
+        <path d={arc(180, 360, r + 10)} fill="none" stroke="var(--cg-border)" strokeWidth="22" strokeLinecap="round"/>
 
-        {/* Red zone */}
-        <path d={arc(180, redEnd, r + 12)} fill="none" stroke="#fde8e8" strokeWidth="28"/>
-        {/* Yellow zone */}
-        <path d={arc(redEnd, yellowEnd, r + 12)} fill="none" stroke="#fef3c7" strokeWidth="28"/>
-        {/* Green zone */}
-        <path d={arc(yellowEnd, 360, r + 12)} fill="none" stroke="#d1fae5" strokeWidth="28"/>
+        {/* Colored zones */}
+        <path d={arc(180, redEnd, r + 10)} fill="none" stroke="#fecaca" strokeWidth="22"/>
+        <path d={arc(redEnd, yellowEnd, r + 10)} fill="none" stroke="#fef08a" strokeWidth="22"/>
+        <path d={arc(yellowEnd, 360, r + 10)} fill="none" stroke="#bbf7d0" strokeWidth="22"/>
 
-        {/* Zone labels */}
-        <text x="42" y="175" fontSize="10" fill="#b83a24" textAnchor="middle" fontWeight="600">Impaired</text>
-        <text x="160" y="50" fontSize="10" fill="#f39c12" textAnchor="middle" fontWeight="600">Mild</text>
-        <text x="278" y="175" fontSize="10" fill="#27ae60" textAnchor="middle" fontWeight="600">Normal</text>
+        {/* Zone descriptive text */}
+        <text x="32" y="160" fontSize="10" fill="#b83a24" textAnchor="start" fontWeight="700">Impaired (&lt;18)</text>
+        <text x="160" y="32" fontSize="10" fill="#d97706" textAnchor="middle" fontWeight="700">Mild (18-23)</text>
+        <text x="288" y="160" fontSize="10" fill="#16a34a" textAnchor="end" fontWeight="700">Normal (≥24)</text>
 
-        {/* Progress arc */}
+        {/* Dynamic colored progress arc */}
         <path
-          d={arc(180, 180 + pct * 180, r + 12)}
+          d={arc(180, 180 + pct * 180, r + 10)}
           fill="none"
           stroke={color}
-          strokeWidth="28"
+          strokeWidth="22"
           strokeLinecap="round"
           className="mmse-progress-arc"
         />
 
-        {/* Tick marks */}
+        {/* Tick marks & Numbers */}
         {[0, 6, 12, 18, 24, 30].map(v => {
           const ang = 180 + (v / 30) * 180
-          const outer = polarToXY(ang, r + 26)
-          const inner = polarToXY(ang, r - 4)
-          const lbl = polarToXY(ang, r - 18)
+          const outer = polarToXY(ang, r + 24)
+          const inner = polarToXY(ang, r - 3)
+          const lbl = polarToXY(ang, r + 35)
           return (
             <g key={v}>
               <line x1={inner.x} y1={inner.y} x2={outer.x} y2={outer.y} stroke="var(--cg-text-dim)" strokeWidth="1.5"/>
-              <text x={lbl.x} y={lbl.y} fontSize="9" fill="var(--cg-text-dim)" textAnchor="middle" dominantBaseline="middle">{v}</text>
+              <text x={lbl.x} y={lbl.y} fontSize="10" fill="var(--cg-text-dim)" textAnchor="middle" dominantBaseline="middle" fontWeight="600">{v}</text>
             </g>
           )
         })}
 
-        {/* Needle */}
+        {/* Needle pointing outward from hub */}
         <polygon
           points={`${needle.x},${needle.y} ${needleBase1.x},${needleBase1.y} ${needleBase2.x},${needleBase2.y}`}
           fill={color}
           className="mmse-needle"
         />
-        <circle cx={cx} cy={cy} r={10} fill={color}/>
-        <circle cx={cx} cy={cy} r={5} fill="white"/>
+        <circle cx={cx} cy={cy} r={9} fill={color}/>
+        <circle cx={cx} cy={cy} r={4} fill="#ffffff"/>
 
-        {/* Center Score */}
-        <text x={cx} y={cy + 35} textAnchor="middle" fontSize="32" fontWeight="800" fill={color} className="mmse-score-text">
+        {/* Center Score readout situated clearly below hub */}
+        <text x={cx} y={cy + 38} textAnchor="middle" fontSize="30" fontWeight="900" fill={color} className="mmse-score-text">
           {displayScore}
         </text>
-        <text x={cx} y={cy + 52} textAnchor="middle" fontSize="11" fill="var(--cg-text-dim)">out of 30</text>
+        <text x={cx} y={cy + 54} textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--cg-text-dim)">
+          out of 30 points
+        </text>
       </svg>
 
       <div className="mmse-label" style={{ color }}>
@@ -210,13 +210,22 @@ function CognitiveTrend({ log }) {
   )
 }
 
+// ── Default realistic clinical baseline (Total = 24/30 - Early stage MCI) ──
+const REALISTIC_DEFAULT_DOMAINS = {
+  orientation: 8,  // 8/10 (occasional date/time confusion)
+  memory: 3,       // 3/3 (immediate registration intact)
+  attention: 4,    // 4/5 (slight serial calculation slip)
+  recall: 2,       // 2/3 (short-term recall delays)
+  language: 6,     // 6/8 (word-finding hesitation)
+  visuospatial: 1, // 1/1 (figure copying intact)
+}
+
 // ── Main Component ─────────────────────────────────────────
 export default function CgCognitive() {
   const log = lsGet(LS.COGNITIVE_LOG, [])
   const todayEntry = log.find(e => e.date === today())
 
-  const defaultDomains = DOMAINS.reduce((acc, d) => ({ ...acc, [d.id]: d.max }), {})
-  const [domains, setDomains] = useState(() => todayEntry?.domains ?? defaultDomains)
+  const [domains, setDomains] = useState(() => todayEntry?.domains ?? REALISTIC_DEFAULT_DOMAINS)
   const [saved, setSaved] = useState(!!todayEntry)
   const [activeTab, setActiveTab] = useState('score')
 
