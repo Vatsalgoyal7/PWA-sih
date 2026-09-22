@@ -1,6 +1,7 @@
 import { useLanguage } from '../context/LanguageContext'
 import LanguageToggle from './LanguageToggle'
-import grandmaIllustration from '../assets/namaskar-grandma.png'
+import claySeniorImg from '../assets/clay-senior.jpg'
+import clayCaregiverImg from '../assets/clay-caregiver.jpg'
 import './RoleSelect.css'
 
 function RoleSelect({ onSelect }) {
@@ -8,137 +9,96 @@ function RoleSelect({ onSelect }) {
   const isEn = lang === 'en'
 
   return (
-    <div className="role-modern-viewport">
-      <div className="role-modern-card">
+    <div className="role-pastel-viewport">
+      <div className="role-pastel-card">
         
-        {/* Subtle Ambient Glow Elements */}
-        <div className="role-ambient-glow role-glow-top" aria-hidden="true" />
-        <div className="role-ambient-glow role-glow-bottom" aria-hidden="true" />
+        {/* Subtle Ambient Radial Lighting */}
+        <div className="role-pastel-glow role-glow-top" aria-hidden="true" />
+        <div className="role-pastel-glow role-glow-bottom" aria-hidden="true" />
 
-        {/* ── Top Bar: Brand + Language Switcher ── */}
-        <header className="role-modern-header">
+        {/* ── Top Bar: Brand Pill + Language Switcher ── */}
+        <header className="role-pastel-header">
           <div className="role-brand-pill">
             <span className="role-brand-icon">🧠</span>
-            <div className="role-brand-text">
-              <span className="role-app-title">SmritiSetu</span>
-              <span className="role-app-tag">{isEn ? 'Cognitive Care' : 'স্মৃতিসেতু'}</span>
-            </div>
+            <span className="role-brand-title">SmritiSetu</span>
           </div>
 
-          <LanguageToggle className="role-modern-lang-btn" />
+          <LanguageToggle className="role-pastel-lang-btn" />
         </header>
 
-        {/* ── Welcome Heading ── */}
-        <div className="role-welcome-block">
-          <h1 className="role-welcome-title">
-            {isEn ? 'Welcome' : 'স্বাগতম'}
-            <span className="role-title-dot">.</span>
+        {/* ── Greeting Title ── */}
+        <div className="role-hero-title-wrap">
+          <h1 className="role-hero-title">
+            {isEn ? 'Welcome / স্বাগতম' : 'স্বাগতম / Welcome'}
           </h1>
-          <p className="role-welcome-sub">
-            {isEn
-              ? 'Select your experience to begin'
-              : 'আগবাঢ়িবলৈ আপোনাৰ মাধ্যম বাছনি কৰক'}
-          </p>
         </div>
 
-        {/* ── Selection Cards (Senior Companion vs Caregiver Desk) ── */}
-        <main className="role-cards-container">
+        {/* ── Two Big Interactive Pastel Cards ── */}
+        <main className="role-pastel-cards-grid">
           
-          {/* Card 1: Senior Companion Mode (Rich illustration with warm backdrop) */}
+          {/* Card 1: Senior Companion */}
           <button
             type="button"
-            className="role-selection-card role-card--senior"
+            className="role-card-pastel role-card-pastel--senior"
             onClick={() => onSelect('patient')}
-            aria-label={isEn ? 'Continue as Senior Companion' : 'আইতাৰ বাবে প্ৰৱেশ কৰক'}
+            aria-label={isEn ? 'Enter Senior Companion' : 'আইতাৰ সংগী খোলক'}
           >
-            {/* Card Graphic Backdrop */}
-            <div className="role-card-art-backdrop role-art--senior">
+            <div className="role-card-content-left">
+              <h2 className="role-card-heading">
+                {isEn ? 'Senior Companion' : 'আইতাৰ সংগী'}
+              </h2>
+              <p className="role-card-subheading">
+                {isEn
+                  ? 'Gentle games & daily memory routines'
+                  : 'সহজ স্মৃতি খেল আৰু দৈনন্দিন নিয়ম'}
+              </p>
+            </div>
+
+            <div className="role-card-art-wrap">
               <img
-                src={grandmaIllustration}
-                alt="Grandmother avatar"
-                className="role-art-grandma-img"
+                src={claySeniorImg}
+                alt="Senior companion 3D character"
+                className="role-clay-img"
               />
             </div>
 
-            <div className="role-card-inner">
-              <div className="role-card-badge-row">
-                <span className="role-card-pill role-pill--warm">
-                  {isEn ? 'Gentle & Simple' : 'সহজ আৰু আনন্দময়'}
-                </span>
-                <span className="role-card-arrow">→</span>
-              </div>
-
-              <div className="role-card-main-content">
-                <div className="role-card-text">
-                  <h2 className="role-card-name">
-                    {isEn ? 'Senior Companion' : 'আইতাৰ সংগী'}
-                  </h2>
-                  <p className="role-card-caption">
-                    {isEn
-                      ? 'Simple touch games, voice daily routines & memories'
-                      : 'সহজ স্মৃতি খেল, দৈনন্দিন নিয়ম আৰু আনন্দদায়ক অনুভৱ'}
-                  </p>
-                </div>
-              </div>
-
-              <div className="role-card-action-bar role-action--senior">
-                <span>{isEn ? 'Open Senior Companion' : 'আইতাৰ সংগী খোলক'}</span>
-                <span className="role-action-chevron">›</span>
-              </div>
+            <div className="role-card-btn-strip role-strip--senior">
+              <span>{isEn ? 'Enter Companion' : 'প্ৰৱেশ কৰক'}</span>
             </div>
           </button>
 
-          {/* Card 2: Caregiver / Family Portal */}
+          {/* Card 2: Caregiver Portal */}
           <button
             type="button"
-            className="role-selection-card role-card--caregiver"
+            className="role-card-pastel role-card-pastel--caregiver"
             onClick={() => onSelect('caregiver')}
-            aria-label={isEn ? 'Continue to Caregiver Portal' : 'কেয়াৰগিভাৰ ডেস্কলৈ যাওক'}
+            aria-label={isEn ? 'Open Caregiver Desk' : 'তত্ত্বাৱধায়ক ডেস্ক খোলক'}
           >
-            {/* Card Graphic Backdrop */}
-            <div className="role-card-art-backdrop role-art--caregiver">
-              <div className="role-art-caregiver-badge">
-                <span>🩺</span>
-              </div>
+            <div className="role-card-content-left">
+              <h2 className="role-card-heading">
+                {isEn ? 'Caregiver Portal' : 'তত্ত্বাৱধায়ক ডেস্ক'}
+              </h2>
+              <p className="role-card-subheading">
+                {isEn
+                  ? 'Medication schedule & clinical oversight'
+                  : 'ঔষধ সময়সূচী আৰু চিকিৎসা পৰিদৰ্শন'}
+              </p>
             </div>
 
-            <div className="role-card-inner">
-              <div className="role-card-badge-row">
-                <span className="role-card-pill role-pill--clinical">
-                  {isEn ? 'Clinical & Supervision' : 'তত্ত্বাৱধায়ক পৰিদৰ্শন'}
-                </span>
-                <span className="role-card-arrow">→</span>
-              </div>
+            <div className="role-card-art-wrap">
+              <img
+                src={clayCaregiverImg}
+                alt="Caregiver clinical monitor 3D character"
+                className="role-clay-img"
+              />
+            </div>
 
-              <div className="role-card-main-content">
-                <div className="role-card-text">
-                  <h2 className="role-card-name">
-                    {isEn ? 'Caregiver Portal' : 'তত্ত্বাৱধায়ক ডেস্ক'}
-                  </h2>
-                  <p className="role-card-caption">
-                    {isEn
-                      ? 'Health tracking, pillbox schedule & daily oversight'
-                      : 'ঔষধ সময়সূচী, স্নায়ু পৰীক্ষা আৰু পৰিয়ালৰ নিৰাপত্তা'}
-                  </p>
-                </div>
-              </div>
-
-              <div className="role-card-action-bar role-action--caregiver">
-                <span>{isEn ? 'Enter Caregiver Console' : 'তত্ত্বাৱধায়ক ডেস্ক খোলক'}</span>
-                <span className="role-action-chevron">›</span>
-              </div>
+            <div className="role-card-btn-strip role-strip--caregiver">
+              <span>{isEn ? 'Open Care Desk' : 'ডেস্ক খোলক'}</span>
             </div>
           </button>
 
         </main>
-
-        {/* ── Modern Minimalist Footer (Clean & balanced) ── */}
-        <footer className="role-modern-footer">
-          <span className="role-footer-dot" />
-          <span className="role-footer-text">
-            {isEn ? 'Voice-enabled AI Cognitive Support' : 'AI আধাৰিত জ্ঞানমূলক সেৱা'}
-          </span>
-        </footer>
 
       </div>
     </div>

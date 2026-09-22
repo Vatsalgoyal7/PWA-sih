@@ -1,72 +1,71 @@
 /* ============================================================
-   RoleSelect.css — Modern Apple Health Style Starting Screen
-   Clean, Warm, Minimalist & Dignified UI
+   RoleSelect.css — Light Soothing Pastel 3D Starting Screen
+   Gentle, Dignified, Zero Eye Strain, Apple-Grade Aesthetics
    ============================================================ */
 
 /* ── Full Viewport Centering Container ── */
-.role-modern-viewport {
+.role-pastel-viewport {
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(145deg, #fdfbf7 0%, #f4efe6 100%);
+  background: linear-gradient(135deg, #faf7f2 0%, #f4ede3 100%);
   padding: 16px;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Floating Modern Mobile Frame ── */
-.role-modern-card {
+/* ── Floating Modern Mobile Card ── */
+.role-pastel-card {
   position: relative;
   width: 100%;
   max-width: 440px;
   height: min(calc(100dvh - 32px), 820px);
   min-height: 640px;
   background-color: #ffffff;
-  border-radius: 36px;
-  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 40px;
+  border: 1px solid rgba(226, 232, 240, 0.7);
   box-shadow:
-    0 25px 60px -15px rgba(184, 58, 36, 0.08),
-    0 10px 25px -5px rgba(0, 0, 0, 0.04),
-    0 1px 3px rgba(0, 0, 0, 0.02);
+    0 30px 70px -15px rgba(224, 160, 130, 0.12),
+    0 10px 25px -5px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 24px 22px 20px;
+  padding: 24px 22px 24px;
   overflow: hidden;
   box-sizing: border-box;
 }
 
-/* ── Ambient Radial Glows (Apple Health style aura) ── */
-.role-ambient-glow {
+/* ── Gentle Ambient Background Radial Glows ── */
+.role-pastel-glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(55px);
+  filter: blur(65px);
   pointer-events: none;
   z-index: 0;
 }
 
 .role-glow-top {
-  top: -30px;
-  right: -30px;
-  width: 190px;
-  height: 190px;
-  background: rgba(239, 68, 68, 0.12);
+  top: -40px;
+  right: -40px;
+  width: 220px;
+  height: 220px;
+  background: rgba(254, 215, 170, 0.4);
 }
 
 .role-glow-bottom {
-  bottom: 20px;
+  bottom: -30px;
   left: -40px;
-  width: 180px;
-  height: 180px;
-  background: rgba(245, 158, 11, 0.09);
+  width: 200px;
+  height: 200px;
+  background: rgba(186, 230, 253, 0.35);
 }
 
-/* ── Top Bar Header ── */
-.role-modern-header {
+/* ── Top Bar: Brand Pill + Language Button ── */
+.role-pastel-header {
   position: relative;
   z-index: 2;
   display: flex;
@@ -79,337 +78,199 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  padding: 6px 14px 6px 10px;
-  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  padding: 8px 18px 8px 12px;
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
 .role-brand-icon {
-  font-size: 22px;
+  font-size: 24px;
 }
 
-.role-brand-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.role-app-title {
-  font-size: 15px;
+.role-brand-title {
+  font-size: 16px;
   font-weight: 800;
   color: #0f172a;
   letter-spacing: -0.01em;
-  line-height: 1.1;
 }
 
-.role-app-tag {
-  font-size: 10px;
-  font-weight: 700;
-  color: #b83a24;
-  letter-spacing: 0.02em;
-}
-
-/* ── Welcome Heading Block ── */
-.role-welcome-block {
+/* ── Clean Hero Title ── */
+.role-hero-title-wrap {
   position: relative;
   z-index: 2;
-  margin: 14px 0 10px;
+  margin: 12px 0 8px;
+  text-align: center;
 }
 
-.role-welcome-title {
-  font-size: 34px;
+.role-hero-title {
+  font-size: 28px;
   font-weight: 900;
-  color: #0f172a;
-  margin: 0;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-}
-
-.role-title-dot {
-  color: #b83a24;
-}
-
-.role-welcome-sub {
-  font-size: 14px;
-  color: #64748b;
-  margin: 6px 0 0;
-  font-weight: 500;
-}
-
-/* ── Selection Cards Container ── */
-.role-cards-container {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  flex: 1;
-  justify-content: center;
-  margin: 12px 0;
-}
-
-/* ── Individual Selection Card ── */
-.role-selection-card {
-  width: 100%;
-  border: none;
-  background: #ffffff;
-  border-radius: 26px;
-  padding: 0;
-  cursor: pointer;
-  text-align: left;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  border: 1.5px solid #edf2f7;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.role-selection-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.09);
-}
-
-.role-selection-card:active {
-  transform: scale(0.98);
-}
-
-/* Senior Card Styling */
-.role-card--senior {
-  border-color: #fed7aa;
-  background: linear-gradient(135deg, #ffffff 0%, #fff8f0 100%);
-}
-
-.role-card--senior:hover {
-  border-color: #ea580c;
-}
-
-/* Caregiver Card Styling */
-.role-card--caregiver {
-  border-color: #fed7d7;
-  background: linear-gradient(135deg, #ffffff 0%, #fef5f5 100%);
-}
-
-.role-card--caregiver:hover {
-  border-color: #ef4444;
-}
-
-/* ── Card Graphic Backdrop (Like the mockup!) ── */
-.role-card-art-backdrop {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 140px;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.role-art--senior {
-  background: radial-gradient(circle at 80% 50%, rgba(254, 215, 170, 0.45) 0%, transparent 70%);
-}
-
-.role-art-grandma-img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-right: -15px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  border: 3px solid #ffffff;
-  transition: transform 0.28s ease;
-}
-
-.role-selection-card:hover .role-art-grandma-img {
-  transform: scale(1.06);
-}
-
-.role-art--caregiver {
-  background: radial-gradient(circle at 80% 50%, rgba(254, 226, 226, 0.5) 0%, transparent 70%);
-}
-
-.role-art-caregiver-badge {
-  width: 90px;
-  height: 90px;
-  border-radius: 28px;
-  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 42px;
-  margin-right: 12px;
-  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.15);
-  border: 2px solid #ffffff;
-  transition: transform 0.28s ease;
-}
-
-.role-selection-card:hover .role-art-caregiver-badge {
-  transform: scale(1.08) rotate(4deg);
-}
-
-/* ── Card Inner Container ── */
-.role-card-inner {
-  position: relative;
-  z-index: 2;
-  padding: 18px 20px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.role-card-badge-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.role-card-pill {
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 12px;
-  letter-spacing: 0.02em;
-}
-
-.role-pill--warm {
-  background: #ffedd5;
-  color: #c2410c;
-}
-
-.role-pill--clinical {
-  background: #fee2e2;
-  color: #b91c1c;
-}
-
-.role-card-arrow {
-  font-size: 16px;
-  color: #94a3b8;
-  transition: transform 0.2s;
-  margin-right: 4px;
-}
-
-.role-selection-card:hover .role-card-arrow {
-  transform: translateX(4px);
-  color: #0f172a;
-}
-
-/* ── Card Main Content ── */
-.role-card-main-content {
-  display: flex;
-  align-items: center;
-  padding-right: 80px; /* leaves room for the background graphic */
-}
-
-.role-card-text {
-  flex: 1;
-}
-
-.role-card-name {
-  font-size: 20px;
-  font-weight: 800;
   color: #0f172a;
   margin: 0;
   letter-spacing: -0.02em;
 }
 
-.role-card-caption {
-  font-size: 12px;
-  color: #64748b;
-  margin: 4px 0 0;
-  line-height: 1.45;
-  font-weight: 500;
-}
-
-/* ── Action Bar along bottom of card ── */
-.role-card-action-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 9px 14px;
-  border-radius: 14px;
-  font-size: 12px;
-  font-weight: 700;
-  transition: all 0.22s ease;
-  margin-top: 4px;
-}
-
-.role-action--senior {
-  background: #fff7ed;
-  color: #c2410c;
-  border: 1px solid #ffedd5;
-}
-
-.role-selection-card:hover .role-action--senior {
-  background: #ea580c;
-  color: #ffffff;
-  border-color: #ea580c;
-}
-
-.role-action--caregiver {
-  background: #fef2f2;
-  color: #b91c1c;
-  border: 1px solid #fee2e2;
-}
-
-.role-selection-card:hover .role-action--caregiver {
-  background: #dc2626;
-  color: #ffffff;
-  border-color: #dc2626;
-}
-
-.role-action-chevron {
-  font-size: 16px;
-  line-height: 1;
-}
-
-/* ── Modern Minimalist Footer ── */
-.role-modern-footer {
+/* ── Interactive Cards Container ── */
+.role-pastel-cards-grid {
   position: relative;
   z-index: 2;
   display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  justify-content: center;
+}
+
+/* ── Base Pastel Card Style ── */
+.role-card-pastel {
+  width: 100%;
+  border: none;
+  border-radius: 28px;
+  padding: 22px 20px 18px;
+  cursor: pointer;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.role-card-pastel:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+.role-card-pastel:active {
+  transform: scale(0.98);
+}
+
+/* ── Card 1: Soft Peach / Butter-Cream Gradient ── */
+.role-card-pastel--senior {
+  background: linear-gradient(135deg, #fed7aa 0%, #fef3c7 45%, #fef9c3 100%);
+  border: 1px solid rgba(254, 215, 170, 0.6);
+}
+
+.role-card-pastel--senior:hover {
+  border-color: #f97316;
+}
+
+/* ── Card 2: Soft Blush-Coral to Sky-Mist Blue Gradient ── */
+.role-card-pastel--caregiver {
+  background: linear-gradient(135deg, #fecdd3 0%, #ffe4e6 35%, #e0f2fe 100%);
+  border: 1px solid rgba(254, 205, 211, 0.6);
+}
+
+.role-card-pastel--caregiver:hover {
+  border-color: #f43f5e;
+}
+
+/* ── Card Text Content ── */
+.role-card-content-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+}
+
+.role-card-heading {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.role-card-subheading {
+  font-size: 13px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.45;
+  font-weight: 500;
+  max-width: 180px;
+}
+
+/* ── 3D Clay Art Graphic ── */
+.role-card-art-wrap {
+  width: 110px;
+  height: 110px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding-top: 8px;
+  z-index: 2;
 }
 
-.role-footer-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #10b981;
+.role-clay-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  transition: transform 0.3s ease;
 }
 
-.role-footer-text {
-  font-size: 11px;
-  color: #94a3b8;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+.role-card-pastel:hover .role-clay-img {
+  transform: scale(1.06);
 }
 
-/* ── Compact screens tweak ── */
+/* ── Tactile Button Strip ── */
+.role-card-btn-strip {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  background: #ffffff;
+  padding: 12px 18px;
+  border-radius: 18px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+  z-index: 2;
+}
+
+.role-card-pastel--senior:hover .role-card-btn-strip {
+  background: #ea580c;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.25);
+}
+
+.role-card-pastel--caregiver:hover .role-card-btn-strip {
+  background: #e11d48;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(225, 29, 72, 0.25);
+}
+
+/* ── Responsive adjustments for smaller screens ── */
 @media (max-width: 380px) {
-  .role-modern-card {
-    padding: 18px 14px 14px;
-    border-radius: 26px;
+  .role-pastel-card {
+    padding: 18px 14px 18px;
+    border-radius: 30px;
   }
-  .role-welcome-title {
-    font-size: 28px;
+  .role-hero-title {
+    font-size: 24px;
   }
-  .role-card-name {
-    font-size: 17px;
+  .role-card-heading {
+    font-size: 18px;
   }
-  .role-art-grandma-img {
-    width: 90px;
-    height: 90px;
+  .role-card-subheading {
+    font-size: 11px;
+    max-width: 140px;
   }
-  .role-art-caregiver-badge {
-    width: 70px;
-    height: 70px;
-    font-size: 32px;
+  .role-card-art-wrap {
+    width: 85px;
+    height: 85px;
+  }
+  .role-card-btn-strip {
+    padding: 10px 14px;
+    font-size: 13px;
   }
 }
