@@ -37,12 +37,31 @@ const ALL_GAMES = [
 
 const GAME_MAP = Object.fromEntries(ALL_GAMES.map(g => [g.id, g]))
 
-function GamesPage({ onBack }) {
-  const [games, setGames]     = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError]     = useState(null)
+// Map game id (e.g. "game1") to the public folder path (e.g. "/games/game_1/index.html")
+// game11 has no public HTML — excluded from launch
+const GAME_URL_MAP = {
+  game1:  "/games/game_1/index.html",
+  game2:  "/games/game_2/index.html",
+  game3:  "/games/game_3/index.html",
+  game4:  "/games/game_4/index.html",
+  game5:  "/games/game_5/index.html",
+  game6:  "/games/game_6/index.html",
+  game7:  "/games/game_7/index.html",
+  game8:  "/games/game_8/index.html",
+  game9:  "/games/game_9/index.html",
+  game10: "/games/game_10/index.html",
+}
 
-  // Fetch which games are active from the backend
+// Only show games that have an actual HTML file
+const PLAYABLE_GAMES = ALL_GAMES.filter(g => !!GAME_URL_MAP[g.id])
+
+function GamesPage({ onBack }) {
+  const [games, setGames]         = useState([])
+  const [loading, setLoading]     = useState(true)
+  const [error, setError]         = useState(null)
+  const [activeGame, setActiveGame] = useState(null)  // game object when iframe is open
+
+  // Fetch which games are active from backend (or localStorage fallback)
   useEffect(() => {
     let cancelled = false
     fetch(`${API_BASE}/patient-config`)
@@ -53,17 +72,27 @@ function GamesPage({ onBack }) {
       .then(data => {
         if (cancelled) return
         const ids = Array.isArray(data.game_selection) ? data.game_selection : []
-        // Preserve catalog order: filter ALL_GAMES to only active ids
-        const active = ALL_GAMES.filter(g => ids.includes(g.id))
-        setGames(active.length >= 3 ? active : ALL_GAMES)   // fallback: show all if config is empty/invalid
+        // Filter to only playable games that are enabled by caregiver
+        const active = PLAYABLE_GAMES.filter(g => ids.includes(g.id))
+        setGames(active.length >= 3 ? active : PLAYABLE_GAMES)
         setLoading(false)
       })
       .catch(err => {
         if (cancelled) return
         console.error("GamesPage fetch failed:", err)
-        setGames(ALL_GAMES)   // offline fallback: show all games
+        // Offline fallback: try localStorage saved games config
+        try {
+          const saved = JSON.parse(localStorage.getItem("setu_games") || "[]")
+          const active = PLAYABLE_GAMES.filter(g => {
+            const cfg = saved.find(s => s.id === g.id)
+            return cfg ? cfg.enabled : true
+          })
+          setGames(active.length >= 2 ? active : PLAYABLE_GAMES)
+        } catch {
+          setGames(PLAYABLE_GAMES)
+        }
         setLoading(false)
-        setError("config unavailable — showing all games")
+        setError("Offline mode — caregiver config loaded from device")
       })
     return () => { cancelled = true }
   }, [])
@@ -78,9 +107,37 @@ function GamesPage({ onBack }) {
   }
 
   const launch = (game) => {
-    // Placeholder — route into the actual game when game components exist
-    console.log("Launching game:", game.id)
-    alert(`খেল আৰম্ভ কৰা হৈছে: ${game.labelAs}`)
+    const url = GAME_URL_MAP[game.id]
+    if (!url) return
+    setActiveGame(game)
+  }
+
+  const closeGame = () => {
+    setActiveGame(null)
+    window.speechSynthesis?.cancel()
+  }
+
+  // ── Full-Screen Game iframe Overlay ──
+  if (activeGame) {
+    const gameUrl = GAME_URL_MAP[activeGame.id]
+    return (
+      <div className="gp-game-overlay">
+        {/* Floating back button */}
+        <button
+          className="gp-overlay-back"
+          onClick={closeGame}
+          aria-label="Back to game list"
+        >
+          ← {activeGame.labelAs}
+        </button>
+        <iframe
+          src={gameUrl}
+          title={activeGame.labelEn}
+          className="gp-game-iframe"
+          allow="autoplay; microphone"
+        />
+      </div>
+    )
   }
 
   return (
@@ -99,7 +156,7 @@ function GamesPage({ onBack }) {
 
         {/* Home / back button */}
         <button className="gp-home-btn" onClick={onBack} aria-label="Back to home">
-          <span aria-hidden="true">¦</span>
+          <span aria-hidden="true">←</span>
         </button>
 
         {/* Scrollable centre */}
@@ -114,7 +171,7 @@ function GamesPage({ onBack }) {
             </div>
           </div>
 
-          {error && <p className="gp-error">{error}</p>}
+          {error && <p className="gp-error" style={{ color: '#f59e0b', fontSize: '11px', textAlign: 'center', margin: '4px 0' }}>{error}</p>}
 
           {loading ? (
             <p className="gp-loading">Loading…</p>
