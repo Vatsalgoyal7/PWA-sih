@@ -46,6 +46,27 @@ async def lifespan(app: FastAPI):
             logger.info("Connecting to PostgreSQL database...")
             pool = await asyncpg.create_pool(database_url, min_size=1, max_size=5)
             logger.info("Connected to PostgreSQL successfully.")
+
+            # Ensure table exists and default row is seeded
+            async with pool.acquire() as conn:
+                await conn.execute("""
+                    CREATE TABLE IF NOT EXISTS patient_config (
+                        patient_id VARCHAR(64) PRIMARY KEY,
+                        game_selection TEXT NOT NULL DEFAULT '["game1", "game2", "game3"]',
+                        reminder_medicine VARCHAR(16) DEFAULT '08:00',
+                        reminder_food VARCHAR(16) DEFAULT '10:00',
+                        reminder_doctor VARCHAR(16) DEFAULT '12:00',
+                        reminder_walk VARCHAR(16) DEFAULT '18:00',
+                        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+                    );
+                """)
+                await conn.execute("""
+                    INSERT INTO patient_config (patient_id, game_selection, reminder_medicine, reminder_food, reminder_doctor, reminder_walk)
+                    VALUES ('default', '["game1", "game2", "game3"]', '08:00', '10:00', '12:00', '18:00')
+                    ON CONFLICT (patient_id) DO NOTHING;
+                """)
+            logger.info("Database schema initialized and verified.")
         except Exception as e:
             logger.warning(
                 f"Failed to connect to DATABASE_URL: {e}. "
@@ -89,6 +110,7 @@ else:
         "http://localhost:5173",
         "http://localhost:3000",
         "https://peppy-puppy-9df68c.netlify.app",
+        "https://smritisetu-pwa.vercel.app",
     ]
 
 app.add_middleware(
